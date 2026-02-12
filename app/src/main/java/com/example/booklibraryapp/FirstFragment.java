@@ -29,10 +29,15 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(v ->
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment)
-        );
+        binding.buttonFirst.setOnClickListener(v -> {
+            // Put your code here:
+            // For example:
+            // Toast.makeText(requireContext(), "Button clicked!", Toast.LENGTH_SHORT).show();
+
+            // If you still want to navigate:
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
+        });
     }
 
     @Override
