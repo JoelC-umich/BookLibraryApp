@@ -4,16 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import com.example.booklibraryapp.databinding.AdminPageBinding;
 
-import com.example.booklibraryapp.databinding.FragmentSecondBinding;
+public class AdminPage extends Fragment {
 
-public class SecondFragment extends Fragment {
-
-    private FragmentSecondBinding binding;
+    private AdminPageBinding binding;
 
     @Override
     public View onCreateView(
@@ -21,7 +19,7 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentSecondBinding.inflate(inflater, container, false);
+        binding = AdminPageBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
@@ -30,8 +28,8 @@ public class SecondFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.buttonSecond.setOnClickListener(v ->
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment)
+                NavHostFragment.findNavController(AdminPage.this)
+                        .navigate(R.id.action_AdminPage_to_LoginPage)
         );
     }
 
