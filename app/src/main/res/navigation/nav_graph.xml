@@ -8,12 +8,14 @@
     <fragment
         android:id="@+id/LoginPage"
         android:name="com.example.booklibraryapp.LoginPage"
-        android:label="@string/login_page_label"
         tools:layout="@layout/login_page">
 
         <action
             android:id="@+id/action_LoginPage_to_AdminPage"
             app:destination="@id/AdminPage" />
+        <action
+            android:id="@+id/action_LoginPage_to_userPage"
+            app:destination="@id/userPage" />
     </fragment>
     <fragment
         android:id="@+id/AdminPage"
@@ -23,5 +25,146 @@
         <action
             android:id="@+id/action_AdminPage_to_LoginPage"
             app:destination="@id/LoginPage" />
+        <action
+            android:id="@+id/action_AdminPage_to_adminViewBookRequestsPage"
+            app:destination="@id/adminViewBookRequestsPage" />
+        <action
+            android:id="@+id/action_AdminPage_to_adminViewBorrowedBooksPage"
+            app:destination="@id/adminViewBorrowedBooksPage" />
+        <action
+            android:id="@+id/action_AdminPage_to_adminViewRoomRequestsPage"
+            app:destination="@id/adminViewRoomRequestsPage" />
+        <action
+            android:id="@+id/action_AdminPage_to_adminViewRoomReservationsPage"
+            app:destination="@id/adminViewRoomReservationsPage" />
+        <action
+            android:id="@+id/action_AdminPage_to_adminAccountsInfoPage"
+            app:destination="@id/adminAccountsInfoPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/userReserveBookPage"
+        android:name="com.example.booklibraryapp.UserReserveBookPage"
+        android:label="fragment_user_reserve_book_page"
+        tools:layout="@layout/fragment_user_reserve_book_page" >
+        <action
+            android:id="@+id/action_userReserveBookPage_to_userPage"
+            app:destination="@id/userPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPage"
+        android:name="com.example.booklibraryapp.UserPage"
+        android:label="fragment_user_page"
+        tools:layout="@layout/fragment_user_page" >
+        <action
+            android:id="@+id/action_userPage_to_LoginPage"
+            app:destination="@id/LoginPage" />
+        <action
+            android:id="@+id/action_userPage_to_userReserveBookPage"
+            app:destination="@id/userReserveBookPage" />
+        <action
+            android:id="@+id/action_userPage_to_userViewReservedBooksPage"
+            app:destination="@id/userViewReservedBooksPage" />
+        <action
+            android:id="@+id/action_userPage_to_userReserveRoomPage"
+            app:destination="@id/userReserveRoomPage" />
+        <action
+            android:id="@+id/action_userPage_to_userViewReservedRoomsPage"
+            app:destination="@id/userViewReservedRoomsPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/userViewReservedBooksPage"
+        android:name="com.example.booklibraryapp.UserViewReservedBooksPage"
+        android:label="fragment_user_view_reserved_books_page"
+        tools:layout="@layout/fragment_user_view_reserved_books_page" >
+        <action
+            android:id="@+id/action_userViewReservedBooksPage_to_userPage"
+            app:destination="@id/userPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/userReserveRoomPage"
+        android:name="com.example.booklibraryapp.UserReserveRoomPage"
+        android:label="fragment_user_reserve_room_page"
+        tools:layout="@layout/fragment_user_reserve_room_page" >
+        <action
+            android:id="@+id/action_userReserveRoomPage_to_userReserveRoomResultsPage"
+            app:destination="@id/userReserveRoomResultsPage" />
+        <action
+            android:id="@+id/action_userReserveRoomPage_to_userPage"
+            app:destination="@id/userPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/userViewReservedRoomsPage"
+        android:name="com.example.booklibraryapp.UserViewReservedRoomsPage"
+        android:label="fragment_user_view_reserved_rooms_page"
+        tools:layout="@layout/fragment_user_view_reserved_rooms_page" >
+        <action
+            android:id="@+id/action_userViewReservedRoomsPage_to_userPage"
+            app:destination="@id/userPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/userReserveRoomResultsPage"
+        android:name="com.example.booklibraryapp.UserReserveRoomResultsPage"
+        android:label="fragment_user_reserve_room_results_page"
+        tools:layout="@layout/fragment_user_reserve_room_results_page" >
+        <action
+            android:id="@+id/action_userReserveRoomResultsPage_to_userReserveRoomPage"
+            app:destination="@id/userReserveRoomPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminViewBookRequestsPage"
+        android:name="com.example.booklibraryapp.AdminViewBookRequestsPage"
+        android:label="fragment_admin_view_book_requests_page"
+        tools:layout="@layout/fragment_admin_view_book_requests_page" >
+        <action
+            android:id="@+id/action_adminViewBookRequestsPage_to_AdminPage"
+            app:destination="@id/AdminPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminViewBorrowedBooksPage"
+        android:name="com.example.booklibraryapp.AdminViewBorrowedBooksPage"
+        android:label="fragment_admin_view_borrowed_books_page"
+        tools:layout="@layout/fragment_admin_view_borrowed_books_page" >
+        <action
+            android:id="@+id/action_adminViewBorrowedBooksPage_to_AdminPage"
+            app:destination="@id/AdminPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminViewRoomRequestsPage"
+        android:name="com.example.booklibraryapp.AdminViewRoomRequestsPage"
+        android:label="fragment_admin_view_room_requests_page"
+        tools:layout="@layout/fragment_admin_view_room_requests_page" >
+        <action
+            android:id="@+id/action_adminViewRoomRequestsPage_to_AdminPage"
+            app:destination="@id/AdminPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminViewRoomReservationsPage"
+        android:name="com.example.booklibraryapp.AdminViewRoomReservationsPage"
+        android:label="fragment_admin_view_room_reservations_page"
+        tools:layout="@layout/fragment_admin_view_room_reservations_page" >
+        <action
+            android:id="@+id/action_adminViewRoomReservationsPage_to_AdminPage"
+            app:destination="@id/AdminPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminAccountsInfoPage"
+        android:name="com.example.booklibraryapp.AdminAccountsInfoPage"
+        android:label="fragment_admin_accounts_info_page"
+        tools:layout="@layout/fragment_admin_accounts_info_page" >
+        <action
+            android:id="@+id/action_adminAccountsInfoPage_to_adminChangeAccounInfoforUserPage"
+            app:destination="@id/adminChangeAccounInfoforUserPage" />
+        <action
+            android:id="@+id/action_adminAccountsInfoPage_to_AdminPage"
+            app:destination="@id/AdminPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminChangeAccounInfoforUserPage"
+        android:name="com.example.booklibraryapp.AdminChangeAccounInfoforUserPage"
+        android:label="fragment_admin_change_accoun_infofor_user_page"
+        tools:layout="@layout/fragment_admin_change_accoun_infofor_user_page" >
+        <action
+            android:id="@+id/action_adminChangeAccounInfoforUserPage_to_adminAccountsInfoPage"
+            app:destination="@id/adminAccountsInfoPage" />
     </fragment>
 </navigation>
