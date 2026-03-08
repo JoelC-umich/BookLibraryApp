@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_LoginPage_to_userPage"
             app:destination="@id/userPage" />
+        <action
+            android:id="@+id/action_LoginPage_to_createUserPage"
+            app:destination="@id/createUserPage" />
     </fragment>
     <fragment
         android:id="@+id/AdminPage"
@@ -53,7 +56,7 @@
     <fragment
         android:id="@+id/userPage"
         android:name="com.example.booklibraryapp.UserPage"
-        android:label="fragment_user_page"
+        android:label=""
         tools:layout="@layout/fragment_user_page" >
         <action
             android:id="@+id/action_userPage_to_LoginPage"
@@ -167,4 +170,9 @@
             android:id="@+id/action_adminChangeAccounInfoforUserPage_to_adminAccountsInfoPage"
             app:destination="@id/adminAccountsInfoPage" />
     </fragment>
+    <fragment
+        android:id="@+id/createUserPage"
+        android:name="com.example.booklibraryapp.CreateUserPage"
+        android:label=""
+        tools:layout="@layout/fragment_create_user_page" />
 </navigation>

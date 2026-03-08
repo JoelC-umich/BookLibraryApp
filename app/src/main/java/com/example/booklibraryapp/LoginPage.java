@@ -33,42 +33,52 @@ public class LoginPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(v -> {
+        binding.btnLogin.setOnClickListener(v -> {
             // Put your code here:
             // For example:
             // Toast.makeText(requireContext(), "Button clicked!", Toast.LENGTH_SHORT).show();
 
             // If you still want to navigate:
             NavHostFragment.findNavController(LoginPage.this)
-                    .navigate(R.id.action_LoginPage_to_AdminPage);
+                    .navigate(R.id.action_LoginPage_to_userPage);
         });
 
-        binding.buttonShowTable.setOnClickListener(v ->{
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.execute(() -> {
-                try {
-                    DBConnector = new DatabaseConnectorClass();
-                    connection = DBConnector.Connector();
+        binding.btnLoginCreateAccount.setOnClickListener(v -> {
+            // Put your code here:
+            // For example:
+            // Toast.makeText(requireContext(), "Button clicked!", Toast.LENGTH_SHORT).show();
 
-                    String query = "SELECT * FROM USERS";
-                    PreparedStatement statement = connection.prepareStatement(query);
-                    ResultSet rset = statement.executeQuery();
-                    StringBuilder stringbldr = new StringBuilder();
-                    while (rset.next()) {
-                        stringbldr.append(rset.getString("FIRST_NAME")).append("\n");
-                    }
-
-                    String result = stringbldr.toString();
-                    // Update UI on main thread
-                    requireActivity().runOnUiThread(() -> {
-                        binding.textviewTable.setText(result);
-                    });
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+            // If you still want to navigate:
+            NavHostFragment.findNavController(LoginPage.this)
+                    .navigate(R.id.action_LoginPage_to_createUserPage);
         });
+
+//        binding.buttonShowTable.setOnClickListener(v ->{
+//            ExecutorService executorService = Executors.newSingleThreadExecutor();
+//            executorService.execute(() -> {
+//                try {
+//                    DBConnector = new DatabaseConnectorClass();
+//                    connection = DBConnector.Connector();
+//
+//                    String query = "SELECT * FROM USERS";
+//                    PreparedStatement statement = connection.prepareStatement(query);
+//                    ResultSet rset = statement.executeQuery();
+//                    StringBuilder stringbldr = new StringBuilder();
+//                    while (rset.next()) {
+//                        stringbldr.append(rset.getString("FIRST_NAME")).append("\n");
+//                    }
+//
+//                    String result = stringbldr.toString();
+//                    // Update UI on main thread
+//                    requireActivity().runOnUiThread(() -> {
+//                        //binding.textviewTable.setText(result);
+//                    });
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//        });
     }
 
     @Override
