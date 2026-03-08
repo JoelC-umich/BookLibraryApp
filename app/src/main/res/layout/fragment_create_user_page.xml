@@ -30,8 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.384" />
+        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserLastName"
+        app:layout_constraintVertical_bias="0.051" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputCreateUserPassword"
@@ -42,8 +42,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.484" />
+        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserUsername"
+        app:layout_constraintVertical_bias="0.053" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputCreateUserEmail"
@@ -54,8 +54,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.584" />
+        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserPassword"
+        app:layout_constraintVertical_bias="0.066" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputCreateUserSchool"
@@ -66,8 +66,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.685" />
+        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserEmail"
+        app:layout_constraintVertical_bias="0.09" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputCreateUserFirstName"
@@ -76,9 +76,10 @@
         android:hint="Enter your First Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText"
+        app:layout_constraintVertical_bias="0.054" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputCreateUserLastName"
@@ -87,19 +88,20 @@
         android:hint="Enter your Last Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.286" />
+        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserFirstName"
+        app:layout_constraintVertical_bias="0.038" />
 
     <Button
         android:id="@+id/btnCreateUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="46dp"
         android:backgroundTint="#0091EA"
         android:text="Create Account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.818" />
+        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserSchool"
+        app:layout_constraintVertical_bias="0.372" />
 </androidx.constraintlayout.widget.ConstraintLayout>
