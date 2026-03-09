@@ -96,7 +96,7 @@
     <Button
         android:id="@+id/btnCreateUser"
         android:layout_width="150dp"
-        android:layout_height="46dp"
+        android:layout_height="50dp"
         android:backgroundTint="#0091EA"
         android:text="Create Account"
         app:layout_constraintBottom_toBottomOf="parent"

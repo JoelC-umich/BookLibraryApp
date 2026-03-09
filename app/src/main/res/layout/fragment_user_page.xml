@@ -7,38 +7,69 @@
     android:layout_height="match_parent"
     tools:context=".UserPage" >
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/inputUserSearchBooks"
-        android:layout_width="379dp"
-        android:layout_height="50dp"
-        android:hint="Search for books"
+    <TextView
+        android:id="@+id/textUserWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome!"
+        android:textColor="#9C27B0"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077" />
+        app:layout_constraintVertical_bias="0.061" />
 
-    <Spinner
-        android:id="@+id/spinnerUserSelectCategory"
-        android:layout_width="169dp"
-        android:layout_height="50dp"
+    <Button
+        android:id="@+id/btnUserPageReserveBook"
+        android:layout_width="151dp"
+        android:layout_height="115dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="488dp"
+        android:backgroundTint="#0091EA"
+        android:text="Reserve a Book"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textUserWelcome"
+        app:layout_constraintVertical_bias="0.66" />
+
+    <Button
+        android:id="@+id/btnUserPageReserveRoom"
+        android:layout_width="151dp"
+        android:layout_height="115dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="356dp"
+        android:backgroundTint="#0091EA"
+        android:text="Reserve a Room"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUserPageReserveBook"
+        app:layout_constraintVertical_bias="0.657" />
+
+    <Button
+        android:id="@+id/btnUserPageViewRoomReservation"
+        android:layout_width="151dp"
+        android:layout_height="115dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="356dp"
+        android:backgroundTint="#0091EA"
+        android:text="View my Room Reservations"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.876"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputUserSearchBooks"
-        app:layout_constraintVertical_bias="0.038" />
+        app:layout_constraintTop_toBottomOf="@+id/btnUserPageViewReservedBooks"
+        app:layout_constraintVertical_bias="0.657" />
 
-    <Spinner
-        android:id="@+id/spinnerUserNavigatePages"
-        android:layout_width="169dp"
-        android:layout_height="50dp"
-        android:spinnerMode="dialog"
+    <Button
+        android:id="@+id/btnUserPageViewReservedBooks"
+        android:layout_width="151dp"
+        android:layout_height="115dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="488dp"
+        android:backgroundTint="#0091EA"
+        android:text="View Reserved Books"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.107"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputUserSearchBooks"
-        app:layout_constraintVertical_bias="0.038" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textUserWelcome"
+        app:layout_constraintVertical_bias="0.66" />
 </androidx.constraintlayout.widget.ConstraintLayout>
