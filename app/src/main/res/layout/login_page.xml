@@ -6,48 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".LoginPage">
 
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:layout_constraintBottom_toTopOf="@id/textview_first"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputLoginUsername"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="44dp"
+        android:hint="Username"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textMiddleLogin"
+        app:layout_constraintVertical_bias="0.049" />
 
-    <Button
-        android:id="@+id/button_show_table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:onClick="btnShowTable"
-        android:text="@string/show_table"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputLoginPassword"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:hint="Password"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.532"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/inputLoginUsername"
+        app:layout_constraintVertical_bias="0.057" />
+
+    <ImageView
+        android:id="@+id/imageLoginBook"
+        android:layout_width="228dp"
+        android:layout_height="164dp"
+        android:src="@drawable/loginbookvector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textLoginTitle"
+        app:layout_constraintVertical_bias="0.038" />
 
     <TextView
-        android:id="@+id/textview_first"
+        android:id="@+id/textMiddleLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Log into your account"
+        android:textColor="#9C27B0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageLoginBook"
+        app:layout_constraintVertical_bias="0.042" />
+
+    <TextView
+        android:id="@+id/textLoginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Book Library Application"
+        android:textColor="#9C27B0"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_first" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.061" />
 
-    <TextView
-        android:id="@+id/textview_table"
+    <Button
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="384dp"
-        android:textSize="12pt"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#0091EA"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/inputLoginPassword"
+        app:layout_constraintVertical_bias="0.106" />
+
+    <Button
+        android:id="@+id/btnLoginCreateAccount"
+        android:layout_width="171dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#00FFFFFF"
+        android:text="Create an Account"
+        android:textColor="#9C27B0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

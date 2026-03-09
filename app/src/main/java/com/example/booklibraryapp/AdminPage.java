@@ -27,9 +27,29 @@ public class AdminPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonSecond.setOnClickListener(v ->
+        binding.btnAdminViewAccounts.setOnClickListener(v ->
                 NavHostFragment.findNavController(AdminPage.this)
-                        .navigate(R.id.action_AdminPage_to_LoginPage)
+                        .navigate(R.id.action_AdminPage_to_adminAccountsInfoPage)
+        );
+
+        binding.btnAdminViewBorrowedBooks.setOnClickListener(v ->
+                NavHostFragment.findNavController(AdminPage.this)
+                        .navigate(R.id.action_AdminPage_to_adminViewBorrowedBooksPage)
+        );
+
+        binding.btnAdminViewRoomReservations.setOnClickListener(v ->
+                NavHostFragment.findNavController(AdminPage.this)
+                        .navigate(R.id.action_AdminPage_to_adminViewRoomRequestsPage)
+        );
+
+        binding.btnAdminViewRoomRequests.setOnClickListener(v ->
+                NavHostFragment.findNavController(AdminPage.this)
+                        .navigate(R.id.action_AdminPage_to_adminViewRoomRequestsPage)
+        );
+
+        binding.btnAdminViewBookRequests.setOnClickListener(v ->
+                NavHostFragment.findNavController(AdminPage.this)
+                        .navigate(R.id.action_AdminPage_to_adminViewBookRequestsPage)
         );
     }
 
