@@ -1,7 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminChangeAccounInfoforUserPage" />
+    tools:context=".AdminChangeAccounInfoforUserPage">
+
+    <Button
+        android:id="@+id/btnUserInfoSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="#0091EA"
+        android:text="@string/save_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserLastName"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:hint="@string/last_name"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserType"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserType"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:hint="@string/user_type"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserID"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:hint="@string/user_id"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserEmail"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:hint="@string/user_email"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserPassword"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:hint="@string/user_password"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserSchool"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserSchool"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="52dp"
+        android:hint="@string/user_school"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserInfoSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserFirstName"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:hint="@string/first_name"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserLastName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserMiddleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="176dp"
+        android:text="@string/user_info"
+        android:textColor="#8E24AA"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserFirstName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
