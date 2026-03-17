@@ -16,23 +16,25 @@ import com.google.android.material.textfield.TextInputEditText;
 public class CreateUserPage extends Fragment {
     private FragmentCreateUserPageBinding binding;
 
-    public CreateUserPage() {
-
+    public CreateUserPage()
+    {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         binding = FragmentCreateUserPageBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
         TextInputEditText inputCreateUserFirstName = view.findViewById(R.id.inputCreateUserFirstName);
         TextInputEditText inputCreateUserLastName = view.findViewById(R.id.inputCreateUserLastName);
@@ -50,7 +52,7 @@ public class CreateUserPage extends Fragment {
             String password = inputCreateUserPassword.getText().toString();
             String email = inputCreateUserEmail.getText().toString();
             String school = inputCreateUserSchool.getText().toString();
-
+            //Must implement logic for having unique emails and checking if email is an email
             if(firstName.isBlank() || lastName.isBlank() || username.isBlank() || password.isBlank() || email.isBlank())
             {
                 Toast.makeText(getContext(), "One of the fields are blank\nPlease fill and try again", Toast.LENGTH_SHORT).show();
@@ -58,12 +60,10 @@ public class CreateUserPage extends Fragment {
                 Toast.makeText(getContext(), "Username already exists\nPlease choose another username", Toast.LENGTH_SHORT).show();
             } else
             {
-                QueryConnectorPlusHelper.insertQuery("INSERT INTO USERS VALUES ("+ID+", '"+firstName+"', '"+lastName+"', '"+userType+"', '"+email+"', '"+username+"', '"+password+"', '"+school+"')");
+                QueryConnectorPlusHelper.runQuery("INSERT INTO USERS VALUES ("+ID+", '"+firstName+"', '"+lastName+"', '"+userType+"', '"+email+"', '"+username+"', '"+password+"', '"+school+"')");
                 Toast.makeText(getContext(), "Account Successfully Created", Toast.LENGTH_SHORT).show();
-                NavHostFragment.findNavController(CreateUserPage.this)
-                        .navigate(R.id.action_createUserPage_to_LoginPage);
+                NavHostFragment.findNavController(CreateUserPage.this).navigate(R.id.action_createUserPage_to_LoginPage);
             }
         });
-
     }
 }

@@ -22,10 +22,10 @@
     <string name="user_type">"User Type"</string>
     <string name="user_id">"User ID"</string>
     <string name="user_email">"User Email"</string>
+    <string name="user_name">"User Username"</string>
     <string name="user_password">"User Password"</string>
     <string name="user_school">"School"</string>
     <string name="save_info">"Save Info"</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="room_reservations">Room Reservations</string>
 </resources>

@@ -20,6 +20,7 @@ public class QueryConnectorPlusHelper {
     protected static String username = "admin";
     protected static String password = "UxEePxbk1LgBzO9UDSJc";
 
+    public static String IDWhenLoggingIn;
     public static java.sql.Connection Connector() {
         java.sql.Connection myConnection = null;
         try {
@@ -66,7 +67,7 @@ public class QueryConnectorPlusHelper {
         });
     }
 
-    public static void insertQuery(String query) {
+    public static void runQuery(String query) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             try {
@@ -77,7 +78,7 @@ public class QueryConnectorPlusHelper {
                     statement.close(); //MUST CLOSE IN ORDER FOR APP TO RUN
                     connection.close();
                 } else {
-                    Log.d("INSERT_QUERY_FAILED", "Insert query failed due to Connector");
+                    Log.d("EXECUTED_QUERY_FAILED", "Executed query failed due to Connector");
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -155,6 +156,94 @@ public class QueryConnectorPlusHelper {
         }
     }
 
+    public static String getFirstNameFromIDQuery(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureFirstName = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT FIRST_NAME FROM USERS WHERE ID = '"+ID+"'");
+            setResult.next();
+            String firstName = setResult.getString("FIRST_NAME");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return firstName;
+        });
+        try {
+            return futureFirstName.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static String getLastNameFromIDQuery(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureLastName = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT LAST_NAME FROM USERS WHERE ID = '"+ID+"'");
+            setResult.next();
+            String LastName = setResult.getString("LAST_NAME");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return LastName;
+        });
+        try {
+            return futureLastName.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static String getTypeFromIDQuery(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureUserType = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT USER_TYPE FROM USERS WHERE ID = '"+ID+"'");
+            setResult.next();
+            String UserType = setResult.getString("USER_TYPE");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return UserType;
+        });
+        try {
+            return futureUserType.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static String getEmailFromIDQuery(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureEmail = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT USER_EMAIL FROM USERS WHERE ID = '"+ID+"'");
+            setResult.next();
+            String userEmail = setResult.getString("USER_EMAIL");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return userEmail;
+        });
+        try {
+            return futureEmail.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
     public static String getPasswordFromID(String ID) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<String> futurePassword = executorService.submit(() -> {
@@ -198,5 +287,28 @@ public class QueryConnectorPlusHelper {
             executorService.shutdown();
         }
     }
+
+    public static String getSchoolFromIDQuery(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureSchool = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT SCHOOL FROM USERS WHERE ID = '"+ID+"'");
+            setResult.next();
+            String userSchool = setResult.getString("SCHOOL");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return userSchool;
+        });
+        try {
+            return futureSchool.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
 
 }

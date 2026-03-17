@@ -1,12 +1,10 @@
 package com.example.booklibraryapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -28,7 +26,8 @@ public class LoginPage extends Fragment {
         return binding.getRoot();
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
         userInputUsername = view.findViewById(R.id.inputLoginUsername);
         userInputPassword = view.findViewById(R.id.inputLoginPassword);
@@ -42,11 +41,19 @@ public class LoginPage extends Fragment {
                 String ID = QueryConnectorPlusHelper.getUsernameIDQuery(username);
                 if (QueryConnectorPlusHelper.getPasswordFromID(ID).equals(password))
                 {
+                    Bundle userInfoBundle = new Bundle();
+                    userInfoBundle.putString("User_ID", ID);
+                    getParentFragmentManager().setFragmentResult("userInfo", userInfoBundle);
+                    QueryConnectorPlusHelper.IDWhenLoggingIn = ID;
                     if(QueryConnectorPlusHelper.getUserTypeFromID(ID).equals("User"))
                     {
+                        userInputUsername.getText().clear();
+                        userInputPassword.getText().clear();
                         NavHostFragment.findNavController(LoginPage.this).navigate(R.id.action_LoginPage_to_userPage);
                     } else if (QueryConnectorPlusHelper.getUserTypeFromID(ID).equals("Admin"))
                     {
+                        userInputUsername.getText().clear();
+                        userInputPassword.getText().clear();
                         NavHostFragment.findNavController(LoginPage.this).navigate(R.id.action_LoginPage_to_AdminPage);
                     }
 
@@ -62,9 +69,9 @@ public class LoginPage extends Fragment {
             }
         });
 
-        binding.btnLoginCreateAccount.setOnClickListener(v -> {
-            NavHostFragment.findNavController(LoginPage.this)
-                    .navigate(R.id.action_LoginPage_to_createUserPage);
+        binding.btnLoginCreateAccount.setOnClickListener(v ->
+        {
+            NavHostFragment.findNavController(LoginPage.this).navigate(R.id.action_LoginPage_to_createUserPage);
         });
     }
 
