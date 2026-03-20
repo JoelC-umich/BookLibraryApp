@@ -14,11 +14,11 @@ import java.util.concurrent.Future;
 
 public class QueryConnectorPlusHelper {
 
-    protected static String database = "library_schema";
-    protected static String ip = "library-app.cpmmsuog2ibh.us-east-2.rds.amazonaws.com";
-    protected static String port = "3306";
-    protected static String username = "admin";
-    protected static String password = "UxEePxbk1LgBzO9UDSJc";
+    protected static String database = "defaultdb";
+    protected static String ip = "libraryapp-library-app.b.aivencloud.com";
+    protected static String port = "10606";
+    protected static String username = "avnadmin";
+    protected static String password = "AVNS_VqaSpcSMcqZ2--67GYI";
 
     public static String IDWhenLoggingIn;
     public static java.sql.Connection Connector() {
