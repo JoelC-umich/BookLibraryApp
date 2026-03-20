@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,38 +19,46 @@ public class AdminPage extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
         binding = AdminPageBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        TextView textAdminWelcomeText = view.findViewById(R.id.textAdminWelcomeText);
+        getParentFragmentManager().setFragmentResultListener("userInfo", this, (requestKey, bundle) -> {
+            String loggedInUserID = bundle.getString("User_ID");
+            String firstUserName = QueryConnectorPlusHelper.getFirstNameFromIDQuery(loggedInUserID);
+            textAdminWelcomeText.setText("Welcome Librarian "+firstUserName+"!");
+        });
+
         binding.btnAdminViewAccounts.setOnClickListener(v ->
-                NavHostFragment.findNavController(AdminPage.this)
-                        .navigate(R.id.action_AdminPage_to_adminAccountsInfoPage)
+                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminAccountsInfoPage)
         );
 
         binding.btnAdminViewBorrowedBooks.setOnClickListener(v ->
-                NavHostFragment.findNavController(AdminPage.this)
-                        .navigate(R.id.action_AdminPage_to_adminViewBorrowedBooksPage)
+                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminViewBorrowedBooksPage)
         );
 
         binding.btnAdminViewRoomReservations.setOnClickListener(v ->
-                NavHostFragment.findNavController(AdminPage.this)
-                        .navigate(R.id.action_AdminPage_to_adminViewRoomRequestsPage)
+                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminViewRoomRequestsPage)
         );
 
         binding.btnAdminViewRoomRequests.setOnClickListener(v ->
-                NavHostFragment.findNavController(AdminPage.this)
-                        .navigate(R.id.action_AdminPage_to_adminViewRoomRequestsPage)
+                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminViewRoomRequestsPage)
         );
 
         binding.btnAdminViewBookRequests.setOnClickListener(v ->
-                NavHostFragment.findNavController(AdminPage.this)
-                        .navigate(R.id.action_AdminPage_to_adminViewBookRequestsPage)
+                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminViewBookRequestsPage)
+        );
+
+        binding.btnAdminLogout.setOnClickListener(v ->
+                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_LoginPage)
+        );
+
+        binding.btnAdminViewCreateAccount.setOnClickListener(v ->
+                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_createUserPageAdmin)
         );
     }
 

@@ -1,68 +1,35 @@
 package com.example.booklibraryapp;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.booklibraryapp.databinding.ActivityMainBinding;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseConnectorClass DBConnector;
-    java.sql.Connection connection;
-    String str;
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
-    public void connect() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(() -> {
-            try {
-                connection = DBConnector.Connector();
-                if (connection == null) {
-                    str = "Connection Failed";
-                } else {
-                    str = "Connected Successfully";
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-            runOnUiThread(() -> {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
-            });
-        });
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        DBConnector = new DatabaseConnectorClass();
-        connect();
-
+        QueryConnectorPlusHelper.checkConnection(); //check connection to database
         setSupportActionBar(binding.toolbar);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
     }
 
     @Override
