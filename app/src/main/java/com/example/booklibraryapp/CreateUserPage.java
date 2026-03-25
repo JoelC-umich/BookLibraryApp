@@ -44,7 +44,7 @@ public class CreateUserPage extends Fragment {
         TextInputEditText inputCreateUserSchool = view.findViewById(R.id.inputCreateUserSchool);
 
         binding.btnCreateUser.setOnClickListener(v -> {
-            String ID = QueryConnectorPlusHelper.getLastIDQuery();
+            String ID = QueryConnectorPlusHelper.getLastIDPlus1UsersQuery();
             String firstName = inputCreateUserFirstName.getText().toString();
             String lastName = inputCreateUserLastName.getText().toString();
             String userType = "User";
@@ -56,7 +56,7 @@ public class CreateUserPage extends Fragment {
             if(firstName.isBlank() || lastName.isBlank() || username.isBlank() || password.isBlank() || email.isBlank())
             {
                 Toast.makeText(getContext(), "One of the fields are blank\nPlease fill and try again", Toast.LENGTH_SHORT).show();
-            } else if (QueryConnectorPlusHelper.getUsernamesQuery().toString().equals(username)) {
+            } else if (QueryConnectorPlusHelper.getUsernamesQuery().toString().contains(username.toLowerCase())) {
                 Toast.makeText(getContext(), "Username already exists\nPlease choose another username", Toast.LENGTH_SHORT).show();
             } else
             {

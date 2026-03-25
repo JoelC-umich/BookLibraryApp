@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout7"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminCreateBookEntryInventory" >
+
+    <Button
+        android:id="@+id/btnAdminCreateBook"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="#0091EA"
+        android:text="Create Book Entry"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserSchool"
+        app:layout_constraintVertical_bias="0.515" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputAdminCreateBookName"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:hint="Enter the Book Name"
+        app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookAuthor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputAdminCreateBookAuthor"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="40dp"
+        android:hint="Enter the Book Author"
+        app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputAdminCreateBookCategory"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="40dp"
+        android:hint="Enter the Book Category"
+        app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookSummary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputAdminCreateBookImage"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="40dp"
+        android:hint="Enter the Book Image Link"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminCreateBook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputAdminCreateBookSummary"
+        android:layout_width="321dp"
+        android:layout_height="139dp"
+        android:layout_marginBottom="40dp"
+        android:hint="Enter the Book Summary"
+        android:singleLine="false"
+        app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+
+    <TextView
+        android:id="@+id/textAdminCreateBookEntryInventory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Book Entry in Inventory"
+        android:textColor="#9C27B0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.061" />
+</androidx.constraintlayout.widget.ConstraintLayout>

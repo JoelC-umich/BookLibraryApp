@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.CheckBox; //B in Box is CAPITAL don't get confused when declaring
-
 import com.example.booklibraryapp.databinding.FragmentCreateUserPageAdminBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -74,7 +73,7 @@ public class CreateUserPageAdmin extends Fragment {
         });
 
         binding.btnCreateUserAdmin.setOnClickListener(v -> {
-            String ID = QueryConnectorPlusHelper.getLastIDQuery();
+            String ID = QueryConnectorPlusHelper.getLastIDPlus1UsersQuery();
             String firstName = inputCreateUserFirstNameAdmin.getText().toString();
             String lastName = inputCreateUserLastNameAdmin.getText().toString();
             String username = inputCreateUserUsernameAdmin.getText().toString();
@@ -93,7 +92,7 @@ public class CreateUserPageAdmin extends Fragment {
             if(firstName.isBlank() || lastName.isBlank() || username.isBlank() || password.isBlank() || email.isBlank())
             {
                 Toast.makeText(getContext(), "One of the fields are blank\nPlease fill and try again", Toast.LENGTH_SHORT).show();
-            } else if (QueryConnectorPlusHelper.getUsernamesQuery().toString().equals(username)) {
+            } else if (QueryConnectorPlusHelper.getUsernamesQuery().toString().contains(username.toLowerCase())) {
                 Toast.makeText(getContext(), "Username already exists\nPlease choose another username", Toast.LENGTH_SHORT).show();
             } else
             {

@@ -1,16 +1,12 @@
 package com.example.booklibraryapp;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.booklibraryapp.databinding.ActivityMainBinding;
-
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
