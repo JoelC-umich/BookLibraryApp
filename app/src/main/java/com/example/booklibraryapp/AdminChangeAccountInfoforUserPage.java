@@ -11,11 +11,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.booklibraryapp.databinding.FragmentAdminChangeAccounInfoforUserPageBinding;
+import com.example.booklibraryapp.databinding.FragmentAdminChangeAccountInfoforUserPageBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AdminChangeAccountInfoforUserPage extends Fragment {
-    private FragmentAdminChangeAccounInfoforUserPageBinding binding;
+    private FragmentAdminChangeAccountInfoforUserPageBinding binding;
     String ID, FName, LName, type, email, username, password, school;
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -26,7 +26,7 @@ public class AdminChangeAccountInfoforUserPage extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
     ) {
-        binding = FragmentAdminChangeAccounInfoforUserPageBinding.inflate(inflater, container, false);
+        binding = FragmentAdminChangeAccountInfoforUserPageBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

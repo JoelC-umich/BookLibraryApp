@@ -17,10 +17,7 @@ public class LoginPage extends Fragment {
     TextInputEditText userInputUsername, userInputPassword;
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    )
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = LoginPageBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -32,7 +29,7 @@ public class LoginPage extends Fragment {
         userInputUsername = view.findViewById(R.id.inputLoginUsername);
         userInputPassword = view.findViewById(R.id.inputLoginPassword);
         binding.btnLogin.setOnClickListener(v -> {
-            String username = userInputUsername.getText().toString();
+            String username = userInputUsername.getText().toString().toLowerCase();
             String password = userInputPassword.getText().toString();
 
             int listIndex = QueryConnectorPlusHelper.getUsernamesQuery().indexOf(username);
@@ -76,7 +73,8 @@ public class LoginPage extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroyView()
+    {
         super.onDestroyView();
         binding = null;
     }

@@ -1,143 +1,47 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp" >
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/textAdminRoomRequests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Incoming Room Requests"
+        android:textColor="#9C27B0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
 
+    <TextView
+        android:id="@+id/textAdminRoomRequestSelectIDs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a request number"
+        android:textColor="#0091EA"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
 
-        <!-- ROOM REQUEST 1 -->
-
-        <TextView
-            android:id="@+id/adminRoomRequestsTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Admin Room Requests"
-            android:textColor="#9C27B0"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/adminRoomRequestRow1"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"
-            android:background="#FFFFFF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/adminRoomRequestRoomNameText1"
-                android:text="Room: Study Room A"
-                android:textColor="#9C27B0"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/adminRoomRequestUserText1"
-                android:text="Requested by: John"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/adminRoomRequestDateText1"
-                android:text="Date: 10 March"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/adminRoomRequestApproveBtn1"
-                    android:text="Approve"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#0091EA"
-                    android:layout_marginEnd="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <Button
-                    android:id="@+id/adminRoomRequestRejectBtn1"
-                    android:text="Reject"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#0091EA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <!-- ROOM REQUEST 2 -->
-
-        <LinearLayout
-            android:id="@+id/adminRoomRequestRow2"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"
-            android:background="#FFFFFF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/adminRoomRequestRoomNameText2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Room: Meeting Room B"
-                android:textColor="#9C27B0"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/adminRoomRequestUserText2"
-                android:text="Requested by: Sarah"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/adminRoomRequestDateText2"
-                android:text="Date: 12 March"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/adminRoomRequestApproveBtn2"
-                    android:text="Approve"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#0091EA"
-                    android:layout_marginEnd="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <Button
-                    android:id="@+id/adminRoomRequestRejectBtn2"
-                    android:text="Reject"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#0091EA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+    <ListView
+        android:id="@+id/listViewAdminRoomRequests"
+        android:layout_width="403dp"
+        android:layout_height="562dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminRoomRequests"
+        app:layout_constraintVertical_bias="0.636" />
+</androidx.constraintlayout.widget.ConstraintLayout>
