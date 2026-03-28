@@ -20,6 +20,7 @@ public class QueryConnectorPlusHelper {
     protected static String password = "AVNS_VqaSpcSMcqZ2--67GYI";
 
     public static String IDWhenLoggingIn;
+
     public static java.sql.Connection Connector() {
         java.sql.Connection myConnection = null;
         try {
@@ -162,8 +163,7 @@ public class QueryConnectorPlusHelper {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
             ResultSet setResult = statement.executeQuery("SELECT ID FROM ROOMS");
-            while (setResult.next())
-            {
+            while (setResult.next()) {
                 roomIDList.add(setResult.getString("ID"));
             }
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -187,8 +187,7 @@ public class QueryConnectorPlusHelper {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
             ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS");
-            while (setResult.next())
-            {
+            while (setResult.next()) {
                 bookNameList.add(setResult.getString("BOOK_NAME"));
             }
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -205,16 +204,14 @@ public class QueryConnectorPlusHelper {
         }
     }
 
-    public static List<String> getReservedBookNamesQuery()
-    {
+    public static List<String> getReservedBookNamesQuery() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<String>> listFutureReservedBookNames = executorService.submit(() -> {
             List<String> reservedBookNameList = new ArrayList<>();
             Connection connection = Connector();
             Statement statement = connection.createStatement();
             ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS WHERE QUANTITY_BORROWED > 0");
-            while (setResult.next())
-            {
+            while (setResult.next()) {
                 reservedBookNameList.add(setResult.getString("BOOK_NAME"));
             }
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -231,16 +228,14 @@ public class QueryConnectorPlusHelper {
         }
     }
 
-    public static List<String> getPendingRoomsReservedQuery()
-    {
+    public static List<String> getPendingRoomsReservedQuery() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<String>> listFuturePendingRooms = executorService.submit(() -> {
             List<String> pendingRoomsList = new ArrayList<>();
             Connection connection = Connector();
             Statement statement = connection.createStatement();
             ResultSet setResult = statement.executeQuery("SELECT ID FROM ROOMS_RESERVED WHERE RESERVE_STATUS = 'Pending'");
-            while (setResult.next())
-            {
+            while (setResult.next()) {
                 pendingRoomsList.add(setResult.getString("ID"));
             }
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -262,7 +257,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureUsernameID = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT ID FROM USERS WHERE USER_NAME = '"+username+"'");
+            ResultSet setResult = statement.executeQuery("SELECT ID FROM USERS WHERE USER_NAME = '" + username + "'");
             setResult.next();
             String usernameID = setResult.getString("ID");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -284,7 +279,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureFirstName = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT FIRST_NAME FROM USERS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT FIRST_NAME FROM USERS WHERE ID = '" + ID + "'");
             setResult.next();
             String firstName = setResult.getString("FIRST_NAME");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -306,7 +301,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureLastName = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT LAST_NAME FROM USERS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT LAST_NAME FROM USERS WHERE ID = '" + ID + "'");
             setResult.next();
             String LastName = setResult.getString("LAST_NAME");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -328,7 +323,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureUserType = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_TYPE FROM USERS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT USER_TYPE FROM USERS WHERE ID = '" + ID + "'");
             setResult.next();
             String UserType = setResult.getString("USER_TYPE");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -350,7 +345,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureEmail = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_EMAIL FROM USERS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT USER_EMAIL FROM USERS WHERE ID = '" + ID + "'");
             setResult.next();
             String userEmail = setResult.getString("USER_EMAIL");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -372,7 +367,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureUsername = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_NAME FROM USERS WHERE ID = "+ID);
+            ResultSet setResult = statement.executeQuery("SELECT USER_NAME FROM USERS WHERE ID = " + ID);
             setResult.next();
             String username = setResult.getString("USER_NAME");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -394,7 +389,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futurePassword = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_PASSWORD FROM USERS WHERE ID = "+ID);
+            ResultSet setResult = statement.executeQuery("SELECT USER_PASSWORD FROM USERS WHERE ID = " + ID);
             setResult.next();
             String password = setResult.getString("USER_PASSWORD");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -416,7 +411,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureUserType = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_TYPE FROM USERS WHERE ID = "+ID);
+            ResultSet setResult = statement.executeQuery("SELECT USER_TYPE FROM USERS WHERE ID = " + ID);
             setResult.next();
             String userType = setResult.getString("USER_TYPE");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -438,7 +433,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureSchool = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT SCHOOL FROM USERS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT SCHOOL FROM USERS WHERE ID = '" + ID + "'");
             setResult.next();
             String userSchool = setResult.getString("SCHOOL");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -460,7 +455,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookNameID = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT ID FROM BOOKS WHERE BOOK_NAME = '"+bookName+"'");
+            ResultSet setResult = statement.executeQuery("SELECT ID FROM BOOKS WHERE BOOK_NAME = '" + bookName + "'");
             setResult.next();
             String bookNameID = setResult.getString("ID");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -482,7 +477,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookName = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS WHERE ID = '" + ID + "'");
             setResult.next();
             String bookName = setResult.getString("BOOK_NAME");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -504,7 +499,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookAuthor = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_AUTHOR FROM BOOKS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT BOOK_AUTHOR FROM BOOKS WHERE ID = '" + ID + "'");
             setResult.next();
             String bookAuthor = setResult.getString("BOOK_AUTHOR");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -526,7 +521,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookCategory = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT CATEGORY FROM BOOKS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT CATEGORY FROM BOOKS WHERE ID = '" + ID + "'");
             setResult.next();
             String bookCategory = setResult.getString("CATEGORY");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -548,7 +543,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookSummary = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT SUMMARY FROM BOOKS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT SUMMARY FROM BOOKS WHERE ID = '" + ID + "'");
             setResult.next();
             String bookSummary = setResult.getString("SUMMARY");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -570,7 +565,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookQuantityTotal = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_TOTAL FROM BOOKS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_TOTAL FROM BOOKS WHERE ID = '" + ID + "'");
             setResult.next();
             String bookQuantityTotal = setResult.getString("QUANTITY_TOTAL");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -592,7 +587,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookQuantityBorrowed = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_BORROWED FROM BOOKS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_BORROWED FROM BOOKS WHERE ID = '" + ID + "'");
             setResult.next();
             String bookQuantityBorrowed = setResult.getString("QUANTITY_BORROWED");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -614,7 +609,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookQuantityAvailable = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_AVAILABLE FROM BOOKS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_AVAILABLE FROM BOOKS WHERE ID = '" + ID + "'");
             setResult.next();
             String bookQuantityAvailable = setResult.getString("QUANTITY_AVAILABLE");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -636,7 +631,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureBookImage = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT IMAGE FROM BOOKS WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT IMAGE FROM BOOKS WHERE ID = '" + ID + "'");
             setResult.next();
             String bookImage = setResult.getString("IMAGE");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -658,7 +653,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureRoomID = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT ROOM_ID FROM ROOMS_RESERVED WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT ROOM_ID FROM ROOMS_RESERVED WHERE ID = '" + ID + "'");
             setResult.next();
             String roomID = setResult.getString("ROOM_ID");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -680,7 +675,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureUserID = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_ID FROM ROOMS_RESERVED WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT USER_ID FROM ROOMS_RESERVED WHERE ID = '" + ID + "'");
             setResult.next();
             String userID = setResult.getString("USER_ID");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -702,7 +697,7 @@ public class QueryConnectorPlusHelper {
         Future<String> futureSlot = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT SLOT FROM ROOMS_RESERVED WHERE ID = '"+ID+"'");
+            ResultSet setResult = statement.executeQuery("SELECT SLOT FROM ROOMS_RESERVED WHERE ID = '" + ID + "'");
             setResult.next();
             String slot = setResult.getString("SLOT");
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -718,4 +713,60 @@ public class QueryConnectorPlusHelper {
             executorService.shutdown();
         }
     }
+
+
+    public static List<String> getRoomIDsReservedOnDateQuery(String date) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<String>> future = executorService.submit(() -> {
+            List<String> reservedList = new ArrayList<>();
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            // Returns ROOM_ID and SLOT for every reservation on the given date
+            ResultSet setResult = statement.executeQuery(
+                    "SELECT ROOM_ID, SLOT FROM ROOMS_RESERVED WHERE DATE = '" + date + "' AND RESERVE_STATUS != 'Cancelled'"
+            );
+            while (setResult.next()) {
+                // Store as "ROOM_ID:SLOT" pairs so caller can parse both values
+                reservedList.add(setResult.getString("ROOM_ID") + ":" + setResult.getString("SLOT"));
+            }
+            setResult.close();
+            statement.close();
+            connection.close();
+            return reservedList;
+        });
+        try {
+            return future.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static void insertRoomReservationQuery(String roomID, String userID, String date, String slot) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
+            try {
+                Connection connection = Connector();
+                if (connection != null) {
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(
+                            "INSERT INTO ROOMS_RESERVED (ROOM_ID, USER_ID, RESERVE_STATUS, DATE, SLOT) VALUES ("
+                                    + roomID + ", "
+                                    + userID + ", "
+                                    + "'Pending', "
+                                    + "'" + date + "', "
+                                    + slot + ")"
+                    );
+                    statement.close();
+                    connection.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                executorService.shutdown();
+            }
+        });
+    }
+
 }
