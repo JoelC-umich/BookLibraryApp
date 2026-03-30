@@ -4,17 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class AdminViewBookRequestsPage extends Fragment {
 
-    ListView listView;
+    private ListView bookRequestsListView;
 
-    String[] bookRequests = {
+    private String[] bookRequests = {
             "The History Boys - Requested by User1",
             "What If It's Us - Requested by User2",
             "The Liar's Dictionary - Requested by User3"
@@ -25,18 +26,29 @@ public class AdminViewBookRequestsPage extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_admin_view_book_requests_page, container, false);
+        return inflater.inflate(R.layout.fragment_admin_view_book_requests_page, container, false);
+    }
 
-        listView = view.findViewById(R.id.requestList);
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Correct ID (VERY IMPORTANT)
+        bookRequestsListView = view.findViewById(R.id.bookRequestsList);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                getContext(),
+                requireContext(),
                 android.R.layout.simple_list_item_1,
                 bookRequests
         );
 
-        listView.setAdapter(adapter);
+        bookRequestsListView.setAdapter(adapter);
 
-        return view;
+        // Click logic
+        bookRequestsListView.setOnItemClickListener((parent, v, position, id) -> {
+            Toast.makeText(requireContext(),
+                    "Selected: " + bookRequests[position],
+                    Toast.LENGTH_SHORT).show();
+        });
     }
 }
