@@ -20,7 +20,6 @@ public class QueryConnectorPlusHelper {
     protected static String password = "AVNS_VqaSpcSMcqZ2--67GYI";
 
     public static String IDWhenLoggingIn;
-
     public static java.sql.Connection Connector() {
         java.sql.Connection myConnection = null;
         try {
@@ -221,6 +220,56 @@ public class QueryConnectorPlusHelper {
         });
         try {
             return listFutureReservedBookNames.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static List<String> getBorrowedIDsFromUserQuery(String UserID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<String>> listFutureReservedIDs = executorService.submit(() ->
+        {
+            List<String> reservedIDList = new ArrayList<>();
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("select ID from BOOKS_BORROWED WHERE USER_ID = '"+UserID+"'");
+            while (setResult.next())
+            {
+                reservedIDList.add(setResult.getString("ID"));
+            }
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return reservedIDList;
+        });
+        try {
+            return listFutureReservedIDs.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static List<String> getPendingBooksReservedQuery() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<String>> listFuturePendingBooks = executorService.submit(() -> {
+            List<String> pendingBooksList = new ArrayList<>();
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT ID FROM BOOKS_BORROWED WHERE RESERVE_STATUS = 'Pending'");
+            while (setResult.next()) {
+                pendingBooksList.add(setResult.getString("ID"));
+            }
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return pendingBooksList;
+        });
+        try {
+            return listFuturePendingBooks.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -472,9 +521,9 @@ public class QueryConnectorPlusHelper {
         }
     }
 
-    public static String getBookNameFromBookID(String ID) {
+    public static String getBookTitleFromBookID(String ID) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Future<String> futureBookName = executorService.submit(() -> {
+        Future<String> futureBookTitle = executorService.submit(() -> {
             Connection connection = Connector();
             Statement statement = connection.createStatement();
             ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS WHERE ID = '" + ID + "'");
@@ -486,7 +535,7 @@ public class QueryConnectorPlusHelper {
             return bookName;
         });
         try {
-            return futureBookName.get();
+            return futureBookTitle.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -767,6 +816,119 @@ public class QueryConnectorPlusHelper {
                 executorService.shutdown();
             }
         });
+    }
+
+    public static List<String> getBorrowedBooksQuery() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<String>> listFuture = executorService.submit(() -> {
+            List<String> usernameList = new ArrayList<>();
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("select distinct BOOK_NAME from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID WHERE BOOKS_BORROWED.RESERVE_STATUS = 'Reserved'");
+            while (setResult.next())
+            {
+                usernameList.add(setResult.getString("BOOK_NAME"));
+            }
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return usernameList;
+        });
+        try {
+            return listFuture.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static String getBookIDFromBorrowedBooksID(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureBookID = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT BOOK_ID FROM BOOKS_BORROWED WHERE ID = '" + ID + "'");
+            setResult.next();
+            String bookID = setResult.getString("BOOK_ID");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return bookID;
+        });
+        try {
+            return futureBookID.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static String getUserIDFromBorrowedBooksID(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureUserID = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT USER_ID FROM BOOKS_BORROWED WHERE ID = '" + ID + "'");
+            setResult.next();
+            String UserID = setResult.getString("USER_ID");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return UserID;
+        });
+        try {
+            return futureUserID.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static String getDateFromBorrowedBooksID(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureDate = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT DATE_BORROWED FROM BOOKS_BORROWED WHERE ID = '" + ID + "'");
+            setResult.next();
+            String dateBorrowed = setResult.getString("DATE_BORROWED");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return dateBorrowed;
+        });
+        try {
+            return futureDate.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static String getStatusFromBorrowedBooksID(String ID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<String> futureStatus = executorService.submit(() -> {
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery("SELECT RESERVE_STATUS FROM BOOKS_BORROWED WHERE ID = '" + ID + "'");
+            setResult.next();
+            String reserveStatus = setResult.getString("RESERVE_STATUS");
+            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return reserveStatus;
+        });
+        try {
+            return futureStatus.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
     }
 
 }

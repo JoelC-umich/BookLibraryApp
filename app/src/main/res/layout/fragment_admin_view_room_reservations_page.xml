@@ -7,74 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".AdminViewRoomReservationsPage" >
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
+    <TextView
+        android:id="@+id/textAdminViewRoomReservationsMiddleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Room Reservations"
+        android:textColor="#9C27B0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ListView
+        android:id="@+id/listAdminViewRoomReservations"
+        android:layout_width="350dp"
+        android:layout_height="550dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <TextView
-            android:id="@+id/adminViewRoomReservationText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/room_reservations"
-            android:textColor="#9C27B0"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground"/>
-
-            <!-- Row: User name + Status badge -->
-            <TextView
-                android:id="@+id/adminViewRoomReservationUserName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:text="Prof Maria Smith"/>
-
-            <TextView
-                android:id="@+id/adminViewRoomReservationStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Active"
-                android:textColor="#FFFFFF"
-                android:background="#4CAF50"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textSize="12sp"/>
-
-        <!-- Room name -->
-        <TextView
-            android:id="@+id/adminViewRoomReservationRoomName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Room #102"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"/>
-
-        <!-- Date and time -->
-        <TextView
-            android:id="@+id/adminViewRoomReservationDateTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="March 11, 2025 - 10:00 AM to 11:00 AM"
-            android:textColor="#888888"
-            android:textSize="12sp"
-            android:layout_marginTop="2dp"/>
-
-    </LinearLayout>
-
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewRoomReservationsMiddleText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

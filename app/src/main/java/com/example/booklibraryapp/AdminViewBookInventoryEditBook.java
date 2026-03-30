@@ -41,7 +41,7 @@ public class AdminViewBookInventoryEditBook extends Fragment {
         {
             String selectedBookName = bundle.getString("bookName");
             String bookID = QueryConnectorPlusHelper.getBookIDFromBookNameQuery(selectedBookName);
-            String bookName = QueryConnectorPlusHelper.getBookNameFromBookID(bookID);
+            String bookName = QueryConnectorPlusHelper.getBookTitleFromBookID(bookID);
             String bookAuthor = QueryConnectorPlusHelper.getAuthorFromBookID(bookID);
             String bookCategory = QueryConnectorPlusHelper.getBookCategoryFromBookID(bookID);
             String bookSummary = QueryConnectorPlusHelper.getBookSummaryFromBookID(bookID);

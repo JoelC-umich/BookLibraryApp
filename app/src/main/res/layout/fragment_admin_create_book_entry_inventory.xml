@@ -11,108 +11,93 @@
         android:id="@+id/inputAdminCreateBookQuantity"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="40dp"
         android:hint="Enter the Book Quantity"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/btnAdminCreateBook"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminCreateBookImage" />
 
     <Button
         android:id="@+id/btnAdminCreateBook"
         android:layout_width="180dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#0091EA"
         android:text="Create Book Entry"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserSchool"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminCreateBookQuantity" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminCreateBookName"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:hint="Enter the Book Name"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookAuthor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory"
-        app:layout_constraintVertical_bias="0.837" />
+        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminCreateBookAuthor"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:hint="Enter the Book Author"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookCategory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminCreateBookName" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminCreateBookCategory"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:hint="Enter the Book Category"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookSummary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminCreateBookAuthor" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminCreateBookImage"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:hint="Enter the Book Image Link"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookQuantity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminCreateBookSummary" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminCreateBookSummary"
         android:layout_width="321dp"
         android:layout_height="139dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:hint="Enter the Book Summary"
         android:singleLine="false"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCreateUserMiddleText" />
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminCreateBookCategory" />
 
     <TextView
         android:id="@+id/textAdminCreateBookEntryInventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Create Book Entry in Inventory"
         android:textColor="#9C27B0"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/inputAdminCreateBookName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
