@@ -1,64 +1,60 @@
 package com.example.booklibraryapp;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminAccountsInfoPage#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AdminAccountsInfoPage extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AdminAccountsInfoPage() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminAccountsInfoPage.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AdminAccountsInfoPage newInstance(String param1, String param2) {
-        AdminAccountsInfoPage fragment = new AdminAccountsInfoPage();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+public class AdminAccountsInfoPage extends Fragment
+{
+    ListView userSearchResult;
+    SearchView userSearchInput;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_accounts_info_page, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_admin_accounts_info_page, container, false);
+        userSearchResult = view.findViewById(R.id.userSearchResult);
+        userSearchInput = view.findViewById(R.id.userSearchInput);
+
+        List<String> usernamesQuery = QueryConnectorPlusHelper.getUsernamesQuery();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, usernamesQuery);
+        userSearchResult.setAdapter(adapter);
+
+        userSearchInput.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        userSearchResult.setOnItemClickListener((parent, view1, position, id) ->
+        {
+            String userSelected = (String) parent.getItemAtPosition(position);
+            Bundle userNameSelected = new Bundle();
+            userNameSelected.putString("Username", userSelected);
+            getParentFragmentManager().setFragmentResult("userNameInfo", userNameSelected);
+            NavHostFragment.findNavController(AdminAccountsInfoPage.this).navigate(R.id.action_adminAccountsInfoPage_to_adminChangeAccounInfoforUserPage);
+        });
+
+        return view;
     }
 }

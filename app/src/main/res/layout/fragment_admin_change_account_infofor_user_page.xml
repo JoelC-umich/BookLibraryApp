@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout10"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminChangeAccountInfoforUserPage">
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserUserSchool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:text="School:"
+        android:textColor="#8E24AA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserInfoSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textChangeAccountUserLoggedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Logged In ID:"
+        android:textColor="@color/black"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.028"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/valueChangeAccountUserLoggedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="number"
+        android:textColor="@color/black"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserUserPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:text="Password:"
+        android:textColor="#8E24AA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textChangeAccountInfoUserUserSchool"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserUserType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="Type:"
+        android:textColor="#8E24AA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textChangeAccountInfoUserUserEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:text="Email:"
+        android:textColor="#8E24AA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textChangeAccountInfoUserUserUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserUserUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:text="Username:"
+        android:textColor="#8E24AA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textChangeAccountInfoUserUserPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserID"
+        android:layout_width="267dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:clickable="false"
+        android:editable="false"
+        android:hint="@string/user_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toEndOf="@+id/textChangeAccountInfoUserUserID"
+        app:layout_constraintTop_toBottomOf="@+id/textChangeAccountInfoUserMiddleText" />
+
+    <Button
+        android:id="@+id/btnUserInfoSave"
+        android:layout_width="111dp"
+        android:layout_height="48dp"
+        android:backgroundTint="#0091EA"
+        android:text="@string/save_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.246"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textChangeAccountInfoUserMiddleText"
+        app:layout_constraintVertical_bias="0.918" />
+
+    <Button
+        android:id="@+id/btnAdminChangeAccountUserDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#0091EA"
+        android:text="Delete User"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.771"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textChangeAccountInfoUserMiddleText"
+        app:layout_constraintVertical_bias="0.918" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserLastName"
+        android:layout_width="267dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/last_name"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserType"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintStart_toEndOf="@+id/textChangeAccountInfoUserUserLName" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserType"
+        android:layout_width="267dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="false"
+        android:editable="false"
+        android:hint="@string/user_type"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toEndOf="@+id/textChangeAccountInfoUserUserType" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserEmail"
+        android:layout_width="267dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/user_email"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toEndOf="@+id/textChangeAccountInfoUserUserEmail" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserPassword"
+        android:layout_width="267dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/user_password"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserSchool"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toEndOf="@+id/textChangeAccountInfoUserUserPassword" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserUsername"
+        android:layout_width="267dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/user_name"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toEndOf="@+id/textChangeAccountInfoUserUserUsername" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserSchool"
+        android:layout_width="267dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="64dp"
+        android:hint="@string/user_school"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserInfoSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toEndOf="@+id/textChangeAccountInfoUserUserSchool" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/userInfoUserFirstName"
+        android:layout_width="267dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/first_name"
+        app:layout_constraintBottom_toTopOf="@+id/userInfoUserLastName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintStart_toEndOf="@+id/textChangeAccountInfoUserUserFName"
+        app:layout_constraintTop_toBottomOf="@+id/userInfoUserID"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserMiddleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/user_info"
+        android:textColor="#8E24AA"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserUserID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="User ID:"
+        android:textColor="#8E24AA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textChangeAccountInfoUserUserFName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.065" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserUserFName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="136dp"
+        android:text="First Name:"
+        android:textColor="#8E24AA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textChangeAccountInfoUserUserLName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textChangeAccountInfoUserUserLName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="40dp"
+        android:text="Last Name:"
+        android:textColor="#8E24AA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textChangeAccountInfoUserUserType"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkAdminChangeAccountUserCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="User"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserInfoSave"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userInfoUserSchool" />
+
+    <CheckBox
+        android:id="@+id/checkAdminChangeAccountAdminCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="112dp"
+        android:text="Admin"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminChangeAccountUserDelete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userInfoUserSchool" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,24 +7,141 @@
     android:padding="16dp"
     tools:context=".AdminPage">
 
-    <Button
-        android:id="@+id/button_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/previous"
-        app:layout_constraintBottom_toTopOf="@id/textview_second"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/textview_second"
+        android:id="@+id/textAdminWelcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:text="Welcome Librarian!"
+        android:textColor="#9C27B0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.061" />
+
+    <Button
+        android:id="@+id/btnAdminViewAccounts"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="28dp"
+        android:backgroundTint="#0091EA"
+        android:text="View Accounts"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminViewBookRequests"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminWelcomeText"
+        app:layout_constraintVertical_bias="0.635" />
+
+    <Button
+        android:id="@+id/btnAdminViewBookRequests"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#0091EA"
+        android:text="View Book Requests"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminViewRoomReservations"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdminViewRoomReservations"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#0091EA"
+        android:text="View Room Reservations"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminViewBooksInventory"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdminViewBooksInventory"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#0091EA"
+        android:text="View Book Inventory"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminViewRooms"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdminViewRooms"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="128dp"
+        android:backgroundTint="#0091EA"
+        android:text="View Rooms"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdminCreateRoom"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="128dp"
+        android:backgroundTint="#0091EA"
+        android:text="Create Room"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdminViewRoomRequests"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#0091EA"
+        android:text="View Room Requests"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminCreateBookEntryInventory"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdminCreateBookEntryInventory"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#0091EA"
+        android:text="Create Book in Inventory"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminCreateRoom"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdminViewCreateAccount"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="200dp"
+        android:backgroundTint="#0091EA"
+        android:text="Create Account"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminViewBorrowedBooks"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminWelcomeText"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <Button
+        android:id="@+id/btnAdminViewBorrowedBooks"
+        android:layout_width="151dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#0091EA"
+        android:text="View Borrowed Books"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminViewRoomRequests"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnAdminLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#0091EA"
+        android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_second" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.947" />
 </androidx.constraintlayout.widget.ConstraintLayout>
