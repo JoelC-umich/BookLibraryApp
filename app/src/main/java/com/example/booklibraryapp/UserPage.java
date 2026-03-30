@@ -1,6 +1,7 @@
 package com.example.booklibraryapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import com.example.booklibraryapp.databinding.FragmentUserPageBinding;
 public class UserPage extends Fragment {
 
     private FragmentUserPageBinding binding;
-
+    TextView textUserWelcomeText, textUserPageID;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
     )
@@ -22,14 +23,14 @@ public class UserPage extends Fragment {
         return binding.getRoot();
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        TextView textUserWelcomeText = view.findViewById(R.id.textUserWelcome);
-        getParentFragmentManager().setFragmentResultListener("userInfo", this, (requestKey, bundle) -> {
-            String loggedInUserID = bundle.getString("User_ID");
-            String firstUserName = QueryConnectorPlusHelper.getFirstNameFromIDQuery(loggedInUserID);
-            textUserWelcomeText.setText("Welcome "+firstUserName+"!");
-        });
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
+    {
+        String userID = QueryConnectorPlusHelper.IDWhenLoggingIn;
+        textUserWelcomeText = view.findViewById(R.id.textUserWelcome);
+        textUserPageID = view.findViewById(R.id.textUserPageID);
+        String firstUserName = QueryConnectorPlusHelper.getFirstNameFromIDQuery(userID);
+        textUserWelcomeText.setText("Welcome "+firstUserName+"!");
+        textUserPageID.setText(userID);
 
         binding.btnUserPageReserveBook.setOnClickListener(v ->
                 NavHostFragment.findNavController(UserPage.this).navigate(R.id.action_userPage_to_userReserveBookPage)

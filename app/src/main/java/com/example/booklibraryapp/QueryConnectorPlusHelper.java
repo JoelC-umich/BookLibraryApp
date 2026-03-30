@@ -204,13 +204,13 @@ public class QueryConnectorPlusHelper {
         }
     }
 
-    public static List<String> getReservedBookNamesQuery() {
+    public static List<String> getReservedBookNamesFromUserQuery(String UserID) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<String>> listFutureReservedBookNames = executorService.submit(() -> {
             List<String> reservedBookNameList = new ArrayList<>();
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS WHERE QUANTITY_BORROWED > 0");
+            ResultSet setResult = statement.executeQuery("select BOOK_NAME from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID INNER JOIN USERS ON USERS.ID = BOOKS_BORROWED.USER_ID WHERE USER_ID = '"+UserID+"'");
             while (setResult.next()) {
                 reservedBookNameList.add(setResult.getString("BOOK_NAME"));
             }

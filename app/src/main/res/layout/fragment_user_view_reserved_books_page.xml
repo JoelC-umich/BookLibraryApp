@@ -21,68 +21,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.061" />
 
-    <TextView
-        android:id="@+id/textUserBookQuantityReserved"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantity Reserved:"
-        android:textColor="#9C27B0"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.135"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewUserViewReservedBooks"
-        app:layout_constraintVertical_bias="0.269" />
-
-    <TextView
-        android:id="@+id/valueUserBookQuantityReserved"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reserved Value"
-        android:textColor="#0091EA"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.868"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewUserViewReservedBooks"
-        app:layout_constraintVertical_bias="0.269" />
-
-    <TextView
-        android:id="@+id/textUserBookQuantityAvailable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Quantity Available:"
-        android:textColor="#9C27B0"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.134"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textUserBookQuantityReserved"
-        app:layout_constraintVertical_bias="0.5" />
-
-    <TextView
-        android:id="@+id/valueUserBookQuantityAvailable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Available Value"
-        android:textColor="#0091EA"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.864"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/valueUserBookQuantityReserved"
-        app:layout_constraintVertical_bias="0.508" />
-
     <ListView
         android:id="@+id/listViewUserViewReservedBooks"
-        android:layout_width="358dp"
+        android:layout_width="350dp"
         android:layout_height="482dp"
-        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchUserViewReservedBooks" />
+
+    <SearchView
+        android:id="@+id/searchUserViewReservedBooks"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/listViewUserViewReservedBooks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textUserReservedBooks" />
 </androidx.constraintlayout.widget.ConstraintLayout>

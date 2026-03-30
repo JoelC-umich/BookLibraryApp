@@ -13,7 +13,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="28dp"
         android:backgroundTint="#0091EA"
-        android:text="Edit"
+        android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"

@@ -33,6 +33,7 @@ public class AdminCreateBookEntryInventory extends Fragment {
         TextInputEditText inputAdminCreateBookCategory = view.findViewById(R.id.inputAdminCreateBookCategory);
         TextInputEditText inputAdminCreateBookSummary = view.findViewById(R.id.inputAdminCreateBookSummary);
         TextInputEditText inputAdminCreateBookImage = view.findViewById(R.id.inputAdminCreateBookImage);
+        TextInputEditText inputAdminCreateBookQuantity = view.findViewById(R.id.inputAdminCreateBookQuantity);
 
         binding.btnAdminCreateBook.setOnClickListener(v -> {
             String ID = QueryConnectorPlusHelper.getLastIDPlus1BooksQuery();
@@ -41,8 +42,9 @@ public class AdminCreateBookEntryInventory extends Fragment {
             String category = inputAdminCreateBookCategory.getText().toString();
             String summary = inputAdminCreateBookSummary.getText().toString();
             String image = inputAdminCreateBookImage.getText().toString();
+            String quantity = inputAdminCreateBookQuantity.getText().toString();
 
-            if(bookName.isBlank() || author.isBlank() || category.isBlank() || summary.isBlank())
+            if(bookName.isBlank() || author.isBlank() || category.isBlank() || summary.isBlank() || quantity.isBlank())
             {
                 Toast.makeText(getContext(), "One of the fields are blank\nPlease fill and try again", Toast.LENGTH_SHORT).show();
             } else if (QueryConnectorPlusHelper.getBookNamesQuery().toString().contains(bookName.toLowerCase())) //USE .contains INSTEAD OF .equals TO CHECK FOR EXACT MATCHES
@@ -56,13 +58,13 @@ public class AdminCreateBookEntryInventory extends Fragment {
             {
                 if (ID == null)
                 {
-                    QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS VALUES (0, '"+bookName+"', '"+author+"', '"+category+"', '"+summary+"', '0', '0', '0', '"+image+"')");
+                    QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS VALUES (0, '"+bookName+"', '"+author+"', '"+category+"', '"+summary+"', '"+quantity+"', '0', '"+quantity+"', '"+image+"')");
                 }
                 else
                 {
-                    QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS VALUES ('"+ID+"', '"+bookName+"', '"+author+"', '"+category+"', '"+summary+"', '0', '0', '0', '"+image+"')");
+                    QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS VALUES ('"+ID+"', '"+bookName+"', '"+author+"', '"+category+"', '"+summary+"', '"+quantity+"', '0', '"+quantity+"', '"+image+"')");
                 }
-                Toast.makeText(getContext(), "Book Entry Successfully Added to Inventory", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Book entry successfully added to inventory", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(AdminCreateBookEntryInventory.this).navigate(R.id.action_adminCreateBookEntryInventory_to_AdminPage);
             }
         });

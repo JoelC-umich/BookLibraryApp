@@ -11,13 +11,12 @@
         android:id="@+id/listViewAdminViewBookInventory"
         android:layout_width="350dp"
         android:layout_height="500dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginBottom="124dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textUserReservedBooks"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/searchAdminViewBookInventory"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textAdminViewBookInventory"
@@ -28,8 +27,17 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.061" />
+
+    <SearchView
+        android:id="@+id/searchAdminViewBookInventory"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/listViewAdminViewBookInventory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookInventory" />
 </androidx.constraintlayout.widget.ConstraintLayout>
