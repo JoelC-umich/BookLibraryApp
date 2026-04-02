@@ -1,64 +1,102 @@
 package com.example.booklibraryapp;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
+import android.widget.ListView;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminViewRoomReservationsPage#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AdminViewRoomReservationsPage extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ListView listView;
+    private CalendarView calendarView;
+    private String selectedDate;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AdminViewRoomReservationsPage() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminViewRoomReservationsPage.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AdminViewRoomReservationsPage newInstance(String param1, String param2) {
-        AdminViewRoomReservationsPage fragment = new AdminViewRoomReservationsPage();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public AdminViewRoomReservationsPage() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_view_room_reservations_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_view_room_reservations_page, container, false);
+
+        listView = view.findViewById(R.id.listViewAdminRoomReservations);
+        calendarView = view.findViewById(R.id.calendarViewAdminRoomReservations);
+
+        // Set default date to today
+        selectedDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        updateListView(selectedDate);
+
+        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth);
+            updateListView(selectedDate);
+        });
+
+        return view;
+    }
+
+    private void updateListView(String date) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            List<String> displayList = new ArrayList<>();
+            try {
+                Connection connection = QueryConnectorPlusHelper.Connector();
+                if (connection != null) {
+                    Statement statement = connection.createStatement();
+                    String query = "SELECT RR.USER_ID, RR.SLOT, RR.RESERVE_STATUS, U.FIRST_NAME, U.LAST_NAME " +
+                                   "FROM ROOMS_RESERVED RR " +
+                                   "JOIN USERS U ON RR.USER_ID = U.ID " +
+                                   "WHERE RR.DATE = '" + date + "'";
+                    ResultSet resultSet = statement.executeQuery(query);
+                    while (resultSet.next()) {
+                        String firstName = resultSet.getString("FIRST_NAME");
+                        String lastName = resultSet.getString("LAST_NAME");
+                        int slot = resultSet.getInt("SLOT");
+                        String status = resultSet.getString("RESERVE_STATUS");
+                        
+                        displayList.add(firstName + " " + lastName + " - Slot: " + slotToTime(slot) + " (" + status + ")");
+                    }
+                    resultSet.close();
+                    statement.close();
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (isAdded()) {
+                requireActivity().runOnUiThread(() -> {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
+                            android.R.layout.simple_list_item_1, displayList);
+                    listView.setAdapter(adapter);
+                });
+            }
+        });
+        executor.shutdown();
+    }
+
+    private String slotToTime(int slot) {
+        switch (slot) {
+            case 1: return "8:00 AM";
+            case 2: return "10:00 AM";
+            case 3: return "12:00 PM";
+            case 4: return "2:00 PM";
+            case 5: return "4:00 PM";
+            default: return "Unknown";
+        }
     }
 }

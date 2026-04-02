@@ -46,7 +46,7 @@ public class AdminPage extends Fragment {
         );
 
         binding.btnAdminViewRoomReservations.setOnClickListener(v ->
-                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminViewRoomRequestsPage)
+                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminViewRoomReservationsPage)
         );
 
         binding.btnAdminViewRoomRequests.setOnClickListener(v ->
