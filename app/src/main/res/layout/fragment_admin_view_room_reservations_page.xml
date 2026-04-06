@@ -48,15 +48,17 @@
         <!-- ListView with fixed height or constraints to ensure it's scrollable -->
         <ListView
             android:id="@+id/listViewAdminRoomReservations"
-            android:layout_width="0dp"
-            android:layout_height="400dp"
+            android:layout_width="372dp"
+            android:layout_height="272dp"
             android:layout_marginTop="8dp"
             android:nestedScrollingEnabled="true"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarViewAdminRoomReservations" />
+            app:layout_constraintTop_toBottomOf="@+id/calendarViewAdminRoomReservations"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

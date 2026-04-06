@@ -11,27 +11,24 @@
         android:id="@+id/btnAdminViewBookInventoryEditBook"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#0091EA"
-        android:text="Edit"
+        android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdminViewBookInventoryDeleteBook"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserSchool"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintTop_toBottomOf="@+id/inputCreateUserSchool" />
 
     <Button
         android:id="@+id/btnAdminViewBookInventoryDeleteBook"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#0091EA"
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAdminViewBookInventoryEditBook"
         app:layout_constraintTop_toBottomOf="@+id/inputCreateUserSchool"
         app:layout_constraintVertical_bias="0.52" />
 
@@ -39,6 +36,7 @@
         android:id="@+id/textAdminViewBookEntryInventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="View Book Details"
         android:textColor="#9C27B0"
         android:textSize="24sp"
@@ -46,242 +44,212 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookID"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         android:clickable="false"
         android:editable="false"
         android:hint="Book ID"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminViewBookEntryInventoryBookName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookID"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventory" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookQuantityAvailable"
         android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="24dp"
         android:text="Quantity Available"
         android:textColor="#9C27B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textAdminViewBookEntryInventoryBookImage"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookQuantityAvailable"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventoryBookQuantityBorrowed" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookAuthor"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         android:hint="Book Author"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminViewBookEntryInventoryBookCategory"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookAuthor"
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminViewBookEntryInventoryBookName" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookQuantityBorrowed"
         android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="24dp"
         android:text="Quantity Borrowed"
         android:textColor="#9C27B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textAdminViewBookEntryInventoryBookQuantityAvailable"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookQuantityBorrowed"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventoryBookQuantityTotal" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookImage"
         android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="104dp"
         android:text="Image"
         android:textColor="#9C27B0"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminViewBookInventoryEditBook"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookImage"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventoryBookQuantityAvailable" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookSummary"
         android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="1dp"
         android:text="Summary"
         android:textColor="#9C27B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textAdminViewBookEntryInventoryBookQuantityTotal"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookSummary"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventoryBookCategory" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookQuantityTotal"
         android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="24dp"
         android:text="Quantity Total"
         android:textColor="#9C27B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textAdminViewBookEntryInventoryBookQuantityBorrowed"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookQuantityTotal"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventoryBookSummary" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookSummary"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         android:hint="Book Summary"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminViewBookEntryInventoryBookQuantityTotal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookSummary"
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminViewBookEntryInventoryBookCategory" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookCategory"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         android:hint="Book Category"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminViewBookEntryInventoryBookSummary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookCategory"
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminViewBookEntryInventoryBookAuthor" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookAuthor"
         android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="24dp"
         android:text="Author"
         android:textColor="#9C27B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textAdminViewBookEntryInventoryBookCategory"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookAuthor"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventoryBookName" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookQuantityTotal"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         android:hint="Quantity Total"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminViewBookEntryInventoryBookQuantityBorrowed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookQuantityTotal"
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminViewBookEntryInventoryBookSummary" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookID"
         android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="24dp"
         android:text="ID"
         android:textColor="#9C27B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textAdminViewBookEntryInventoryBookName"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookID"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventory" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookQuantityBorrowed"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         android:clickable="false"
         android:editable="false"
         android:hint="Quantity Borrowed"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminViewBookEntryInventoryBookQuantityAvailable"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookQuantityBorrowed"
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminViewBookEntryInventoryBookQuantityTotal" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookImage"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="96dp"
+        android:layout_height="50dp"
         android:hint="Image"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdminViewBookInventoryDeleteBook"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookImage"
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminViewBookEntryInventoryBookQuantityAvailable" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookCategory"
         android:layout_width="150dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="24dp"
         android:text="Category"
         android:textColor="#9C27B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textAdminViewBookEntryInventoryBookSummary"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookCategory"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventoryBookAuthor" />
 
     <TextView
         android:id="@+id/textAdminViewBookEntryInventoryBookName"
-        android:layout_width="150dp"
-        android:layout_height="36dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="154dp"
+        android:layout_height="38dp"
         android:text="Name"
         android:textColor="#9C27B0"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textAdminViewBookEntryInventoryBookAuthor"
         app:layout_constraintEnd_toStartOf="@+id/inputAdminViewBookEntryInventoryBookName"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBookEntryInventoryBookID" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookQuantityAvailable"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         android:clickable="false"
         android:editable="false"
         android:hint="Quantity Available"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminViewBookEntryInventoryBookImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookQuantityAvailable"
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminViewBookEntryInventoryBookQuantityBorrowed" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputAdminViewBookEntryInventoryBookName"
         android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="50dp"
         android:hint="Book Name"
         app:layout_constraintBottom_toTopOf="@+id/inputAdminViewBookEntryInventoryBookAuthor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminCreateBookEntryInventory" />
+        app:layout_constraintStart_toEndOf="@+id/textAdminViewBookEntryInventoryBookName"
+        app:layout_constraintTop_toBottomOf="@+id/inputAdminViewBookEntryInventoryBookID" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

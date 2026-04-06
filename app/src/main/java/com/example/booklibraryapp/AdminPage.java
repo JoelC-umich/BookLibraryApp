@@ -17,25 +17,21 @@ import com.example.booklibraryapp.databinding.AdminPageBinding;
 public class AdminPage extends Fragment {
 
     private AdminPageBinding binding;
+    String loggedInUserID = QueryConnectorPlusHelper.IDWhenLoggingIn;
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         binding = AdminPageBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
-
         TextView textAdminWelcomeText = view.findViewById(R.id.textAdminWelcomeText);
-        getParentFragmentManager().setFragmentResultListener("userInfo", this, (requestKey, bundle) -> {
-            String loggedInUserID = bundle.getString("User_ID");
-            String firstUserName = QueryConnectorPlusHelper.getFirstNameFromIDQuery(loggedInUserID);
-            textAdminWelcomeText.setText("Welcome Librarian "+firstUserName+"!");
-        });
+        String firstUserName = QueryConnectorPlusHelper.getFirstNameFromIDQuery(loggedInUserID);
+        textAdminWelcomeText.setText("Welcome Librarian "+firstUserName+"!");
 
         binding.btnAdminViewAccounts.setOnClickListener(v ->
                 NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminAccountsInfoPage)

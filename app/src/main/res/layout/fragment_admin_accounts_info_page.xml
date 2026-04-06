@@ -8,41 +8,29 @@
     tools:context=".AdminAccountsInfoPage" >
 
     <TextView
-        android:id="@+id/textChangeAccountInfoUserMiddleText2"
+        android:id="@+id/textChangeAccountInfoUserMiddleTextTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/user_search"
+        android:text="View an Account"
         android:textColor="#8E24AA"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/userSearchInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textChangeAccountInfoUserMiddleText3"
-        android:layout_width="173dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/user_search_result"
-        android:textColor="#8E24AA"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userSearchInput" />
-
     <SearchView
         android:id="@+id/userSearchInput"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:iconifiedByDefault="false"
         android:queryHint="@string/user_search"
+        app:layout_constraintBottom_toTopOf="@+id/userSearchResult"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textChangeAccountInfoUserMiddleText2" />
+        app:layout_constraintTop_toBottomOf="@+id/textChangeAccountInfoUserMiddleTextTitle" />
 
     <ListView
         android:id="@+id/userSearchResult"
@@ -52,7 +40,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textChangeAccountInfoUserMiddleText3"
-        app:layout_constraintVertical_bias="0.372" />
+        app:layout_constraintTop_toBottomOf="@+id/userSearchInput" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

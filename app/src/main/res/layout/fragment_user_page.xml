@@ -11,14 +11,12 @@
         android:id="@+id/btnUserLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:backgroundTint="#0091EA"
         android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnUserPageReserveRoom"
-        app:layout_constraintVertical_bias="0.856" />
+        app:layout_constraintTop_toBottomOf="@+id/btnUserPageReserveRoom" />
 
     <TextView
         android:id="@+id/textUserWelcome"
@@ -32,17 +30,16 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.081" />
 
     <Button
         android:id="@+id/btnUserPageReserveBook"
         android:layout_width="151dp"
         android:layout_height="115dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="488dp"
         android:backgroundTint="#0091EA"
         android:text="Reserve a Book"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserPageReserveRoom"
+        app:layout_constraintEnd_toStartOf="@+id/btnUserPageViewReservedBooks"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textUserWelcome"
         app:layout_constraintVertical_bias="0.66" />
@@ -51,38 +48,34 @@
         android:id="@+id/btnUserPageReserveRoom"
         android:layout_width="151dp"
         android:layout_height="115dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="356dp"
         android:backgroundTint="#0091EA"
         android:text="Reserve a Room"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserLogout"
+        app:layout_constraintEnd_toStartOf="@+id/btnUserPageViewRoomReservation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnUserPageReserveBook"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintTop_toBottomOf="@+id/btnUserPageReserveBook" />
 
     <Button
         android:id="@+id/btnUserPageViewRoomReservation"
         android:layout_width="151dp"
         android:layout_height="115dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="356dp"
         android:backgroundTint="#0091EA"
         android:text="View my Room Reservations"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserLogout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnUserPageViewReservedBooks"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintStart_toEndOf="@+id/btnUserPageReserveRoom"
+        app:layout_constraintTop_toBottomOf="@+id/btnUserPageViewReservedBooks" />
 
     <Button
         android:id="@+id/btnUserPageViewReservedBooks"
         android:layout_width="151dp"
         android:layout_height="115dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="488dp"
         android:backgroundTint="#0091EA"
-        android:text="View Reserved Books"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="View my Reserved Books"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserPageViewRoomReservation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnUserPageReserveBook"
         app:layout_constraintTop_toBottomOf="@+id/textUserWelcome"
         app:layout_constraintVertical_bias="0.66" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

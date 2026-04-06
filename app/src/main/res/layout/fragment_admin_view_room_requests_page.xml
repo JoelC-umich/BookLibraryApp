@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.044" />
 
     <TextView
-        android:id="@+id/textAdminRoomRequestSelectIDs"
+        android:id="@+id/textAdminRoomRequests2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select a request number"
@@ -29,19 +29,18 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintTop_toBottomOf="@+id/textAdminRoomRequests"
+        app:layout_constraintVertical_bias="0.011" />
 
     <ListView
         android:id="@+id/listViewAdminRoomRequests"
-        android:layout_width="403dp"
-        android:layout_height="562dp"
+        android:layout_width="350dp"
+        android:layout_height="550dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminRoomRequests"
-        app:layout_constraintVertical_bias="0.636" />
+        app:layout_constraintTop_toBottomOf="@+id/textAdminRoomRequests2"
+        app:layout_constraintVertical_bias="0.371" />
 </androidx.constraintlayout.widget.ConstraintLayout>

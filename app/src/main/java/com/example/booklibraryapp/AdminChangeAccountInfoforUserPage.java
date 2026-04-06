@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.example.booklibraryapp.databinding.FragmentAdminChangeAccountInfoforUserPageBinding;
 import com.google.android.material.textfield.TextInputEditText;
@@ -17,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class AdminChangeAccountInfoforUserPage extends Fragment {
     private FragmentAdminChangeAccountInfoforUserPageBinding binding;
     String ID, FName, LName, type, email, username, password, school;
+    String userLoggedIn = QueryConnectorPlusHelper.IDWhenLoggingIn;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -40,10 +40,8 @@ public class AdminChangeAccountInfoforUserPage extends Fragment {
         TextInputEditText userInfoUserUsername = view.findViewById(R.id.userInfoUserUsername);
         TextInputEditText userInfoUserPassword = view.findViewById(R.id.userInfoUserPassword);
         TextInputEditText userInfoUserSchool = view.findViewById(R.id.userInfoUserSchool);
-        TextView userLoggedIn = view.findViewById(R.id.valueChangeAccountUserLoggedIn);
         CheckBox checkUserInfoUserTypeUser = view.findViewById(R.id.checkAdminChangeAccountUserCheckbox);
         CheckBox checkUserInfoUserTypeAdmin = view.findViewById(R.id.checkAdminChangeAccountAdminCheckbox);
-        userLoggedIn.setText(QueryConnectorPlusHelper.IDWhenLoggingIn);
         getParentFragmentManager().setFragmentResultListener("userNameInfo", this, (requestKey, bundle) -> {
             String selectedUserName = bundle.getString("Username");
             String userID = QueryConnectorPlusHelper.getUsernameIDQuery(selectedUserName);
@@ -118,7 +116,7 @@ public class AdminChangeAccountInfoforUserPage extends Fragment {
                     Toast.makeText(getContext(), username + " information saved", Toast.LENGTH_SHORT).show();
                 }
 
-            } else if (userInfoUserID.getText().toString().equals(userLoggedIn.getText().toString())) {
+            } else if (userInfoUserID.getText().toString().equals(userLoggedIn)) {
                 if (checkUserInfoUserTypeUser.isChecked()){
                     ID = userInfoUserID.getText().toString();
                     FName = userInfoUserFirstName.getText().toString();
@@ -171,9 +169,9 @@ public class AdminChangeAccountInfoforUserPage extends Fragment {
             if (ID.equals("0"))
             {
                 Toast.makeText(getContext(), "Cannot delete primary admin account", Toast.LENGTH_SHORT).show();
-            } else if (ID.equals(userLoggedIn.getText().toString())) {
+            } else if (ID.equals(userLoggedIn)) {
                 QueryConnectorPlusHelper.runQuery("DELETE FROM USERS WHERE ID = '"+ID+"'");
-                Toast.makeText(getContext(), "Your account has been deleted successfully. Logging you out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Your account has been deleted successfully\nLogging you out", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(AdminChangeAccountInfoforUserPage.this).navigate(R.id.action_adminChangeAccounInfoforUserPage_to_LoginPage);
             } else {
                 QueryConnectorPlusHelper.runQuery("DELETE FROM USERS WHERE ID = '"+ID+"'");
