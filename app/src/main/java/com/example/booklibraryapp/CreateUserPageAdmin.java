@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
-import android.widget.CheckBox; //B in Box is CAPITAL don't get confused when declaring
+import android.widget.CheckBox;
 import com.example.booklibraryapp.databinding.FragmentCreateUserPageAdminBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -46,6 +46,7 @@ public class CreateUserPageAdmin extends Fragment {
         TextInputEditText inputCreateUserSchoolAdmin = view.findViewById(R.id.inputCreateUserSchoolAdmin);
         checkUserCheckbox = view.findViewById(R.id.checkAdminViewCreateAccountIsUser);
         checkAdminCheckbox = view.findViewById(R.id.checkAdminViewCreateAccountIsAdmin);
+        
         binding.checkAdminViewCreateAccountIsUser.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean isChecked) {
@@ -79,7 +80,6 @@ public class CreateUserPageAdmin extends Fragment {
             String username = inputCreateUserUsernameAdmin.getText().toString();
             String password = inputCreateUserPasswordAdmin.getText().toString();
             String email = inputCreateUserEmailAdmin.getText().toString();
-            //Must implement logic for having unique emails and checking if email is an email
             String school = inputCreateUserSchoolAdmin.getText().toString();
             String userType = null;
             if (isAdminChecked)
@@ -89,13 +89,15 @@ public class CreateUserPageAdmin extends Fragment {
                 userType = "User";
             }
 
-            if(firstName.isBlank() || lastName.isBlank() || username.isBlank() || password.isBlank() || email.isBlank())
-            {
+            if (!ValidationUtils.isNotEmpty(firstName) || !ValidationUtils.isNotEmpty(lastName) ||
+                !ValidationUtils.isNotEmpty(username) || !ValidationUtils.isNotEmpty(password) ||
+                !ValidationUtils.isNotEmpty(email)) {
                 Toast.makeText(getContext(), "One of the fields are blank\nPlease fill and try again", Toast.LENGTH_SHORT).show();
+            } else if (!ValidationUtils.isValidEmail(email)) {
+                Toast.makeText(getContext(), "Invalid email format\nPlease enter a valid email", Toast.LENGTH_SHORT).show();
             } else if (QueryConnectorPlusHelper.getUsernamesQuery().toString().contains(username.toLowerCase())) {
                 Toast.makeText(getContext(), "Username already exists\nPlease choose another username", Toast.LENGTH_SHORT).show();
-            } else
-            {
+            } else {
                 QueryConnectorPlusHelper.runQuery("INSERT INTO USERS VALUES ("+ID+", '"+firstName+"', '"+lastName+"', '"+userType+"', '"+email+"', '"+username+"', '"+password+"', '"+school+"')");
                 Toast.makeText(getContext(), "Account Successfully Created", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(CreateUserPageAdmin.this).navigate(R.id.action_createUserPageAdmin_to_AdminPage);

@@ -13,3 +13,44 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Gradle files
+.gradle/
+gradle/caches
+gradle/kotlin-profile
+gradle/wrapper/dists
+gradle/daemon
+gradle/.tmp
+
+build/
+
+# IDE files (IntelliJ / Android Studio)
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+*.html
+
+# Local configuration
+local.properties
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Android specific
+captures/
+.externalNativeBuild/
+.cxx/
+*.keystore
+!debug.keystore
+
+# Git Extensions
+[Gg]it[Ee]xtensions.settings
+*.vshost.exe
+*.vshost.exe.config
+*.vshost.exe.manifest

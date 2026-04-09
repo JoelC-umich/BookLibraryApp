@@ -52,15 +52,17 @@ public class CreateUserPage extends Fragment {
             String password = inputCreateUserPassword.getText().toString();
             String email = inputCreateUserEmail.getText().toString();
             String school = inputCreateUserSchool.getText().toString();
-            //Must implement logic for having unique emails and checking if email is an email
-            if(firstName.isBlank() || lastName.isBlank() || username.isBlank() || password.isBlank() || email.isBlank())
-            {
+
+            if (!ValidationUtils.isNotEmpty(firstName) || !ValidationUtils.isNotEmpty(lastName) ||
+                !ValidationUtils.isNotEmpty(username) || !ValidationUtils.isNotEmpty(password) ||
+                !ValidationUtils.isNotEmpty(email)) {
                 Toast.makeText(getContext(), "One of the fields are blank\nPlease fill and try again", Toast.LENGTH_SHORT).show();
+            } else if (!ValidationUtils.isValidEmail(email)) {
+                Toast.makeText(getContext(), "Invalid email format\nPlease enter a valid email", Toast.LENGTH_SHORT).show();
             } else if (QueryConnectorPlusHelper.getUsernamesQuery().toString().contains(username.toLowerCase())) {
                 Toast.makeText(getContext(), "Username already exists\nPlease choose another username", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                QueryConnectorPlusHelper.runQuery("INSERT INTO USERS VALUES ("+ID+", '"+firstName+"', '"+lastName+"', '"+userType+"', '"+email+"', '"+username+"', '"+password+"', '"+school+"')");
+            } else {
+                QueryConnectorPlusHelper.runQuery("INSERT INTO USERS VALUES (" + ID + ", '" + firstName + "', '" + lastName + "', '" + userType + "', '" + email + "', '" + username + "', '" + password + "', '" + school + "')");
                 Toast.makeText(getContext(), "Account Successfully Created", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(CreateUserPage.this).navigate(R.id.action_createUserPage_to_LoginPage);
             }

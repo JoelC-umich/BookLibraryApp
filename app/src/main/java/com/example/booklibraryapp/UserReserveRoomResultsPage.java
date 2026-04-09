@@ -65,18 +65,16 @@ public class UserReserveRoomResultsPage extends Fragment {
             // Load reserved pairs into a Set for O(1) lookup
             Set<String> reservedSet = new HashSet<>(reservedPairs);
 
-            // 3. Build the full list of available room+slot combinations
+            // 3. Build the full list of available room+slot combinations using RoomUtils
+            List<RoomUtils.AvailableSlot> availableSlots = RoomUtils.getAvailableSlots(
+                    allRoomIDs, reservedSet, MAX_SLOTS_PER_ROOM
+            );
+
             List<String> labels = new ArrayList<>();
             List<String> keys = new ArrayList<>();
-
-            for (String roomID : allRoomIDs) {
-                for (int slot = 1; slot <= MAX_SLOTS_PER_ROOM; slot++) {
-                    String key = roomID + ":" + slot;
-                    if (!reservedSet.contains(key)) {
-                        labels.add("Room " + roomID + " — " + slotToTime(slot));
-                        keys.add(key);
-                    }
-                }
+            for (RoomUtils.AvailableSlot slot : availableSlots) {
+                labels.add(slot.label);
+                keys.add(slot.key);
             }
 
             // 4. Update UI back on the main thread
@@ -124,7 +122,7 @@ public class UserReserveRoomResultsPage extends Fragment {
             QueryConnectorPlusHelper.insertRoomReservationQuery(roomID, userID, selectedDate, slot);
 
             Toast.makeText(getContext(),
-                    "Room " + roomID + " — " + slotToTime(Integer.parseInt(slot)) + " reserved for " + selectedDate + "!",
+                    "Room " + roomID + " — " + DateTimeUtils.slotToTime(Integer.parseInt(slot)) + " reserved for " + selectedDate + "!",
                     Toast.LENGTH_LONG).show();
 
             // Use v (the button itself) instead of the stale view reference
@@ -133,16 +131,5 @@ public class UserReserveRoomResultsPage extends Fragment {
         });
 
         return view;
-    }
-
-    private String slotToTime(int slot) {
-        switch (slot) {
-            case 1: return "8:00 AM";
-            case 2: return "10:00 AM";
-            case 3: return "12:00 PM";
-            case 4: return "2:00 PM";
-            case 5: return "4:00 PM";
-            default: return "Unknown";
-        }
     }
 }
