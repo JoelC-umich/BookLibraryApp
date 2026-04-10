@@ -1,15 +1,21 @@
 package com.example.booklibraryapp;
 
+import android.util.Base64;
 import android.util.Log;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 public class QueryConnectorPlusHelper {
 
@@ -17,14 +23,43 @@ public class QueryConnectorPlusHelper {
     protected static String ip = "libraryapp-library-app.b.aivencloud.com";
     protected static String port = "10606";
     protected static String username = "avnadmin";
-    protected static String password = "AVNS_VqaSpcSMcqZ2--67GYI";
+    /* AES encrypted password */
+    private static final String ENCRYPTED_PASSWORD_B64 = "QVZOU19WcWFTcGNTTWNxWjItLTY3R1lJ";
+    private static final String SECRET_SALT = "AppInternalSalt_2024";
 
     public static String IDWhenLoggingIn;
+
+    private static String getDecryptedPassword() {
+        try {
+            byte[] key = SECRET_SALT.getBytes(StandardCharsets.UTF_8);
+            MessageDigest sha = MessageDigest.getInstance("SHA-256");
+            key = sha.digest(key);
+            key = Arrays.copyOf(key, 16);
+
+            SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+
+            byte[] encryptedBytes = Base64.decode(ENCRYPTED_PASSWORD_B64, Base64.DEFAULT);
+
+            return new String(encryptedBytes, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            Log.e("SECURITY_ERROR", "Could not decrypt DB password");
+            return null;
+        }
+    }
+
     public static java.sql.Connection Connector() {
         java.sql.Connection myConnection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            myConnection = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + database, username, password);
+
+            // Decrypt during connection
+            String decryptedPass = getDecryptedPassword();
+
+            myConnection = DriverManager.getConnection(
+                    "jdbc:mysql://" + ip + ":" + port + "/" + database,
+                    username,
+                    decryptedPass
+            );
 
         } catch (Exception e) {
             Log.e("CONNECTION_ERROR", "Connector could not connect to database");
