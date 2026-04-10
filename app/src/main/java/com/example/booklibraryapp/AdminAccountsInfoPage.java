@@ -52,7 +52,7 @@ public class AdminAccountsInfoPage extends Fragment
             Bundle userNameSelected = new Bundle();
             userNameSelected.putString("Username", userSelected);
             getParentFragmentManager().setFragmentResult("userNameInfo", userNameSelected);
-            NavHostFragment.findNavController(AdminAccountsInfoPage.this).navigate(R.id.action_adminAccountsInfoPage_to_adminChangeAccounInfoforUserPage);
+            NavHostFragment.findNavController(AdminAccountsInfoPage.this).navigate(R.id.action_adminAccountsInfoPage_to_adminChangeAccountInfoforUserPage);
         });
 
         return view;

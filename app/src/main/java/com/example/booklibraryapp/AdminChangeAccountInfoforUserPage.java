@@ -128,7 +128,7 @@ public class AdminChangeAccountInfoforUserPage extends Fragment {
                     school = userInfoUserSchool.getText().toString();
                     QueryConnectorPlusHelper.runQuery("UPDATE USERS SET FIRST_NAME = '"+FName+"', LAST_NAME = '"+LName+"', USER_TYPE = '"+type+"', USER_EMAIL = '"+email+"', USER_NAME = '"+username+"', USER_PASSWORD = '"+password+"', SCHOOL = '"+school+"' WHERE ID = '"+ID+"'");
                     Toast.makeText(getContext(), "Your information is saved\nLogging you out of admin view", Toast.LENGTH_SHORT).show();
-                    NavHostFragment.findNavController(AdminChangeAccountInfoforUserPage.this).navigate(R.id.action_adminChangeAccounInfoforUserPage_to_LoginPage);
+                    NavHostFragment.findNavController(AdminChangeAccountInfoforUserPage.this).navigate(R.id.action_adminChangeAccountInfoforUserPage_to_LoginPage);
                     userInfoUserID.getText().clear();
                     userInfoUserFirstName.getText().clear();
                     userInfoUserLastName.getText().clear();
@@ -172,11 +172,11 @@ public class AdminChangeAccountInfoforUserPage extends Fragment {
             } else if (ID.equals(userLoggedIn)) {
                 QueryConnectorPlusHelper.runQuery("DELETE FROM USERS WHERE ID = '"+ID+"'");
                 Toast.makeText(getContext(), "Your account has been deleted successfully\nLogging you out", Toast.LENGTH_SHORT).show();
-                NavHostFragment.findNavController(AdminChangeAccountInfoforUserPage.this).navigate(R.id.action_adminChangeAccounInfoforUserPage_to_LoginPage);
+                NavHostFragment.findNavController(AdminChangeAccountInfoforUserPage.this).navigate(R.id.action_adminChangeAccountInfoforUserPage_to_LoginPage);
             } else {
                 QueryConnectorPlusHelper.runQuery("DELETE FROM USERS WHERE ID = '"+ID+"'");
                 Toast.makeText(getContext(), username + " has been deleted", Toast.LENGTH_SHORT).show();
-                NavHostFragment.findNavController(AdminChangeAccountInfoforUserPage.this).navigate(R.id.action_adminChangeAccounInfoforUserPage_to_adminAccountsInfoPage);
+                NavHostFragment.findNavController(AdminChangeAccountInfoforUserPage.this).navigate(R.id.action_adminChangeAccountInfoforUserPage_to_adminAccountsInfoPage);
                 userInfoUserID.getText().clear();
                 userInfoUserFirstName.getText().clear();
                 userInfoUserLastName.getText().clear();

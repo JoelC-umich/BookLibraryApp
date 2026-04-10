@@ -76,6 +76,7 @@ public class AdminPage extends Fragment {
         binding.btnAdminCreateRoom.setOnClickListener(v ->
         {
             final EditText userInput = new EditText(getContext());
+            userInput.setId(android.R.id.edit);
             userInput.setInputType(InputType.TYPE_CLASS_NUMBER);
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             dialogBuilder.setTitle("Create Room");

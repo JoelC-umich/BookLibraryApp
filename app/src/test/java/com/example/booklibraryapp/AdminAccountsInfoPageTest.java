@@ -159,7 +159,7 @@ public class AdminAccountsInfoPageTest {
                     listView.performItemClick(listItem, 1, listView.getAdapter().getItemId(1));
 
                     // Verify navigation to the correct destination
-                    verify(mockNavController).navigate(eq(R.id.action_adminAccountsInfoPage_to_adminChangeAccounInfoforUserPage));
+                    verify(mockNavController).navigate(eq(R.id.action_adminAccountsInfoPage_to_adminChangeAccountInfoforUserPage));
                 });
             }
         }

@@ -167,22 +167,22 @@
         android:label=""
         tools:layout="@layout/fragment_admin_accounts_info_page" >
         <action
-            android:id="@+id/action_adminAccountsInfoPage_to_adminChangeAccounInfoforUserPage"
-            app:destination="@id/adminChangeAccounInfoforUserPage" />
+            android:id="@+id/action_adminAccountsInfoPage_to_adminChangeAccountInfoforUserPage"
+            app:destination="@id/adminChangeAccountInfoforUserPage" />
         <action
             android:id="@+id/action_adminAccountsInfoPage_to_AdminPage"
             app:destination="@id/AdminPage" />
     </fragment>
     <fragment
-        android:id="@+id/adminChangeAccounInfoforUserPage"
+        android:id="@+id/adminChangeAccountInfoforUserPage"
         android:name="com.example.booklibraryapp.AdminChangeAccountInfoforUserPage"
         android:label=""
         tools:layout="@layout/fragment_admin_change_account_infofor_user_page" >
         <action
-            android:id="@+id/action_adminChangeAccounInfoforUserPage_to_adminAccountsInfoPage"
+            android:id="@+id/action_adminChangeAccountInfoforUserPage_to_adminAccountsInfoPage"
             app:destination="@id/adminAccountsInfoPage" />
         <action
-            android:id="@+id/action_adminChangeAccounInfoforUserPage_to_LoginPage"
+            android:id="@+id/action_adminChangeAccountInfoforUserPage_to_LoginPage"
             app:destination="@id/LoginPage" />
     </fragment>
     <fragment

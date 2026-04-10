@@ -3,9 +3,9 @@ package com.example.booklibraryapp;
 import java.util.regex.Pattern;
 
 public class ValidationUtils {
-    // A more robust email regex that prevents consecutive dots in the domain
+    // A more robust email regex that handles consecutive dots and dots at start/end of local part
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
-            "^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE
+            "^[A-Z0-9]+(?:[._%+-][A-Z0-9]+)*@(?:[A-Z0-9-]+\\.)+[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE
     );
 
     /**
