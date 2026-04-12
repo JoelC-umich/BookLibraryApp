@@ -1,9 +1,13 @@
 package com.example.booklibraryapp;
 
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,6 +19,7 @@ public class LoginPage extends Fragment {
     private LoginPageBinding binding;
 
     TextInputEditText userInputUsername, userInputPassword;
+    CheckBox checkLoginPageShowPassword;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -28,6 +33,7 @@ public class LoginPage extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         userInputUsername = view.findViewById(R.id.inputLoginUsername);
         userInputPassword = view.findViewById(R.id.inputLoginPassword);
+        checkLoginPageShowPassword = view.findViewById(R.id.checkLoginPageShowPassword);
         binding.btnLogin.setOnClickListener(v -> {
             String username = userInputUsername.getText().toString().toLowerCase();
             String password = userInputPassword.getText().toString();
@@ -69,6 +75,20 @@ public class LoginPage extends Fragment {
         binding.btnLoginCreateAccount.setOnClickListener(v ->
         {
             NavHostFragment.findNavController(LoginPage.this).navigate(R.id.action_LoginPage_to_createUserPage);
+        });
+
+        binding.checkLoginPageShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    userInputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    userInputPassword.setSelection(userInputPassword.getText().length());
+                }
+                else {
+                    userInputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    userInputPassword.setSelection(userInputPassword.getText().length());
+                }
+            }
         });
     }
 

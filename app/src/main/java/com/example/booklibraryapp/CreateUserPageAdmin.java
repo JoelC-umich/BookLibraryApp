@@ -94,6 +94,8 @@ public class CreateUserPageAdmin extends Fragment {
                 Toast.makeText(getContext(), "One of the fields are blank\nPlease fill and try again", Toast.LENGTH_SHORT).show();
             } else if (QueryConnectorPlusHelper.getUsernamesQuery().toString().contains(username.toLowerCase())) {
                 Toast.makeText(getContext(), "Username already exists\nPlease choose another username", Toast.LENGTH_SHORT).show();
+            } else if ((email.contains("@") && (email.contains(".com"))) == false) {
+                Toast.makeText(getContext(), "Email seems incorrect\nPlease check and try again", Toast.LENGTH_SHORT).show();
             } else
             {
                 QueryConnectorPlusHelper.runQuery("INSERT INTO USERS VALUES ("+ID+", '"+firstName+"', '"+lastName+"', '"+userType+"', '"+email+"', '"+username+"', '"+password+"', '"+school+"')");

@@ -1,7 +1,6 @@
 package com.example.booklibraryapp;
 
 import android.app.AlertDialog;
-import android.app.DownloadManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,38 +40,37 @@ public class UserViewReservedBooksPage extends Fragment
         super.onViewCreated(view, savedInstanceState);
         listViewReservedBooks = view.findViewById(R.id.listViewUserViewReservedBooks);
         searchUserViewReservedBooks = view.findViewById(R.id.searchUserViewReservedBooks);
-        List<String> reservedIDs = QueryConnectorPlusHelper.getBorrowedIDsFromUserQuery(loggedInUserID);
-        List<String> bookNames = QueryConnectorPlusHelper.getReservedBookNamesFromUserQuery(loggedInUserID);
+        List<String> bookNames = QueryConnectorPlusHelper.getBookNamesReservedPendingPlusStatusFromUserQuery(loggedInUserID);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, bookNames);
         listViewReservedBooks.setAdapter(adapter);
 
-        listViewReservedBooks.setOnItemClickListener((parent, view1, position, id) -> {
-            String selectedBookName = (String) parent.getItemAtPosition(position);
-            String bookID = QueryConnectorPlusHelper.getBookIDFromBookNameQuery(selectedBookName);
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-            dialogBuilder.setTitle("Return Book Selected?");
-            dialogBuilder.setMessage("Would you like to return "+selectedBookName+"?");
-
-            dialogBuilder.setPositiveButton("Yes", (dialog, which) ->
-            {
-                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Returned' WHERE BOOK_ID = '"+bookID+"' AND USER_ID = '"+loggedInUserID+"'");
-                Toast.makeText(getContext(), "Book "+selectedBookName+" is successfully returned\nThank you!", Toast.LENGTH_SHORT).show();
-            });
-
-            dialogBuilder.setNegativeButton("No", (dialog, which) ->
-            {
-                dialog.dismiss();
-            });
-
-            dialogBuilder.setNeutralButton("Cancel", (dialog, which) ->
-            {
-                dialog.dismiss();
-            });
-
-            AlertDialog handleRoomRequestDialog = dialogBuilder.create();
-            handleRoomRequestDialog.show();
-            //FIND A WAY TO REFRESH THE VIEW AFTER APPROVING/DECLINING REQUESTS
-        });
+//        listViewReservedBooks.setOnItemClickListener((parent, view1, position, id) -> {
+//            String selectedBookName = (String) parent.getItemAtPosition(position);
+//            String bookID = QueryConnectorPlusHelper.getBookIDFromBookNameQuery(selectedBookName);
+//            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+//            dialogBuilder.setTitle("Return Book Selected?");
+//            dialogBuilder.setMessage("Would you like to return "+selectedBookName+"?");
+//
+//            dialogBuilder.setPositiveButton("Yes", (dialog, which) ->
+//            {
+//                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Returned' WHERE BOOK_ID = '"+bookID+"' AND USER_ID = '"+loggedInUserID+"'");
+//                Toast.makeText(getContext(), "Book "+selectedBookName+" is successfully returned\nThank you!", Toast.LENGTH_SHORT).show();
+//            });
+//
+//            dialogBuilder.setNegativeButton("No", (dialog, which) ->
+//            {
+//                dialog.dismiss();
+//            });
+//
+//            dialogBuilder.setNeutralButton("Cancel", (dialog, which) ->
+//            {
+//                dialog.dismiss();
+//            });
+//
+//            AlertDialog handleRoomRequestDialog = dialogBuilder.create();
+//            handleRoomRequestDialog.show();
+//            //FIND A WAY TO REFRESH THE VIEW AFTER APPROVING/DECLINING REQUESTS
+//        });
 
         searchUserViewReservedBooks.setOnQueryTextListener(new SearchView.OnQueryTextListener()
         {

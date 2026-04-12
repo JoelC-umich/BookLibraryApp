@@ -2,6 +2,7 @@ package com.example.booklibraryapp;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class AdminViewBookRequestsPage extends Fragment {
             String bookTitle = QueryConnectorPlusHelper.getBookTitleFromBookID(bookID);
             String userFullName = (QueryConnectorPlusHelper.getFirstNameFromIDQuery(userID) + " " + QueryConnectorPlusHelper.getLastNameFromIDQuery(userID));
             String userEmail = QueryConnectorPlusHelper.getEmailFromIDQuery(userID);
-            String dateBorrowing = QueryConnectorPlusHelper.getDateFromBorrowedBooksID(bookID);
+            String dateBorrowing = QueryConnectorPlusHelper.getDateFromBorrowedBooksID(selectedRequestID);
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             dialogBuilder.setTitle("Book Request " + selectedRequestID);
             dialogBuilder.setMessage(
@@ -49,13 +50,13 @@ public class AdminViewBookRequestsPage extends Fragment {
 
             dialogBuilder.setPositiveButton("Yes", (dialog, which) ->
             {
-                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_RESERVED SET RESERVE_STATUS = 'Reserved' WHERE ID = '" + selectedRequestID + "'");
+                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Reserved' WHERE ID = '" + selectedRequestID + "'");
                 Toast.makeText(getContext(), "Request " + selectedRequestID + " is successfully approved", Toast.LENGTH_SHORT).show();
             });
 
             dialogBuilder.setNegativeButton("No", (dialog, which) ->
             {
-                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_RESERVED SET RESERVE_STATUS = 'Available' WHERE ID = '" + selectedRequestID + "'"); //PROBABLY USE DECLINED INSTEAD OF AVAILABLE, IF ROOM IS NOT RESERVED, IT IS AVAILABLE LOGIC
+                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Denied' WHERE ID = '" + selectedRequestID + "'");
                 Toast.makeText(getContext(), "Request " + selectedRequestID + " has been denied", Toast.LENGTH_SHORT).show();
             });
 

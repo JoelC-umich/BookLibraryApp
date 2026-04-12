@@ -8,39 +8,34 @@
     tools:context=".UserViewReservedRoomsPage" >
 
     <TextView
-        android:id="@+id/textUserReserveBook2"
-        android:layout_width="1008dp"
-        android:layout_height="163dp"
+        android:id="@+id/textUserViewReservedRoomsMiddleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Reserved Rooms"
         android:textColor="#9C27B0"
-        android:textSize="120sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/searchUserViewReservedBooks"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/listViewAdminViewBookInventory"
-        android:layout_width="1912dp"
-        android:layout_height="1989dp"
-        android:layout_marginBottom="110dp"
+        android:id="@+id/listUserViewReservedRooms"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerReserveBookCategory" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarUserViewReservedRooms" />
 
-    <SearchView
-        android:layout_width="1855dp"
-        android:layout_height="219dp"
-        android:layout_marginStart="179dp"
-        android:layout_marginTop="123dp"
-        android:layout_marginEnd="122dp"
-        android:layout_marginBottom="223dp"
-        app:layout_constraintBottom_toTopOf="@+id/listViewAdminViewBookInventory"
+    <CalendarView
+        android:id="@+id/calendarUserViewReservedRooms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/listUserViewReservedRooms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textUserReserveBook2" />
+        app:layout_constraintTop_toBottomOf="@+id/textUserViewReservedRoomsMiddleText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
