@@ -61,7 +61,8 @@ public class UserReserveBookResultsPage extends Fragment {
             textBookCategoryOutput.setText(category);
             textBookSummaryOutput.setText(summary);
             Picasso.get().load(image).into(imageBookImageOutput);
-
+            Log.d("QTY_AVAIL", QueryConnectorPlusHelper.getQuantityAvailableMinus1FromBookID(availableBookID));
+            Log.d("QTY_BORROW", QueryConnectorPlusHelper.getQuantityBorrowedPlus1FromBookID(availableBookID));
             binding.btnReserveBook.setOnClickListener(v -> {
                 if (reservedBooksFromUser.contains(availableBookID)) {
                     Toast.makeText(getContext(), "Error reserving book\nYou already have this book reserved or pending", Toast.LENGTH_SHORT).show();
@@ -73,7 +74,8 @@ public class UserReserveBookResultsPage extends Fragment {
                     QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS_BORROWED VALUES ("+maxIDBookBorrowed+", "+availableBookID+", "+loggedInUserID+", "+todayDate+", 'Pending')");
                     Toast.makeText(getContext(), textBookNameOutput.getText().toString() + " request to reserve has been made\nPlease wait for the librarian to approve your request", Toast.LENGTH_SHORT).show();
                     NavHostFragment.findNavController(UserReserveBookResultsPage.this).navigate(R.id.action_userReserveBookResultsPage_to_userPage);
-                    QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_AVAILABLE = "+quantityAvailableMinus1+" AND QUANTITY_BORROWED = "+quantityBorrowedPlus1+" WHERE ID = '"+availableBookID+"'");
+                    QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_AVAILABLE = '"+quantityAvailableMinus1+"' WHERE ID = '"+availableBookID+"'");
+                    QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_BORROWED = '"+quantityBorrowedPlus1+"' WHERE ID = '"+availableBookID+"'");
                     FragmentManager fragmentManager = getChildFragmentManager();
                     fragmentManager.popBackStack();
                 }
