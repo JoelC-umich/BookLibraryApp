@@ -73,7 +73,7 @@ public class UserReserveRoomResultsPage extends Fragment {
                 for (int slot = 1; slot <= MAX_SLOTS_PER_ROOM; slot++) {
                     String key = roomID + ":" + slot;
                     if (!reservedSet.contains(key)) {
-                        labels.add("Room " + roomID + " — " + slotToTime(slot));
+                        labels.add("Room " + roomID + " — Slot " + slot + " (" + QueryConnectorPlusHelper.slotToTime(slot) + ")");
                         keys.add(key);
                     }
                 }
@@ -124,7 +124,7 @@ public class UserReserveRoomResultsPage extends Fragment {
             QueryConnectorPlusHelper.insertRoomReservationQuery(roomID, userID, selectedDate, slot);
 
             Toast.makeText(getContext(),
-                    "Room " + roomID + " — " + slotToTime(Integer.parseInt(slot)) + " reserved for " + selectedDate + "!",
+                    "Room " + roomID + " — Slot " + slot + " (" + QueryConnectorPlusHelper.slotToTime(Integer.parseInt(slot)) + ") reserved for " + selectedDate + "!",
                     Toast.LENGTH_LONG).show();
 
             // Use v (the button itself) instead of the stale view reference
@@ -133,16 +133,5 @@ public class UserReserveRoomResultsPage extends Fragment {
         });
 
         return view;
-    }
-
-    private String slotToTime(int slot) {
-        switch (slot) {
-            case 1: return "8:00 AM";
-            case 2: return "10:00 AM";
-            case 3: return "12:00 PM";
-            case 4: return "2:00 PM";
-            case 5: return "4:00 PM";
-            default: return "Unknown";
-        }
     }
 }

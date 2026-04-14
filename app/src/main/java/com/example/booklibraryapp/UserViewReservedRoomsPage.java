@@ -44,11 +44,13 @@ public class UserViewReservedRoomsPage extends Fragment {
 
         listUserViewReservedRooms.setOnItemClickListener((parent, view1, position, id) -> {
             String selectedRequest = (String) parent.getItemAtPosition(position);
+            // "Room: 101 Slot: 1 (8:00 AM) (Reserved)"
             String[] splittedSelectedRequest = selectedRequest.split(" ");
             String roomID = splittedSelectedRequest[1];
-            String time = splittedSelectedRequest[3] + " " + splittedSelectedRequest[4];
-            String slot = timeToSlot(time);
-            String reservedStatus = splittedSelectedRequest[5].replace("(", "").replace(")","");
+            String slotStr = splittedSelectedRequest[3];
+            String time = splittedSelectedRequest[4].replace("(", "").replace(")", "") + " " + splittedSelectedRequest[5].replace("(", "").replace(")", "");
+            String reservedStatus = splittedSelectedRequest[6].replace("(", "").replace(")","");
+            
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             dialogBuilder.setTitle("Cancel Room " + roomID + " Reservation?");
             dialogBuilder.setMessage("Would you like to cancel your " + time + " reservation for Room " + roomID + "?");
@@ -56,8 +58,14 @@ public class UserViewReservedRoomsPage extends Fragment {
             dialogBuilder.setPositiveButton("Yes", (dialog, which) ->
             {
                 QueryConnectorPlusHelper.runQuery("UPDATE ROOMS_RESERVED SET RESERVE_STATUS = 'Canceled' WHERE ROOM_ID = '" + roomID + "' " +
-                        "AND USER_ID = '" + loggedInUserID + "' AND RESERVE_STATUS = '" +reservedStatus+ "' AND SLOT = '" +slot+ "' AND DATE = '" +selectedDate+ "'");
-                Toast.makeText(getContext(), "Room " + roomID + " " + time + " is canceled", Toast.LENGTH_SHORT).show();
+                        "AND USER_ID = '" + loggedInUserID + "' AND RESERVE_STATUS = '" +reservedStatus+ "' AND SLOT = '" +slotStr+ "' AND DATE = '" +selectedDate+ "'", () -> {
+                    if (isAdded()) {
+                        requireActivity().runOnUiThread(() -> {
+                            updateListView(selectedDate);
+                            Toast.makeText(getContext(), "Room " + roomID + " " + time + " is canceled", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                });
             });
 
             dialogBuilder.setNegativeButton("No", (dialog, which) ->
@@ -72,7 +80,6 @@ public class UserViewReservedRoomsPage extends Fragment {
 
             AlertDialog handleRoomRequestDialog = dialogBuilder.create();
             handleRoomRequestDialog.show();
-            //FIND A WAY TO REFRESH THE VIEW AFTER APPROVING/DECLINING REQUESTS
         });
 
         return view;
@@ -97,7 +104,7 @@ public class UserViewReservedRoomsPage extends Fragment {
                         int slot = resultSet.getInt("SLOT");
                         String status = resultSet.getString("RESERVE_STATUS");
 
-                        displayList.add("Room: " + roomID + " Slot: " + slotToTime(slot) + " (" + status + ")");
+                        displayList.add("Room: " + roomID + " Slot: " + slot + " (" + QueryConnectorPlusHelper.slotToTime(slot) + ") (" + status + ")");
                     }
                     resultSet.close();
                     statement.close();
@@ -115,27 +122,5 @@ public class UserViewReservedRoomsPage extends Fragment {
             }
         });
         executor.shutdown();
-    }
-
-    private String slotToTime(int slot) {
-        switch (slot) {
-            case 1: return "8:00 AM";
-            case 2: return "10:00 AM";
-            case 3: return "12:00 PM";
-            case 4: return "2:00 PM";
-            case 5: return "4:00 PM";
-            default: return "Unknown";
-        }
-    }
-
-    private String timeToSlot(String time) {
-        switch (time) {
-            case "8:00 AM": return "1";
-            case "10:00 AM": return "2";
-            case "12:00 PM": return "3";
-            case "2:00 PM": return "4";
-            case "4:00 PM": return "5";
-            default: return "Unknown";
-        }
     }
 }

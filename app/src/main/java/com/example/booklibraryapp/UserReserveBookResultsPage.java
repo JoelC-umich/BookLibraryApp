@@ -3,7 +3,6 @@ package com.example.booklibraryapp;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -27,12 +26,7 @@ public class UserReserveBookResultsPage extends Fragment {
     Button btnReserveBook;
     String availableBookName, availableBookID, author, category, summary, image;
     String loggedInUserID = QueryConnectorPlusHelper.IDWhenLoggingIn;
-    List<String> reservedBooksFromUser = QueryConnectorPlusHelper.getReservedBooksFromUserID(loggedInUserID);
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -49,6 +43,7 @@ public class UserReserveBookResultsPage extends Fragment {
         TextView textBookSummaryOutput = view.findViewById(R.id.textBookSummaryOutput);
         ImageView imageBookImageOutput = view.findViewById(R.id.imageBookImageOutput);
         btnReserveBook = view.findViewById(R.id.btnReserveBook);
+
         getParentFragmentManager().setFragmentResultListener("availableBookInfo", this, (requestKey, bundle) -> {
             availableBookName = bundle.getString("availableBook");
             availableBookID = QueryConnectorPlusHelper.getBookIDFromBookNameQuery(availableBookName);
@@ -56,14 +51,15 @@ public class UserReserveBookResultsPage extends Fragment {
             category = QueryConnectorPlusHelper.getBookCategoryFromBookID(availableBookID);
             summary = QueryConnectorPlusHelper.getBookSummaryFromBookID(availableBookID);
             image = QueryConnectorPlusHelper.getBookImageFromBookID(availableBookID);
+            
             textBookNameOutput.setText(availableBookName);
             textBookAuthorOutput.setText(author);
             textBookCategoryOutput.setText(category);
             textBookSummaryOutput.setText(summary);
             Picasso.get().load(image).into(imageBookImageOutput);
-            Log.d("QTY_AVAIL", QueryConnectorPlusHelper.getQuantityAvailableMinus1FromBookID(availableBookID));
-            Log.d("QTY_BORROW", QueryConnectorPlusHelper.getQuantityBorrowedPlus1FromBookID(availableBookID));
+
             binding.btnReserveBook.setOnClickListener(v -> {
+                List<String> reservedBooksFromUser = QueryConnectorPlusHelper.getReservedBooksFromUserID(loggedInUserID);
                 if (reservedBooksFromUser.contains(availableBookID)) {
                     Toast.makeText(getContext(), "Error reserving book\nYou already have this book reserved or pending", Toast.LENGTH_SHORT).show();
                 } else {
@@ -71,13 +67,16 @@ public class UserReserveBookResultsPage extends Fragment {
                     String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                     String quantityAvailableMinus1 = QueryConnectorPlusHelper.getQuantityAvailableMinus1FromBookID(availableBookID);
                     String quantityBorrowedPlus1 = QueryConnectorPlusHelper.getQuantityBorrowedPlus1FromBookID(availableBookID);
-                    QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS_BORROWED VALUES ("+maxIDBookBorrowed+", "+availableBookID+", "+loggedInUserID+", "+todayDate+", 'Pending')");
-                    Toast.makeText(getContext(), textBookNameOutput.getText().toString() + " request to reserve has been made\nPlease wait for the librarian to approve your request", Toast.LENGTH_SHORT).show();
-                    NavHostFragment.findNavController(UserReserveBookResultsPage.this).navigate(R.id.action_userReserveBookResultsPage_to_userPage);
+                    
+                    // Fixed: Added quotes around todayDate for SQL
+                    QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS_BORROWED VALUES ("+maxIDBookBorrowed+", "+availableBookID+", "+loggedInUserID+", '"+todayDate+"', 'Pending')");
                     QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_AVAILABLE = '"+quantityAvailableMinus1+"' WHERE ID = '"+availableBookID+"'");
                     QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_BORROWED = '"+quantityBorrowedPlus1+"' WHERE ID = '"+availableBookID+"'");
-                    FragmentManager fragmentManager = getChildFragmentManager();
-                    fragmentManager.popBackStack();
+                    
+                    Toast.makeText(getContext(), availableBookName + " request to reserve has been made\nPlease wait for the librarian to approve your request", Toast.LENGTH_SHORT).show();
+                    
+                    // Navigate back to UserPage and clear the search/results fragments from the stack
+                    NavHostFragment.findNavController(this).popBackStack(R.id.userPage, false);
                 }
             });
         });

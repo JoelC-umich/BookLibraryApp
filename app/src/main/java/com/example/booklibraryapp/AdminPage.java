@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,6 +19,20 @@ public class AdminPage extends Fragment {
 
     private AdminPageBinding binding;
     String loggedInUserID = QueryConnectorPlusHelper.IDWhenLoggingIn;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // This callback will only be called when AdminPage is at the top of the back stack
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                logout();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -54,8 +69,7 @@ public class AdminPage extends Fragment {
         );
 
         binding.btnAdminLogout.setOnClickListener(v -> {
-            NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_LoginPage);
-            Toast.makeText(getContext(), "You are successfully logged out", Toast.LENGTH_SHORT).show();
+            logout();
         });
 
         binding.btnAdminViewCreateAccount.setOnClickListener(v ->
@@ -113,6 +127,11 @@ public class AdminPage extends Fragment {
             AlertDialog createRoomDialog = dialogBuilder.create();
             createRoomDialog.show();
         });
+    }
+
+    private void logout() {
+        Toast.makeText(requireContext(), "You are successfully logged out", Toast.LENGTH_SHORT).show();
+        NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_LoginPage);
     }
 
     @Override

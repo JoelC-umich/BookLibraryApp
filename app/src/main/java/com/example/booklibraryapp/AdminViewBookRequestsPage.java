@@ -23,20 +23,22 @@ public class AdminViewBookRequestsPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_admin_view_book_requests_page, container, false);
-        // Correct ID (VERY IMPORTANT)
         listAdminViewBookRequests = view.findViewById(R.id.listAdminViewBookRequests);
-        List<String> pendingBooksReservedQuery = QueryConnectorPlusHelper.getPendingBooksReservedQuery();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, pendingBooksReservedQuery);
-        listAdminViewBookRequests.setAdapter(adapter);
-        // Click logic
+        
+        refreshList();
+
         listAdminViewBookRequests.setOnItemClickListener((parent, view1, position, id) -> {
-            String selectedRequestID = (String) parent.getItemAtPosition(position);
+            String selectedItem = (String) parent.getItemAtPosition(position);
+            // Parse the ID from "Request #ID: First Last - BookName"
+            String selectedRequestID = selectedItem.substring(selectedItem.indexOf("#") + 1, selectedItem.indexOf(":"));
+            
             String bookID = QueryConnectorPlusHelper.getBookIDFromBorrowedBooksID(selectedRequestID);
             String userID = QueryConnectorPlusHelper.getUserIDFromBorrowedBooksID(selectedRequestID);
             String bookTitle = QueryConnectorPlusHelper.getBookTitleFromBookID(bookID);
             String userFullName = (QueryConnectorPlusHelper.getFirstNameFromIDQuery(userID) + " " + QueryConnectorPlusHelper.getLastNameFromIDQuery(userID));
             String userEmail = QueryConnectorPlusHelper.getEmailFromIDQuery(userID);
             String dateBorrowing = QueryConnectorPlusHelper.getDateFromBorrowedBooksID(selectedRequestID);
+            
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             dialogBuilder.setTitle("Book Request " + selectedRequestID);
             dialogBuilder.setMessage(
@@ -50,14 +52,29 @@ public class AdminViewBookRequestsPage extends Fragment {
 
             dialogBuilder.setPositiveButton("Yes", (dialog, which) ->
             {
-                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Reserved' WHERE ID = '" + selectedRequestID + "'");
-                Toast.makeText(getContext(), "Request " + selectedRequestID + " is successfully approved", Toast.LENGTH_SHORT).show();
+                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Reserved' WHERE ID = '" + selectedRequestID + "'", () -> {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "Request " + selectedRequestID + " is successfully approved", Toast.LENGTH_SHORT).show();
+                            refreshList();
+                        });
+                    }
+                });
             });
 
             dialogBuilder.setNegativeButton("No", (dialog, which) ->
             {
-                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Denied' WHERE ID = '" + selectedRequestID + "'");
-                Toast.makeText(getContext(), "Request " + selectedRequestID + " has been denied", Toast.LENGTH_SHORT).show();
+                // When denying, we should also return the book to stock
+                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_AVAILABLE = QUANTITY_AVAILABLE + 1, QUANTITY_BORROWED = QUANTITY_BORROWED - 1 WHERE ID = '" + bookID + "'", () -> {
+                    QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Denied' WHERE ID = '" + selectedRequestID + "'", () -> {
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(() -> {
+                                Toast.makeText(getContext(), "Request " + selectedRequestID + " has been denied", Toast.LENGTH_SHORT).show();
+                                refreshList();
+                            });
+                        }
+                    });
+                });
             });
 
             dialogBuilder.setNeutralButton("Cancel", (dialog, which) ->
@@ -67,8 +84,13 @@ public class AdminViewBookRequestsPage extends Fragment {
 
             AlertDialog handleRoomRequestDialog = dialogBuilder.create();
             handleRoomRequestDialog.show();
-            //FIND A WAY TO REFRESH THE VIEW AFTER APPROVING/DECLINING REQUESTS
         });
         return view;
+    }
+
+    private void refreshList() {
+        List<String> pendingBooksReservedQuery = QueryConnectorPlusHelper.getPendingBooksReservedWithDetailsQuery();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, pendingBooksReservedQuery);
+        listAdminViewBookRequests.setAdapter(adapter);
     }
 }

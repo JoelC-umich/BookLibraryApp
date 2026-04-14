@@ -15,6 +15,7 @@ public class UserReserveBookPage extends Fragment
 {
     ListView listUserReserveBookPage;
     SearchView searchUserReserveBookPage;
+    
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -27,6 +28,7 @@ public class UserReserveBookPage extends Fragment
         View view = inflater.inflate(R.layout.fragment_user_reserve_book_page, container, false);
         listUserReserveBookPage = view.findViewById(R.id.listUserReserveBookPage);
         searchUserReserveBookPage = view.findViewById(R.id.searchUserReserveBookPage);
+        
         List<String> availableBooks = QueryConnectorPlusHelper.getAvailableBooksQuery();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, availableBooks);
         listUserReserveBookPage.setAdapter(adapter);
@@ -46,13 +48,19 @@ public class UserReserveBookPage extends Fragment
         });
 
         listUserReserveBookPage.setOnItemClickListener((parent, view1, position, id) -> {
-            String book = (String) parent.getItemAtPosition(position);
+            String selectedItem = (String) parent.getItemAtPosition(position);
+            // Extract book name from "Book Name by Author"
+            String bookName = selectedItem;
+            if (selectedItem.contains(" by ")) {
+                bookName = selectedItem.substring(0, selectedItem.lastIndexOf(" by "));
+            }
+            
             Bundle availableBookSelected = new Bundle();
-            availableBookSelected.putString("availableBook", book.toString());
+            availableBookSelected.putString("availableBook", bookName);
             getParentFragmentManager().setFragmentResult("availableBookInfo", availableBookSelected);
             NavHostFragment.findNavController(UserReserveBookPage.this).navigate(R.id.action_userReserveBookPage_to_userReserveBookResultsPage);
         });
+        
         return view;
     }
-
 }

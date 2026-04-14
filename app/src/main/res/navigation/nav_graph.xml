@@ -96,7 +96,9 @@
         tools:layout="@layout/fragment_user_view_reserved_books_page" >
         <action
             android:id="@+id/action_userViewReservedBooksPage_to_userPage"
-            app:destination="@id/userPage" />
+            app:destination="@id/userPage"
+            app:popUpTo="@id/userPage"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/userReserveRoomPage"
@@ -117,7 +119,9 @@
         tools:layout="@layout/fragment_user_view_reserved_rooms_page" >
         <action
             android:id="@+id/action_userViewReservedRoomsPage_to_userPage"
-            app:destination="@id/userPage" />
+            app:destination="@id/userPage"
+            app:popUpTo="@id/userPage"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/userReserveRoomResultsPage"
@@ -126,7 +130,9 @@
         tools:layout="@layout/fragment_user_reserve_room_results_page" >
         <action
             android:id="@+id/action_userReserveRoomResultsPage_to_userPage"
-            app:destination="@id/userPage" />
+            app:destination="@id/userPage"
+            app:popUpTo="@id/userPage"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/adminViewBookRequestsPage"
@@ -252,6 +258,8 @@
         tools:layout="@layout/fragment_user_reserve_book_results_page" >
         <action
             android:id="@+id/action_userReserveBookResultsPage_to_userPage"
-            app:destination="@id/userPage" />
+            app:destination="@id/userPage"
+            app:popUpTo="@id/userPage"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
