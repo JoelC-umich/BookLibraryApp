@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -46,9 +48,10 @@ public class UserPage extends Fragment {
                 NavHostFragment.findNavController(UserPage.this).navigate(R.id.action_userPage_to_userViewReservedRoomsPage)
         );
 
-        binding.btnUserLogout.setOnClickListener(v ->
-                NavHostFragment.findNavController(UserPage.this).navigate(R.id.action_userPage_to_LoginPage)
-        );
+        binding.btnUserLogout.setOnClickListener(v -> {
+            NavHostFragment.findNavController(UserPage.this).navigate(R.id.action_userPage_to_LoginPage);
+            Toast.makeText(getContext(), "You are successfully logged out", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override

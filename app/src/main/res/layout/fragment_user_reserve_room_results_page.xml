@@ -8,9 +8,9 @@
     tools:context=".UserReserveRoomResultsPage" >
 
     <ListView
-        android:id="@+id/listView"
-        android:layout_width="311dp"
-        android:layout_height="482dp"
+        android:id="@+id/listUserReserveRoomResults"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonReserveRoomReserve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         android:text="Select a Time Slot"
         android:textColor="#9C27B0"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintBottom_toTopOf="@+id/listUserReserveRoomResults"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,5 +38,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView" />
+        app:layout_constraintTop_toBottomOf="@+id/listUserReserveRoomResults" />
 </androidx.constraintlayout.widget.ConstraintLayout>

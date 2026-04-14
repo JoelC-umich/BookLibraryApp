@@ -10,25 +10,25 @@
         android:id="@+id/inputLoginUsername"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginStart="44dp"
         android:hint="Username"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textMiddleLogin"
         app:layout_constraintVertical_bias="0.049" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inputLoginPassword"
-        android:layout_width="320dp"
+        android:layout_width="185dp"
         android:layout_height="50dp"
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.203"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputLoginUsername"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintVertical_bias="0.051" />
 
     <ImageView
         android:id="@+id/imageLoginBook"
@@ -94,5 +94,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+    <CheckBox
+        android:id="@+id/checkLoginPageShowPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="28dp"
+        android:text="Show Password"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/inputLoginPassword"
+        app:layout_constraintTop_toBottomOf="@+id/inputLoginUsername" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,9 +53,10 @@ public class AdminPage extends Fragment {
                 NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_adminViewBookRequestsPage)
         );
 
-        binding.btnAdminLogout.setOnClickListener(v ->
-                NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_LoginPage)
-        );
+        binding.btnAdminLogout.setOnClickListener(v -> {
+            NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_LoginPage);
+            Toast.makeText(getContext(), "You are successfully logged out", Toast.LENGTH_SHORT).show();
+        });
 
         binding.btnAdminViewCreateAccount.setOnClickListener(v ->
                 NavHostFragment.findNavController(AdminPage.this).navigate(R.id.action_AdminPage_to_createUserPageAdmin)

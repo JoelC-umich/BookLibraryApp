@@ -7,17 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".UserReserveBookPage" >
 
-    <Button
-        android:id="@+id/btnReserveBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#0091EA"
-        android:text="Reserve"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listUserReserveBookPage" />
-
     <TextView
         android:id="@+id/textUserReserveBook"
         android:layout_width="wrap_content"
@@ -25,12 +14,10 @@
         android:text="Reserve a Book"
         android:textColor="#9C27B0"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/searchUserReserveBookPage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
         android:id="@+id/searchUserReserveBookPage"
@@ -45,9 +32,10 @@
     <ListView
         android:id="@+id/listUserReserveBookPage"
         android:layout_width="350dp"
-        android:layout_height="400dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnReserveBook"
+        android:layout_height="500dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchUserReserveBookPage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

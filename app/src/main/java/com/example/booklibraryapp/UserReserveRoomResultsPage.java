@@ -40,7 +40,7 @@ public class UserReserveRoomResultsPage extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_reserve_room_results_page, container, false);
 
-        ListView listView = view.findViewById(R.id.listView);
+        ListView listView = view.findViewById(R.id.listUserReserveRoomResults);
         Button buttonReserve = view.findViewById(R.id.buttonReserveRoomReserve);
 
         // Pull the date the previous fragment passed in
@@ -129,7 +129,7 @@ public class UserReserveRoomResultsPage extends Fragment {
 
             // Use v (the button itself) instead of the stale view reference
             Navigation.findNavController(v)
-                    .navigate(R.id.action_userReserveRoomResultsPage_to_userReserveRoomPage);
+                    .navigate(R.id.action_userReserveRoomResultsPage_to_userPage);
         });
 
         return view;

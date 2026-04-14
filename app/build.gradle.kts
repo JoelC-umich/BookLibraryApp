@@ -53,4 +53,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("mysql:mysql-connector-java:5.1.49")
+    implementation("com.squareup.picasso:picasso:2.71828")
 }

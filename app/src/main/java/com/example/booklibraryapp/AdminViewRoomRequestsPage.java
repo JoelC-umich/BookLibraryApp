@@ -28,12 +28,13 @@ public class AdminViewRoomRequestsPage extends Fragment
         listViewAdminRoomRequests.setAdapter(adapter);
         listViewAdminRoomRequests.setOnItemClickListener((parent, view1, position, id) -> {
             String selectedRequestID = (String) parent.getItemAtPosition(position);
-            String roomID = QueryConnectorPlusHelper.getRoomIDFromReserveID(selectedRequestID);
-            String userID = QueryConnectorPlusHelper.getUserIDFromReserveID(selectedRequestID);
+            String roomID = QueryConnectorPlusHelper.getRoomIDFromRoomReserveID(selectedRequestID);
+            String userID = QueryConnectorPlusHelper.getUserIDFromRoomReserveID(selectedRequestID);
             String username = QueryConnectorPlusHelper.getUsernameFromID(userID);
             String userFullName = (QueryConnectorPlusHelper.getFirstNameFromIDQuery(userID)+" "+QueryConnectorPlusHelper.getLastNameFromIDQuery(userID));
             String userEmail = QueryConnectorPlusHelper.getEmailFromIDQuery(userID);
-            String slot = QueryConnectorPlusHelper.getSlotFromReserveID(selectedRequestID);
+            String slot = QueryConnectorPlusHelper.getSlotFromRoomReserveID(selectedRequestID);
+            String date = QueryConnectorPlusHelper.getDateFromRoomReserveID(selectedRequestID);
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             dialogBuilder.setTitle("Room Request "+selectedRequestID);
             dialogBuilder.setMessage(
@@ -43,6 +44,7 @@ public class AdminViewRoomRequestsPage extends Fragment
                     "\nFull Name: "+userFullName+
                     "\nEmail: "+userEmail+
                     "\nSlot: "+slot+
+                    "\nDate: "+date+
                     "\n\nApprove?");
 
             dialogBuilder.setPositiveButton("Yes", (dialog, which) ->
