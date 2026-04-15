@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout11"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserReserveRoomResultsPage" >
+    android:fillViewport="true">
 
-    <ListView
-        android:id="@+id/listUserReserveRoomResults"
-        android:layout_width="350dp"
-        android:layout_height="500dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonReserveRoomReserve"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewReserveRoomSelectTImeSlot" />
-
-    <TextView
-        android:id="@+id/textViewReserveRoomSelectTImeSlot"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout11"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select a Time Slot"
-        android:textColor="#9C27B0"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/listUserReserveRoomResults"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:padding="16dp"
+        tools:context=".UserReserveRoomResultsPage">
 
-    <Button
-        android:id="@+id/buttonReserveRoomReserve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#0091EA"
-        android:text="Reserve Room"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listUserReserveRoomResults" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewReserveRoomSelectTImeSlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select a Time Slot"
+            android:textColor="#9C27B0"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/listUserReserveRoomResults"
+            android:layout_width="379dp"
+            android:layout_height="572dp"
+            android:layout_marginTop="16dp"
+            android:nestedScrollingEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewReserveRoomSelectTImeSlot" />
+
+        <Button
+            android:id="@+id/buttonReserveRoomReserve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#0091EA"
+            android:text="Reserve Room"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listUserReserveRoomResults" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

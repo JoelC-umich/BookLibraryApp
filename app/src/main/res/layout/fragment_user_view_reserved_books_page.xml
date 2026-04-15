@@ -1,40 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserViewReservedBooksPage" >
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/textUserReservedBooks"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reserved Books"
-        android:textColor="#9C27B0"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/searchUserViewReservedBooks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="16dp"
+        tools:context=".UserViewReservedBooksPage">
 
-    <ListView
-        android:id="@+id/listViewUserViewReservedBooks"
-        android:layout_width="350dp"
-        android:layout_height="482dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchUserViewReservedBooks" />
+        <TextView
+            android:id="@+id/textUserReservedBooks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reserved Books"
+            android:textColor="#9C27B0"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <SearchView
-        android:id="@+id/searchUserViewReservedBooks"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/listViewUserViewReservedBooks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textUserReservedBooks" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <SearchView
+            android:id="@+id/searchUserViewReservedBooks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textUserReservedBooks" />
+
+        <ListView
+            android:id="@+id/listViewUserViewReservedBooks"
+            android:layout_width="395dp"
+            android:layout_height="583dp"
+            android:layout_marginTop="16dp"
+            android:nestedScrollingEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchUserViewReservedBooks" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

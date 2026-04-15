@@ -43,8 +43,15 @@ public class AdminViewBookInventory extends Fragment {
 
         listViewAdminViewBookInventory.setOnItemClickListener((parent, view1, position, id) -> {
             String item = (String) parent.getItemAtPosition(position);
+            
+            // Extract book name from "Book Name by Author" to ensure database lookups work
+            String bookName = item;
+            if (item.contains(" by ")) {
+                bookName = item.substring(0, item.lastIndexOf(" by "));
+            }
+            
             Bundle bookNameSelected = new Bundle();
-            bookNameSelected.putString("bookName", item.toString());
+            bookNameSelected.putString("bookName", bookName);
             getParentFragmentManager().setFragmentResult("bookNameInfo", bookNameSelected);
             NavHostFragment.findNavController(AdminViewBookInventory.this).navigate(R.id.action_adminViewBookInventory_to_adminViewBookInventoryEditBook);
         });

@@ -59,7 +59,7 @@ public class AdminViewRoomReservationsPage extends Fragment {
                     String query = "SELECT RR.USER_ID, RR.SLOT, RR.RESERVE_STATUS, U.FIRST_NAME, U.LAST_NAME " +
                                    "FROM ROOMS_RESERVED RR " +
                                    "JOIN USERS U ON RR.USER_ID = U.ID " +
-                                   "WHERE RR.DATE = '" + date + "'";
+                                   "WHERE RR.DATE = '" + date + "' AND RR.RESERVE_STATUS != 'Canceled'";
                     ResultSet resultSet = statement.executeQuery(query);
                     while (resultSet.next()) {
                         String firstName = resultSet.getString("FIRST_NAME");
@@ -67,7 +67,7 @@ public class AdminViewRoomReservationsPage extends Fragment {
                         int slot = resultSet.getInt("SLOT");
                         String status = resultSet.getString("RESERVE_STATUS");
                         
-                        displayList.add(firstName + " " + lastName + " - Slot: " + slotToTime(slot) + " (" + status + ")");
+                        displayList.add(firstName + " " + lastName + " - Slot: " + slot + " (" + QueryConnectorPlusHelper.slotToTime(slot) + ") (" + status + ")");
                     }
                     resultSet.close();
                     statement.close();
@@ -86,16 +86,5 @@ public class AdminViewRoomReservationsPage extends Fragment {
             }
         });
         executor.shutdown();
-    }
-
-    private String slotToTime(int slot) {
-        switch (slot) {
-            case 1: return "8:00 AM";
-            case 2: return "10:00 AM";
-            case 3: return "12:00 PM";
-            case 4: return "2:00 PM";
-            case 5: return "4:00 PM";
-            default: return "Unknown";
-        }
     }
 }

@@ -34,7 +34,7 @@ public class AdminViewBorrowedBooksPage extends Fragment {
         // Correct ID (VERY IMPORTANT)
         listAdminViewBorrowedBooks = view.findViewById(R.id.listAdminViewBorrowedBooks);
         searchAdminViewBorrowedBooks = view.findViewById(R.id.searchAdminViewBorrowedBooks);
-        List<String> borrowedBooks = QueryConnectorPlusHelper.getBorrowedBooksQuery();
+        List<String> borrowedBooks = QueryConnectorPlusHelper.getBorrowedBooksWithDetailsQuery();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, borrowedBooks);
         listAdminViewBorrowedBooks.setAdapter(adapter);

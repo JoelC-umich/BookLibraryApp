@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/textAdminViewBorrowedBooksMiddleText"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Borrowed Books"
-        android:textColor="#9C27B0"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/searchAdminViewBorrowedBooks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="16dp">
 
-    <ListView
-        android:id="@+id/listAdminViewBorrowedBooks"
-        android:layout_width="350dp"
-        android:layout_height="500dp"
-        android:clickable="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchAdminViewBorrowedBooks" />
+        <TextView
+            android:id="@+id/textAdminViewBorrowedBooksMiddleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Borrowed Books"
+            android:textColor="#9C27B0"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <SearchView
-        android:id="@+id/searchAdminViewBorrowedBooks"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/listAdminViewBorrowedBooks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdminViewBorrowedBooksMiddleText" />
+        <SearchView
+            android:id="@+id/searchAdminViewBorrowedBooks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search for a book"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textAdminViewBorrowedBooksMiddleText" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ListView
+            android:id="@+id/listAdminViewBorrowedBooks"
+            android:layout_width="374dp"
+            android:layout_height="570dp"
+            android:layout_marginTop="16dp"
+            android:clickable="false"
+            android:nestedScrollingEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchAdminViewBorrowedBooks" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

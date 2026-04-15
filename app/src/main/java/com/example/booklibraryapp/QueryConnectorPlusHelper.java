@@ -92,7 +92,7 @@ public class QueryConnectorPlusHelper {
             }
 
             try {
-                if (connection.isClosed() == false) {
+                if (connection != null && connection.isClosed() == false) {
                     connection.close();
                 }
             } catch (Exception e) {
@@ -102,6 +102,10 @@ public class QueryConnectorPlusHelper {
     }
 
     public static void runQuery(String query) {
+        runQuery(query, null);
+    }
+
+    public static void runQuery(String query, Runnable onComplete) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             try {
@@ -111,6 +115,9 @@ public class QueryConnectorPlusHelper {
                     statement.executeUpdate(query);
                     statement.close(); //MUST CLOSE IN ORDER FOR APP TO RUN
                     connection.close();
+                    if (onComplete != null) {
+                        onComplete.run();
+                    }
                 } else {
                     Log.d("EXECUTED_QUERY_FAILED", "Executed query failed due to Connector");
                 }
@@ -220,9 +227,9 @@ public class QueryConnectorPlusHelper {
             List<String> bookNameList = new ArrayList<>();
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS");
+            ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME, BOOK_AUTHOR FROM BOOKS");
             while (setResult.next()) {
-                bookNameList.add(setResult.getString("BOOK_NAME"));
+                bookNameList.add(setResult.getString("BOOK_NAME") + " by " + setResult.getString("BOOK_AUTHOR"));
             }
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
             statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -268,7 +275,7 @@ public class QueryConnectorPlusHelper {
             List<String> reservedBookNameList = new ArrayList<>();
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("select BOOKS.BOOK_NAME, BOOKS_BORROWED.RESERVE_STATUS from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID INNER JOIN USERS ON USERS.ID = BOOKS_BORROWED.USER_ID WHERE USER_ID = '"+UserID+"' AND BOOKS_BORROWED.RESERVE_STATUS = 'Reserved' OR BOOKS_BORROWED.RESERVE_STATUS = 'Pending'");
+            ResultSet setResult = statement.executeQuery("select BOOKS.BOOK_NAME, BOOKS_BORROWED.RESERVE_STATUS from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID INNER JOIN USERS ON USERS.ID = BOOKS_BORROWED.USER_ID WHERE USER_ID = '"+UserID+"' AND (BOOKS_BORROWED.RESERVE_STATUS = 'Reserved' OR BOOKS_BORROWED.RESERVE_STATUS = 'Pending')");
             while (setResult.next()) {
                 reservedBookNameList.add((setResult.getString("BOOK_NAME") + " (" + setResult.getString("RESERVE_STATUS") + ")"));
             }
@@ -312,6 +319,39 @@ public class QueryConnectorPlusHelper {
         }
     }
 
+    public static List<String> getBorrowedBooksDetailedQuery(String UserID) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<String>> future = executorService.submit(() -> {
+            List<String> detailsList = new ArrayList<>();
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery(
+                    "SELECT BOOKS_BORROWED.ID, BOOKS_BORROWED.BOOK_ID, BOOKS.BOOK_NAME, BOOKS_BORROWED.RESERVE_STATUS, BOOKS_BORROWED.DATE_BORROWED " +
+                            "FROM BOOKS_BORROWED " +
+                            "INNER JOIN BOOKS ON BOOKS_BORROWED.BOOK_ID = BOOKS.ID " +
+                            "WHERE BOOKS_BORROWED.USER_ID = '" + UserID + "' AND (BOOKS_BORROWED.RESERVE_STATUS = 'Reserved' OR BOOKS_BORROWED.RESERVE_STATUS = 'Pending')"
+            );
+            while (setResult.next()) {
+                detailsList.add(setResult.getString("ID") + ";;;" +
+                        setResult.getString("BOOK_ID") + ";;;" +
+                        setResult.getString("BOOK_NAME") + ";;;" +
+                        setResult.getString("RESERVE_STATUS") + ";;;" +
+                        setResult.getString("DATE_BORROWED"));
+            }
+            setResult.close();
+            statement.close();
+            connection.close();
+            return detailsList;
+        });
+        try {
+            return future.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
     public static List<String> getPendingBooksReservedQuery() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<String>> listFuturePendingBooks = executorService.submit(() -> {
@@ -336,6 +376,38 @@ public class QueryConnectorPlusHelper {
         }
     }
 
+    public static List<String> getPendingBooksReservedWithDetailsQuery() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<String>> listFuturePendingBooks = executorService.submit(() -> {
+            List<String> pendingBooksList = new ArrayList<>();
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery(
+                    "SELECT BOOKS_BORROWED.ID, USERS.FIRST_NAME, USERS.LAST_NAME, BOOKS.BOOK_NAME " +
+                            "FROM BOOKS_BORROWED " +
+                            "INNER JOIN USERS ON BOOKS_BORROWED.USER_ID = USERS.ID " +
+                            "INNER JOIN BOOKS ON BOOKS_BORROWED.BOOK_ID = BOOKS.ID " +
+                            "WHERE BOOKS_BORROWED.RESERVE_STATUS = 'Pending'");
+            while (setResult.next()) {
+                String details = "Request #" + setResult.getString("ID") + ": " +
+                        setResult.getString("FIRST_NAME") + " " + setResult.getString("LAST_NAME") +
+                        " - " + setResult.getString("BOOK_NAME");
+                pendingBooksList.add(details);
+            }
+            setResult.close();
+            statement.close();
+            connection.close();
+            return pendingBooksList;
+        });
+        try {
+            return listFuturePendingBooks.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
     public static List<String> getPendingRoomsReservedQuery() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<String>> listFuturePendingRooms = executorService.submit(() -> {
@@ -349,6 +421,38 @@ public class QueryConnectorPlusHelper {
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
             statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
             connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
+            return pendingRoomsList;
+        });
+        try {
+            return listFuturePendingRooms.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            executorService.shutdown();
+        }
+    }
+
+    public static List<String> getPendingRoomsReservedWithDetailsQuery() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<List<String>> listFuturePendingRooms = executorService.submit(() -> {
+            List<String> pendingRoomsList = new ArrayList<>();
+            Connection connection = Connector();
+            Statement statement = connection.createStatement();
+            ResultSet setResult = statement.executeQuery(
+                    "SELECT ROOMS_RESERVED.ID, USERS.FIRST_NAME, USERS.LAST_NAME, ROOMS_RESERVED.DATE, ROOMS_RESERVED.SLOT " +
+                    "FROM ROOMS_RESERVED " +
+                    "INNER JOIN USERS ON ROOMS_RESERVED.USER_ID = USERS.ID " +
+                    "WHERE ROOMS_RESERVED.RESERVE_STATUS = 'Pending'");
+            while (setResult.next()) {
+                int slot = setResult.getInt("SLOT");
+                String details = "Request #" + setResult.getString("ID") + ": " +
+                        setResult.getString("FIRST_NAME") + " " + setResult.getString("LAST_NAME") +
+                        " | Date: " + setResult.getString("DATE") + " | Slot: " + slot + " (" + slotToTime(slot) + ")";
+                pendingRoomsList.add(details);
+            }
+            setResult.close();
+            statement.close();
+            connection.close();
             return pendingRoomsList;
         });
         try {
@@ -944,18 +1048,24 @@ public class QueryConnectorPlusHelper {
     public static List<String> getBorrowedBooksQuery() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<String>> listFuture = executorService.submit(() -> {
-            List<String> usernameList = new ArrayList<>();
+            List<String> borrowedList = new ArrayList<>();
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("select distinct BOOK_NAME from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID WHERE BOOKS_BORROWED.RESERVE_STATUS = 'Reserved'");
-            while (setResult.next())
-            {
-                usernameList.add(setResult.getString("BOOK_NAME"));
+            ResultSet setResult = statement.executeQuery(
+                    "SELECT USERS.FIRST_NAME, USERS.LAST_NAME, BOOKS.BOOK_NAME " +
+                            "FROM BOOKS_BORROWED " +
+                            "INNER JOIN USERS ON BOOKS_BORROWED.USER_ID = USERS.ID " +
+                            "INNER JOIN BOOKS ON BOOKS_BORROWED.BOOK_ID = BOOKS.ID " +
+                            "WHERE BOOKS_BORROWED.RESERVE_STATUS = 'Reserved'");
+            while (setResult.next()) {
+                borrowedList.add(setResult.getString("FIRST_NAME") + " " +
+                        setResult.getString("LAST_NAME") + " - " +
+                        setResult.getString("BOOK_NAME"));
             }
-            setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
-            statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
-            connection.close();//MUST CLOSE IN ORDER FOR APP TO RUN
-            return usernameList;
+            setResult.close();
+            statement.close();
+            connection.close();
+            return borrowedList;
         });
         try {
             return listFuture.get();
@@ -964,6 +1074,10 @@ public class QueryConnectorPlusHelper {
         } finally {
             executorService.shutdown();
         }
+    }
+
+    public static List<String> getBorrowedBooksWithDetailsQuery() {
+        return getBorrowedBooksQuery();
     }
 
     public static String getBookIDFromBorrowedBooksID(String ID) {
@@ -1060,10 +1174,11 @@ public class QueryConnectorPlusHelper {
             List<String> availableBooksList = new ArrayList<>();
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS WHERE QUANTITY_AVAILABLE > 0");
+            // Available books = QUANTITY_AVAILABLE > 0
+            ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME, BOOK_AUTHOR FROM BOOKS WHERE QUANTITY_AVAILABLE > 0");
             while (setResult.next())
             {
-                availableBooksList.add(setResult.getString("BOOK_NAME"));
+                availableBooksList.add(setResult.getString("BOOK_NAME") + " by " + setResult.getString("BOOK_AUTHOR"));
             }
             setResult.close();//MUST CLOSE IN ORDER FOR APP TO RUN
             statement.close();//MUST CLOSE IN ORDER FOR APP TO RUN
@@ -1085,7 +1200,7 @@ public class QueryConnectorPlusHelper {
             List<String> reservedBooksUser = new ArrayList<>();
             Connection connection = Connector();
             Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_ID FROM BOOKS_BORROWED WHERE USER_ID = '" + UserID + "' AND RESERVE_STATUS = 'Pending' OR RESERVE_STATUS = 'Reserved'");
+            ResultSet setResult = statement.executeQuery("SELECT BOOK_ID FROM BOOKS_BORROWED WHERE USER_ID = '" + UserID + "' AND (RESERVE_STATUS = 'Pending' OR RESERVE_STATUS = 'Reserved')");
             while (setResult.next())
             {
                 reservedBooksUser.add(setResult.getString("BOOK_ID"));
@@ -1123,6 +1238,23 @@ public class QueryConnectorPlusHelper {
             throw new RuntimeException(e);
         } finally {
             executorService.shutdown();
+        }
+    }
+
+    public static void returnBook(String borrowedID, String bookID, Runnable onComplete) {
+        runQuery("UPDATE BOOKS SET QUANTITY_AVAILABLE = QUANTITY_AVAILABLE + 1, QUANTITY_BORROWED = QUANTITY_BORROWED - 1 WHERE ID = '" + bookID + "'", () -> {
+            runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Returned' WHERE ID = '" + borrowedID + "'", onComplete);
+        });
+    }
+
+    public static String slotToTime(int slot) {
+        switch (slot) {
+            case 1: return "8:00 AM";
+            case 2: return "10:00 AM";
+            case 3: return "12:00 PM";
+            case 4: return "2:00 PM";
+            case 5: return "4:00 PM";
+            default: return "Unknown";
         }
     }
 }

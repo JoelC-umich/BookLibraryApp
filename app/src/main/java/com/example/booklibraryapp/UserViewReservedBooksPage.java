@@ -13,6 +13,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.booklibraryapp.databinding.FragmentUserViewReservedBooksPageBinding;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserViewReservedBooksPage extends Fragment
@@ -21,13 +22,12 @@ public class UserViewReservedBooksPage extends Fragment
     SearchView searchUserViewReservedBooks;
     private FragmentUserViewReservedBooksPageBinding binding;
     String loggedInUserID = QueryConnectorPlusHelper.IDWhenLoggingIn;
+    
+    List<String> detailedBookData = new ArrayList<>();
+    List<String> displayNames = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
-    public UserViewReservedBooksPage()
-    {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public UserViewReservedBooksPage() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -35,58 +35,105 @@ public class UserViewReservedBooksPage extends Fragment
         binding = FragmentUserViewReservedBooksPageBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
         listViewReservedBooks = view.findViewById(R.id.listViewUserViewReservedBooks);
         searchUserViewReservedBooks = view.findViewById(R.id.searchUserViewReservedBooks);
-        List<String> bookNames = QueryConnectorPlusHelper.getBookNamesReservedPendingPlusStatusFromUserQuery(loggedInUserID);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, bookNames);
-        listViewReservedBooks.setAdapter(adapter);
+        
+        refreshList();
 
-//        listViewReservedBooks.setOnItemClickListener((parent, view1, position, id) -> {
-//            String selectedBookName = (String) parent.getItemAtPosition(position);
-//            String bookID = QueryConnectorPlusHelper.getBookIDFromBookNameQuery(selectedBookName);
-//            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-//            dialogBuilder.setTitle("Return Book Selected?");
-//            dialogBuilder.setMessage("Would you like to return "+selectedBookName+"?");
-//
-//            dialogBuilder.setPositiveButton("Yes", (dialog, which) ->
-//            {
-//                QueryConnectorPlusHelper.runQuery("UPDATE BOOKS_BORROWED SET RESERVE_STATUS = 'Returned' WHERE BOOK_ID = '"+bookID+"' AND USER_ID = '"+loggedInUserID+"'");
-//                Toast.makeText(getContext(), "Book "+selectedBookName+" is successfully returned\nThank you!", Toast.LENGTH_SHORT).show();
-//            });
-//
-//            dialogBuilder.setNegativeButton("No", (dialog, which) ->
-//            {
-//                dialog.dismiss();
-//            });
-//
-//            dialogBuilder.setNeutralButton("Cancel", (dialog, which) ->
-//            {
-//                dialog.dismiss();
-//            });
-//
-//            AlertDialog handleRoomRequestDialog = dialogBuilder.create();
-//            handleRoomRequestDialog.show();
-//            //FIND A WAY TO REFRESH THE VIEW AFTER APPROVING/DECLINING REQUESTS
-//        });
-
-        searchUserViewReservedBooks.setOnQueryTextListener(new SearchView.OnQueryTextListener()
-        {
-            @Override
-            public boolean onQueryTextSubmit(String query)
-            {
-                return false;
+        listViewReservedBooks.setOnItemClickListener((parent, view1, position, id) -> {
+            String selectedItem = (String) parent.getItemAtPosition(position);
+            
+            // Find the corresponding detailed record
+            String record = null;
+            for (String r : detailedBookData) {
+                String[] parts = r.split(";;;");
+                if (parts.length >= 4) {
+                    String displayName = parts[2] + " (" + parts[3] + ")";
+                    if (displayName.equals(selectedItem)) {
+                        record = r;
+                        break;
+                    }
+                }
             }
 
+            if (record != null) {
+                String[] parts = record.split(";;;");
+                String borrowedID = parts[0];
+                String bookID = parts[1];
+                String bookName = parts[2];
+                String status = parts[3];
+                String date = parts.length > 4 ? parts[4] : "N/A";
+
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                dialogBuilder.setTitle("Book Details");
+                dialogBuilder.setMessage("Book: " + bookName + 
+                                       "\nBorrowed Date: " + (date != null && !date.equals("null") ? date : "N/A") + 
+                                       "\nStatus: " + status);
+
+                if ("Reserved".equals(status)) {
+                    dialogBuilder.setPositiveButton("Return Book", (dialog, which) -> {
+                        QueryConnectorPlusHelper.returnBook(borrowedID, bookID, () -> {
+                            if (getActivity() != null) {
+                                getActivity().runOnUiThread(() -> {
+                                    Toast.makeText(getContext(), "Book " + bookName + " returned successfully", Toast.LENGTH_SHORT).show();
+                                    refreshList();
+                                });
+                            }
+                        });
+                    });
+                } else if ("Pending".equals(status)) {
+                    dialogBuilder.setPositiveButton("Cancel Request", (dialog, which) -> {
+                        QueryConnectorPlusHelper.returnBook(borrowedID, bookID, () -> {
+                            if (getActivity() != null) {
+                                getActivity().runOnUiThread(() -> {
+                                    Toast.makeText(getContext(), "Reservation request canceled", Toast.LENGTH_SHORT).show();
+                                    refreshList();
+                                });
+                            }
+                        });
+                    });
+                }
+
+                dialogBuilder.setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
+                dialogBuilder.show();
+            }
+        });
+
+        searchUserViewReservedBooks.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) { return false; }
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                if (adapter != null) adapter.getFilter().filter(newText);
                 return false;
             }
         });
     }
+
+    private void refreshList() {
+        new Thread(() -> {
+            List<String> data = QueryConnectorPlusHelper.getBorrowedBooksDetailedQuery(loggedInUserID);
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    detailedBookData = data;
+                    displayNames.clear();
+                    for (String record : detailedBookData) {
+                        String[] parts = record.split(";;;");
+                        if (parts.length >= 4) {
+                            displayNames.add(parts[2] + " (" + parts[3] + ")");
+                        }
+                    }
+                    adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, displayNames);
+                    listViewReservedBooks.setAdapter(adapter);
+                });
+            }
+        }).start();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
