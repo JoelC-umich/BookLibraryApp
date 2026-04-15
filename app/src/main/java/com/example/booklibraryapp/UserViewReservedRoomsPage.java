@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class UserViewReservedRoomsPage extends Fragment {
     private ListView listUserViewReservedRooms;
@@ -51,6 +49,7 @@ public class UserViewReservedRoomsPage extends Fragment {
             String time = splittedSelectedRequest[4].replace("(", "").replace(")", "") + " " + splittedSelectedRequest[5].replace("(", "").replace(")", "");
             String reservedStatus = splittedSelectedRequest[6].replace("(", "").replace(")","");
             
+            if (getContext() == null) return;
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             dialogBuilder.setTitle("Cancel Room " + roomID + " Reservation?");
             dialogBuilder.setMessage("Would you like to cancel your " + time + " reservation for Room " + roomID + "?");
@@ -59,8 +58,8 @@ public class UserViewReservedRoomsPage extends Fragment {
             {
                 QueryConnectorPlusHelper.runQuery("UPDATE ROOMS_RESERVED SET RESERVE_STATUS = 'Canceled' WHERE ROOM_ID = '" + roomID + "' " +
                         "AND USER_ID = '" + loggedInUserID + "' AND RESERVE_STATUS = '" +reservedStatus+ "' AND SLOT = '" +slotStr+ "' AND DATE = '" +selectedDate+ "'", () -> {
-                    if (isAdded()) {
-                        requireActivity().runOnUiThread(() -> {
+                    if (isAdded() && getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
                             updateListView(selectedDate);
                             Toast.makeText(getContext(), "Room " + roomID + " " + time + " is canceled", Toast.LENGTH_SHORT).show();
                         });
@@ -86,8 +85,7 @@ public class UserViewReservedRoomsPage extends Fragment {
     }
 
     private void updateListView(String date) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
+        QueryConnectorPlusHelper.executor.execute(() -> {
             List<String> displayList = new ArrayList<>();
             try {
                 Connection connection = QueryConnectorPlusHelper.Connector();
@@ -114,13 +112,14 @@ public class UserViewReservedRoomsPage extends Fragment {
                 e.printStackTrace();
             }
 
-            if (isAdded()) {
-                requireActivity().runOnUiThread(() -> {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, displayList);
-                    listUserViewReservedRooms.setAdapter(adapter);
+            if (isAdded() && getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    if (getContext() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, displayList);
+                        listUserViewReservedRooms.setAdapter(adapter);
+                    }
                 });
             }
         });
-        executor.shutdown();
     }
 }
