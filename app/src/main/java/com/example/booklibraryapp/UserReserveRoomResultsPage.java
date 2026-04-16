@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class UserReserveRoomResultsPage extends Fragment {
 
@@ -52,9 +50,8 @@ public class UserReserveRoomResultsPage extends Fragment {
             return view;
         }
 
-        // Run DB work off the main thread, then update UI on main thread
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
+        // Run DB work using shared executor
+        QueryConnectorPlusHelper.executor.execute(() -> {
 
             // 1. Get all room IDs that exist
             List<String> allRoomIDs = QueryConnectorPlusHelper.getRoomIDsQuery();
@@ -80,35 +77,38 @@ public class UserReserveRoomResultsPage extends Fragment {
             }
 
             // 4. Update UI back on the main thread
-            requireActivity().runOnUiThread(() -> {
-                availableSlotLabels.clear();
-                availableSlotKeys.clear();
-                availableSlotLabels.addAll(labels);
-                availableSlotKeys.addAll(keys);
+            if (isAdded() && getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    availableSlotLabels.clear();
+                    availableSlotKeys.clear();
+                    availableSlotLabels.addAll(labels);
+                    availableSlotKeys.addAll(keys);
 
-                if (availableSlotLabels.isEmpty()) {
-                    Toast.makeText(getContext(),
-                            "No rooms available for " + selectedDate, Toast.LENGTH_LONG).show();
-                    // Disable the reserve button since there's nothing to select
-                    buttonReserve.setEnabled(false);
-                } else {
-                    buttonReserve.setEnabled(true);
-                }
+                    if (availableSlotLabels.isEmpty()) {
+                        Toast.makeText(getContext(),
+                                "No rooms available for " + selectedDate, Toast.LENGTH_LONG).show();
+                        // Disable the reserve button since there's nothing to select
+                        buttonReserve.setEnabled(false);
+                    } else {
+                        buttonReserve.setEnabled(true);
+                    }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        requireContext(),
-                        android.R.layout.simple_list_item_single_choice,
-                        availableSlotLabels
-                );
-                listView.setAdapter(adapter);
-                listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+                    if (getContext() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                getContext(),
+                                android.R.layout.simple_list_item_single_choice,
+                                availableSlotLabels
+                        );
+                        listView.setAdapter(adapter);
+                        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-                listView.setOnItemClickListener((parent, v, position, id) -> {
-                    selectedIndex = position;
+                        listView.setOnItemClickListener((parent, v, position, id) -> {
+                            selectedIndex = position;
+                        });
+                    }
                 });
-            });
+            }
         });
-        executor.shutdown();
 
         buttonReserve.setOnClickListener(v -> {
             if (selectedIndex < 0) {

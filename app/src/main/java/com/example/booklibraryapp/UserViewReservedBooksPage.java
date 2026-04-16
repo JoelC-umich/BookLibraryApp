@@ -68,6 +68,7 @@ public class UserViewReservedBooksPage extends Fragment
                 String status = parts[3];
                 String date = parts.length > 4 ? parts[4] : "N/A";
 
+                if (getContext() == null) return;
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                 dialogBuilder.setTitle("Book Details");
                 dialogBuilder.setMessage("Book: " + bookName + 
@@ -77,7 +78,7 @@ public class UserViewReservedBooksPage extends Fragment
                 if ("Reserved".equals(status)) {
                     dialogBuilder.setPositiveButton("Return Book", (dialog, which) -> {
                         QueryConnectorPlusHelper.returnBook(borrowedID, bookID, () -> {
-                            if (getActivity() != null) {
+                            if (isAdded() && getActivity() != null) {
                                 getActivity().runOnUiThread(() -> {
                                     Toast.makeText(getContext(), "Book " + bookName + " returned successfully", Toast.LENGTH_SHORT).show();
                                     refreshList();
@@ -88,7 +89,7 @@ public class UserViewReservedBooksPage extends Fragment
                 } else if ("Pending".equals(status)) {
                     dialogBuilder.setPositiveButton("Cancel Request", (dialog, which) -> {
                         QueryConnectorPlusHelper.returnBook(borrowedID, bookID, () -> {
-                            if (getActivity() != null) {
+                            if (isAdded() && getActivity() != null) {
                                 getActivity().runOnUiThread(() -> {
                                     Toast.makeText(getContext(), "Reservation request canceled", Toast.LENGTH_SHORT).show();
                                     refreshList();
@@ -115,9 +116,9 @@ public class UserViewReservedBooksPage extends Fragment
     }
 
     private void refreshList() {
-        new Thread(() -> {
+        QueryConnectorPlusHelper.executor.execute(() -> {
             List<String> data = QueryConnectorPlusHelper.getBorrowedBooksDetailedQuery(loggedInUserID);
-            if (getActivity() != null) {
+            if (isAdded() && getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
                     detailedBookData = data;
                     displayNames.clear();
@@ -127,11 +128,13 @@ public class UserViewReservedBooksPage extends Fragment
                             displayNames.add(parts[2] + " (" + parts[3] + ")");
                         }
                     }
-                    adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, displayNames);
-                    listViewReservedBooks.setAdapter(adapter);
+                    if (getContext() != null) {
+                        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, displayNames);
+                        listViewReservedBooks.setAdapter(adapter);
+                    }
                 });
             }
-        }).start();
+        });
     }
 
     @Override

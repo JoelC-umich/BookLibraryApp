@@ -28,11 +28,9 @@ public class AdminViewRoomRequestsPage extends Fragment
 
         listViewAdminRoomRequests.setOnItemClickListener((parent, view1, position, id) -> {
             String selectedItemText = (String) parent.getItemAtPosition(position);
-            // Extract the Request ID from the display string "Request #ID: ..."
             String selectedRequestID = selectedItemText.substring(selectedItemText.indexOf("#") + 1, selectedItemText.indexOf(":"));
             
-            // Fetch data in a background thread to avoid App Not Responding (ANR)
-            new Thread(() -> {
+            QueryConnectorPlusHelper.executor.execute(() -> {
                 String roomID = QueryConnectorPlusHelper.getRoomIDFromRoomReserveID(selectedRequestID);
                 String userID = QueryConnectorPlusHelper.getUserIDFromRoomReserveID(selectedRequestID);
                 String username = QueryConnectorPlusHelper.getUsernameFromID(userID);
@@ -43,6 +41,7 @@ public class AdminViewRoomRequestsPage extends Fragment
 
                 if (isAdded() && getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
+                        if (getContext() == null) return;
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                         dialogBuilder.setTitle("Room Request "+selectedRequestID);
                         
@@ -95,13 +94,13 @@ public class AdminViewRoomRequestsPage extends Fragment
                         handleRoomRequestDialog.show();
                     });
                 }
-            }).start();
+            });
         });
         return view;
     }
 
     private void refreshList() {
-        new Thread(() -> {
+        QueryConnectorPlusHelper.executor.execute(() -> {
             List<String> pendingRoomsReservedQuery = QueryConnectorPlusHelper.getPendingRoomsReservedWithDetailsQuery();
             if (isAdded() && getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
@@ -111,6 +110,6 @@ public class AdminViewRoomRequestsPage extends Fragment
                     }
                 });
             }
-        }).start();
+        });
     }
 }

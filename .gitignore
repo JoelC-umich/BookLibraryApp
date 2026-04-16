@@ -1,15 +1,40 @@
+# Gradle files
+.gradle/
+gradle/caches
+gradle/kotlin-profile
+gradle/wrapper/dists
+gradle/daemon
+gradle/.tmp
+build/
+
+# IDE files (IntelliJ / Android Studio)
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+*.ipr
+*.iws
+*.dll
+*.html
+out/
+
+# Local configuration
 local.properties
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Android specific
+captures/
+.externalNativeBuild/
+.cxx/
+*.keystore
+!debug.keystore
+
+# Git Extensions
+[Gg]it[Ee]xtensions.settings
+*.vshost.exe
+*.vshost.exe.config
+*.vshost.exe.manifest

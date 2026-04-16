@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class AdminViewRoomReservationsPage extends Fragment {
 
@@ -49,8 +47,7 @@ public class AdminViewRoomReservationsPage extends Fragment {
     }
 
     private void updateListView(String date) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
+        QueryConnectorPlusHelper.executor.execute(() -> {
             List<String> displayList = new ArrayList<>();
             try {
                 Connection connection = QueryConnectorPlusHelper.Connector();
@@ -77,14 +74,15 @@ public class AdminViewRoomReservationsPage extends Fragment {
                 e.printStackTrace();
             }
 
-            if (isAdded()) {
-                requireActivity().runOnUiThread(() -> {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
-                            android.R.layout.simple_list_item_1, displayList);
-                    listView.setAdapter(adapter);
+            if (isAdded() && getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    if (getContext() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                                android.R.layout.simple_list_item_1, displayList);
+                        listView.setAdapter(adapter);
+                    }
                 });
             }
         });
-        executor.shutdown();
     }
 }
