@@ -95,7 +95,7 @@ public class UserViewReservedRoomsPage extends Fragment {
                             "FROM ROOMS_RESERVED RR " +
                             "JOIN USERS U ON RR.USER_ID = U.ID " +
                             "WHERE RR.USER_ID = '" + loggedInUserID + "' AND RR.DATE = '" + date + "' " +
-                            "AND RR.RESERVE_STATUS != 'Canceled'";
+                            "AND RR.RESERVE_STATUS != 'Canceled' AND RR.RESERVE_STATUS != 'Denied'";
                     ResultSet resultSet = statement.executeQuery(query);
                     while (resultSet.next()) {
                         String roomID = resultSet.getString("ROOM_ID");
