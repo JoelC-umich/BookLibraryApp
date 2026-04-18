@@ -31,7 +31,7 @@ public class AdminViewBorrowedBooksPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Correct ID (VERY IMPORTANT)
+        // FR11 Admin view borrowed books details
         listAdminViewBorrowedBooks = view.findViewById(R.id.listAdminViewBorrowedBooks);
         searchAdminViewBorrowedBooks = view.findViewById(R.id.searchAdminViewBorrowedBooks);
         List<String> borrowedBooks = QueryConnectorPlusHelper.getBorrowedBooksWithDetailsQuery();

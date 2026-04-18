@@ -41,6 +41,7 @@ public class AdminPage extends Fragment {
         return binding.getRoot();
     }
 
+    // FR2 Admin account login
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);

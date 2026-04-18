@@ -59,10 +59,10 @@ public class AdminChangeAccountInfoforUserPage extends Fragment {
             userInfoUserPassword.setText(userPassword);
             userInfoUserSchool.setText(userSchool);
 
-            if (userType.equals("User")){
+            if ("User".equals(userType)){
                 checkUserInfoUserTypeUser.setChecked(true);
                 checkUserInfoUserTypeAdmin.setChecked(false);
-            } else if (userType.equals("Admin")){
+            } else if ("Admin".equals(userType)){
                 checkUserInfoUserTypeAdmin.setChecked(true);
                 checkUserInfoUserTypeUser.setChecked(false);
             }

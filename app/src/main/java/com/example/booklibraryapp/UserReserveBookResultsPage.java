@@ -34,6 +34,7 @@ public class UserReserveBookResultsPage extends Fragment {
         return binding.getRoot();
     }
 
+    // FR 4 User book selection for reservation/request
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);

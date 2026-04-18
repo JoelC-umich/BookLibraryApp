@@ -1,8 +1,10 @@
 package com.example.booklibraryapp;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import android.widget.Button;
@@ -21,13 +23,14 @@ import org.mockito.MockedStatic;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
-@Config(sdk = 28)
+@Config(sdk = 32)
 public class LoginPageTest {
 
     private static class SynchronousExecutor extends AbstractExecutorService {
@@ -56,7 +59,7 @@ public class LoginPageTest {
     }
 
     @Test
-    public void testLoginAttemptWithMockedDb() {
+    public void testLoginAttemptSuccess() {
         NavController mockNavController = mock(NavController.class);
         try (MockedStatic<QueryConnectorPlusHelper> mockedHelper = mockStatic(QueryConnectorPlusHelper.class)) {
             mockedHelper.when(QueryConnectorPlusHelper::getUsernamesQuery).thenReturn(Arrays.asList("testuser"));
@@ -76,10 +79,65 @@ public class LoginPageTest {
                     passField.setText("password");
                     loginBtn.performClick();
                     
-                    // Idle looper to catch navigation which might be posted
                     Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
                     
                     verify(mockNavController).navigate(R.id.action_LoginPage_to_userPage);
+                });
+            }
+        }
+    }
+
+    @Test
+    public void testLoginAttemptWithInvalidUsername() {
+        NavController mockNavController = mock(NavController.class);
+        try (MockedStatic<QueryConnectorPlusHelper> mockedHelper = mockStatic(QueryConnectorPlusHelper.class)) {
+            mockedHelper.when(QueryConnectorPlusHelper::getUsernamesQuery).thenReturn(new ArrayList<>()); // Empty list
+
+            try (FragmentScenario<LoginPage> scenario = FragmentScenario.launchInContainer(LoginPage.class, null, R.style.Theme_BookLibraryApp)) {
+                scenario.onFragment(fragment -> {
+                    Navigation.setViewNavController(fragment.requireView(), mockNavController);
+                    
+                    TextInputEditText userField = fragment.requireView().findViewById(R.id.inputLoginUsername);
+                    TextInputEditText passField = fragment.requireView().findViewById(R.id.inputLoginPassword);
+                    Button loginBtn = fragment.requireView().findViewById(R.id.btnLogin);
+
+                    userField.setText("nonexistent");
+                    passField.setText("any");
+                    loginBtn.performClick();
+                    
+                    Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+                    
+                    // Verify navigation never happens
+                    verify(mockNavController, never()).navigate(anyInt());
+                });
+            }
+        }
+    }
+
+    @Test
+    public void testLoginAttemptWithWrongPassword() {
+        NavController mockNavController = mock(NavController.class);
+        try (MockedStatic<QueryConnectorPlusHelper> mockedHelper = mockStatic(QueryConnectorPlusHelper.class)) {
+            mockedHelper.when(QueryConnectorPlusHelper::getUsernamesQuery).thenReturn(Arrays.asList("testuser"));
+            mockedHelper.when(() -> QueryConnectorPlusHelper.getUsernameIDQuery("testuser")).thenReturn("1");
+            mockedHelper.when(() -> QueryConnectorPlusHelper.getPasswordFromID("1")).thenReturn("correct_password");
+
+            try (FragmentScenario<LoginPage> scenario = FragmentScenario.launchInContainer(LoginPage.class, null, R.style.Theme_BookLibraryApp)) {
+                scenario.onFragment(fragment -> {
+                    Navigation.setViewNavController(fragment.requireView(), mockNavController);
+                    
+                    TextInputEditText userField = fragment.requireView().findViewById(R.id.inputLoginUsername);
+                    TextInputEditText passField = fragment.requireView().findViewById(R.id.inputLoginPassword);
+                    Button loginBtn = fragment.requireView().findViewById(R.id.btnLogin);
+
+                    userField.setText("testuser");
+                    passField.setText("wrong_password");
+                    loginBtn.performClick();
+                    
+                    Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+                    
+                    // Verify navigation never happens
+                    verify(mockNavController, never()).navigate(anyInt());
                 });
             }
         }

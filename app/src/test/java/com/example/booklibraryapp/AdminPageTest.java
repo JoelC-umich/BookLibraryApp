@@ -19,6 +19,7 @@ import org.robolectric.annotation.Config;
 @Config(sdk = 32)
 public class AdminPageTest {
 
+    // FR2 test admin login landing page
     @Test
     public void testFragmentUIInitialization() {
         try (MockedStatic<QueryConnectorPlusHelper> mockedHelper = mockStatic(QueryConnectorPlusHelper.class)) {

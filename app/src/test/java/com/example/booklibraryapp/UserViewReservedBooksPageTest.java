@@ -44,6 +44,7 @@ public class UserViewReservedBooksPageTest {
         QueryConnectorPlusHelper.IDWhenLoggingIn = "1";
     }
 
+    // FR4 test user book reserved list view
     @Test
     public void testFragmentUIInitialization() {
         List<String> mockBooksData = Arrays.asList("1;;;101;;;Book 1;;;Reserved;;;2023-10-10", "2;;;102;;;Book 2;;;Pending;;;null");
@@ -66,6 +67,7 @@ public class UserViewReservedBooksPageTest {
         }
     }
 
+    // FR4 test user book reserved list view search book from the list
     @Test
     public void testSearchFiltering() {
         List<String> mockBooksData = Arrays.asList("1;;;101;;;Apple;;;Reserved", "2;;;102;;;Banana;;;Reserved");

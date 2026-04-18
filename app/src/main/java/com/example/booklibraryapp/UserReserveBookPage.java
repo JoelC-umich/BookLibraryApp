@@ -22,6 +22,7 @@ public class UserReserveBookPage extends Fragment
         super.onCreate(savedInstanceState);
     }
 
+    // FR3 User book search and view
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -47,6 +48,7 @@ public class UserReserveBookPage extends Fragment
             }
         });
 
+        // FR 4 User book selection for reservation/request
         listUserReserveBookPage.setOnItemClickListener((parent, view1, position, id) -> {
             String selectedItem = (String) parent.getItemAtPosition(position);
             // Extract book name from "Book Name by Author"

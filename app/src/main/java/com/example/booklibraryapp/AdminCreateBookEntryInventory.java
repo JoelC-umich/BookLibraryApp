@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.booklibraryapp.databinding.FragmentAdminCreateBookEntryInventoryBinding;
 import com.google.android.material.textfield.TextInputEditText;
+import java.util.List;
 
 public class AdminCreateBookEntryInventory extends Fragment {
 
@@ -44,10 +45,21 @@ public class AdminCreateBookEntryInventory extends Fragment {
             String image = inputAdminCreateBookImage.getText().toString();
             String quantity = inputAdminCreateBookQuantity.getText().toString();
 
+            boolean exists = false;
+            List<String> existingNames = QueryConnectorPlusHelper.getBookNamesQuery();
+            if (existingNames != null) {
+                for (String name : existingNames) {
+                    if (name != null && name.equalsIgnoreCase(bookName)) {
+                        exists = true;
+                        break;
+                    }
+                }
+            }
+
             if(bookName.isBlank() || author.isBlank() || category.isBlank() || summary.isBlank() || quantity.isBlank())
             {
                 Toast.makeText(getContext(), "One of the fields are blank\nPlease fill and try again", Toast.LENGTH_SHORT).show();
-            } else if (QueryConnectorPlusHelper.getBookNamesQuery().toString().contains(bookName.toLowerCase())) //USE .contains INSTEAD OF .equals TO CHECK FOR EXACT MATCHES
+            } else if (exists)
             {
                 Toast.makeText(getContext(), "Book name already exists\nPlease try again", Toast.LENGTH_SHORT).show();
             } else if (summary.length() > 500)

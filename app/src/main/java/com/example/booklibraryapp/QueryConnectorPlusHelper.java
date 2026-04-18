@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -248,8 +249,9 @@ public class QueryConnectorPlusHelper {
         Future<List<String>> listFutureReservedBookNames = executor.submit(() -> {
             List<String> reservedBookNameList = new ArrayList<>();
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("select BOOK_NAME from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID INNER JOIN USERS ON USERS.ID = BOOKS_BORROWED.USER_ID WHERE USER_ID = '"+UserID+"' AND BOOKS_BORROWED.RESERVE_STATUS = 'Reserved'");
+            PreparedStatement statement = connection.prepareStatement("select BOOK_NAME from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID INNER JOIN USERS ON USERS.ID = BOOKS_BORROWED.USER_ID WHERE USER_ID = ? AND BOOKS_BORROWED.RESERVE_STATUS = 'Reserved'");
+            statement.setString(1, UserID);
+            ResultSet setResult = statement.executeQuery();
             while (setResult.next()) {
                 reservedBookNameList.add(setResult.getString("BOOK_NAME"));
             }
@@ -269,8 +271,9 @@ public class QueryConnectorPlusHelper {
         Future<List<String>> listFutureReservedBookNames = executor.submit(() -> {
             List<String> reservedBookNameList = new ArrayList<>();
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("select BOOKS.BOOK_NAME, BOOKS_BORROWED.RESERVE_STATUS from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID INNER JOIN USERS ON USERS.ID = BOOKS_BORROWED.USER_ID WHERE USER_ID = '"+UserID+"' AND (BOOKS_BORROWED.RESERVE_STATUS = 'Reserved' OR BOOKS_BORROWED.RESERVE_STATUS = 'Pending')");
+            PreparedStatement statement = connection.prepareStatement("select BOOKS.BOOK_NAME, BOOKS_BORROWED.RESERVE_STATUS from BOOKS INNER JOIN BOOKS_BORROWED ON BOOKS.ID = BOOKS_BORROWED.BOOK_ID INNER JOIN USERS ON USERS.ID = BOOKS_BORROWED.USER_ID WHERE USER_ID = ? AND (BOOKS_BORROWED.RESERVE_STATUS = 'Reserved' OR BOOKS_BORROWED.RESERVE_STATUS = 'Pending')");
+            statement.setString(1, UserID);
+            ResultSet setResult = statement.executeQuery();
             while (setResult.next()) {
                 reservedBookNameList.add((setResult.getString("BOOK_NAME") + " (" + setResult.getString("RESERVE_STATUS") + ")"));
             }
@@ -291,8 +294,9 @@ public class QueryConnectorPlusHelper {
         {
             List<String> reservedIDList = new ArrayList<>();
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("select ID from BOOKS_BORROWED WHERE USER_ID = '"+UserID+"'");
+            PreparedStatement statement = connection.prepareStatement("select ID from BOOKS_BORROWED WHERE USER_ID = ?");
+            statement.setString(1, UserID);
+            ResultSet setResult = statement.executeQuery();
             while (setResult.next())
             {
                 reservedIDList.add(setResult.getString("ID"));
@@ -314,13 +318,14 @@ public class QueryConnectorPlusHelper {
             List<String> detailsList = new ArrayList<>();
             Connection connection = Connector();
             if (connection == null) return detailsList;
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery(
+            PreparedStatement statement = connection.prepareStatement(
                     "SELECT BOOKS_BORROWED.ID, BOOKS_BORROWED.BOOK_ID, BOOKS.BOOK_NAME, BOOKS_BORROWED.RESERVE_STATUS, BOOKS_BORROWED.DATE_BORROWED " +
                             "FROM BOOKS_BORROWED " +
                             "INNER JOIN BOOKS ON BOOKS_BORROWED.BOOK_ID = BOOKS.ID " +
-                            "WHERE BOOKS_BORROWED.USER_ID = '" + UserID + "' AND (BOOKS_BORROWED.RESERVE_STATUS = 'Reserved' OR BOOKS_BORROWED.RESERVE_STATUS = 'Pending')"
+                            "WHERE BOOKS_BORROWED.USER_ID = ? AND (BOOKS_BORROWED.RESERVE_STATUS = 'Reserved' OR BOOKS_BORROWED.RESERVE_STATUS = 'Pending')"
             );
+            statement.setString(1, UserID);
+            ResultSet setResult = statement.executeQuery();
             while (setResult.next()) {
                 detailsList.add(setResult.getString("ID") + ";;;" +
                         setResult.getString("BOOK_ID") + ";;;" +
@@ -443,8 +448,9 @@ public class QueryConnectorPlusHelper {
     public static String getUsernameIDQuery(String username) {
         Future<String> futureUsernameID = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT ID FROM USERS WHERE USER_NAME = '" + username + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT ID FROM USERS WHERE USER_NAME = ?");
+            statement.setString(1, username);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String usernameID = setResult.getString("ID");
             setResult.close();
@@ -462,8 +468,9 @@ public class QueryConnectorPlusHelper {
     public static String getFirstNameFromIDQuery(String ID) {
         Future<String> futureFirstName = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT FIRST_NAME FROM USERS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT FIRST_NAME FROM USERS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String firstName = setResult.getString("FIRST_NAME");
             setResult.close();
@@ -481,8 +488,9 @@ public class QueryConnectorPlusHelper {
     public static String getLastNameFromIDQuery(String ID) {
         Future<String> futureLastName = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT LAST_NAME FROM USERS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT LAST_NAME FROM USERS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String LastName = setResult.getString("LAST_NAME");
             setResult.close();
@@ -500,8 +508,9 @@ public class QueryConnectorPlusHelper {
     public static String getTypeFromIDQuery(String ID) {
         Future<String> futureUserType = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_TYPE FROM USERS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT USER_TYPE FROM USERS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String UserType = setResult.getString("USER_TYPE");
             setResult.close();
@@ -519,8 +528,9 @@ public class QueryConnectorPlusHelper {
     public static String getEmailFromIDQuery(String ID) {
         Future<String> futureEmail = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_EMAIL FROM USERS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT USER_EMAIL FROM USERS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String userEmail = setResult.getString("USER_EMAIL");
             setResult.close();
@@ -538,8 +548,9 @@ public class QueryConnectorPlusHelper {
     public static String getUsernameFromID(String ID) {
         Future<String> futureUsername = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_NAME FROM USERS WHERE ID = " + ID);
+            PreparedStatement statement = connection.prepareStatement("SELECT USER_NAME FROM USERS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String username = setResult.getString("USER_NAME");
             setResult.close();
@@ -557,8 +568,9 @@ public class QueryConnectorPlusHelper {
     public static String getPasswordFromID(String ID) {
         Future<String> futurePassword = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_PASSWORD FROM USERS WHERE ID = " + ID);
+            PreparedStatement statement = connection.prepareStatement("SELECT USER_PASSWORD FROM USERS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String password = setResult.getString("USER_PASSWORD");
             setResult.close();
@@ -576,8 +588,9 @@ public class QueryConnectorPlusHelper {
     public static String getUserTypeFromID(String ID) {
         Future<String> futureUserType = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_TYPE FROM USERS WHERE ID = " + ID);
+            PreparedStatement statement = connection.prepareStatement("SELECT USER_TYPE FROM USERS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String userType = setResult.getString("USER_TYPE");
             setResult.close();
@@ -595,8 +608,9 @@ public class QueryConnectorPlusHelper {
     public static String getSchoolFromIDQuery(String ID) {
         Future<String> futureSchool = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT SCHOOL FROM USERS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT SCHOOL FROM USERS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String userSchool = setResult.getString("SCHOOL");
             setResult.close();
@@ -614,8 +628,9 @@ public class QueryConnectorPlusHelper {
     public static String getBookIDFromBookNameQuery(String bookName) {
         Future<String> futureBookNameID = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT ID FROM BOOKS WHERE BOOK_NAME = '" + bookName + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT ID FROM BOOKS WHERE BOOK_NAME = ?");
+            statement.setString(1, bookName);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookNameID = setResult.getString("ID");
             setResult.close();
@@ -633,8 +648,9 @@ public class QueryConnectorPlusHelper {
     public static String getBookTitleFromBookID(String ID) {
         Future<String> futureBookTitle = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_NAME FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT BOOK_NAME FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookName = setResult.getString("BOOK_NAME");
             setResult.close();
@@ -652,8 +668,9 @@ public class QueryConnectorPlusHelper {
     public static String getAuthorFromBookID(String ID) {
         Future<String> futureBookAuthor = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_AUTHOR FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT BOOK_AUTHOR FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookAuthor = setResult.getString("BOOK_AUTHOR");
             setResult.close();
@@ -671,8 +688,9 @@ public class QueryConnectorPlusHelper {
     public static String getBookCategoryFromBookID(String ID) {
         Future<String> futureBookCategory = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT CATEGORY FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT CATEGORY FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookCategory = setResult.getString("CATEGORY");
             setResult.close();
@@ -690,8 +708,9 @@ public class QueryConnectorPlusHelper {
     public static String getBookSummaryFromBookID(String ID) {
         Future<String> futureBookSummary = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT SUMMARY FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT SUMMARY FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookSummary = setResult.getString("SUMMARY");
             setResult.close();
@@ -709,8 +728,9 @@ public class QueryConnectorPlusHelper {
     public static String getQuantityTotalFromBookID(String ID) {
         Future<String> futureBookQuantityTotal = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_TOTAL FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT QUANTITY_TOTAL FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookQuantityTotal = setResult.getString("QUANTITY_TOTAL");
             setResult.close();
@@ -728,8 +748,9 @@ public class QueryConnectorPlusHelper {
     public static String getQuantityBorrowedFromBookID(String ID) {
         Future<String> futureBookQuantityBorrowed = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_BORROWED FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT QUANTITY_BORROWED FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookQuantityBorrowed = setResult.getString("QUANTITY_BORROWED");
             setResult.close();
@@ -747,8 +768,9 @@ public class QueryConnectorPlusHelper {
     public static String getQuantityAvailableMinus1FromBookID(String BookID) {
         Future<String> futureBookQuantityAvailableMinus1 = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_AVAILABLE - 1 FROM BOOKS WHERE ID = '" + BookID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT QUANTITY_AVAILABLE - 1 FROM BOOKS WHERE ID = ?");
+            statement.setString(1, BookID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookQuantityAvailable = setResult.getString("QUANTITY_AVAILABLE - 1");
             setResult.close();
@@ -766,8 +788,9 @@ public class QueryConnectorPlusHelper {
     public static String getQuantityBorrowedPlus1FromBookID(String ID) {
         Future<String> futureBookQuantityBorrowedPlus1 = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_BORROWED + 1 FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT QUANTITY_BORROWED + 1 FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookQuantityBorrowedPlus1 = setResult.getString("QUANTITY_BORROWED + 1");
             setResult.close();
@@ -785,8 +808,9 @@ public class QueryConnectorPlusHelper {
     public static String getQuantityAvailableFromBookID(String ID) {
         Future<String> futureBookQuantityAvailable = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT QUANTITY_AVAILABLE FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT QUANTITY_AVAILABLE FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookQuantityAvailable = setResult.getString("QUANTITY_AVAILABLE");
             setResult.close();
@@ -804,8 +828,9 @@ public class QueryConnectorPlusHelper {
     public static String getBookImageFromBookID(String ID) {
         Future<String> futureBookImage = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT IMAGE FROM BOOKS WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT IMAGE FROM BOOKS WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookImage = setResult.getString("IMAGE");
             setResult.close();
@@ -823,8 +848,9 @@ public class QueryConnectorPlusHelper {
     public static String getRoomIDFromRoomReserveID(String ID) {
         Future<String> futureRoomID = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT ROOM_ID FROM ROOMS_RESERVED WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT ROOM_ID FROM ROOMS_RESERVED WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String roomID = setResult.getString("ROOM_ID");
             setResult.close();
@@ -842,8 +868,9 @@ public class QueryConnectorPlusHelper {
     public static String getUserIDFromRoomReserveID(String ID) {
         Future<String> futureUserID = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_ID FROM ROOMS_RESERVED WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT USER_ID FROM ROOMS_RESERVED WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String userID = setResult.getString("USER_ID");
             setResult.close();
@@ -861,8 +888,9 @@ public class QueryConnectorPlusHelper {
     public static String getSlotFromRoomReserveID(String ID) {
         Future<String> futureSlot = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT SLOT FROM ROOMS_RESERVED WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT SLOT FROM ROOMS_RESERVED WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String slot = setResult.getString("SLOT");
             setResult.close();
@@ -880,8 +908,9 @@ public class QueryConnectorPlusHelper {
     public static String getDateFromRoomReserveID(String ID) {
         Future<String> futureDate = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT DATE FROM ROOMS_RESERVED WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT DATE FROM ROOMS_RESERVED WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String reserveDate = setResult.getString("DATE");
             setResult.close();
@@ -901,10 +930,10 @@ public class QueryConnectorPlusHelper {
             List<String> reservedList = new ArrayList<>();
             Connection connection = Connector();
             if (connection == null) return reservedList;
-            Statement statement = connection.createStatement();
+            PreparedStatement statement = connection.prepareStatement("SELECT ROOM_ID, SLOT FROM ROOMS_RESERVED WHERE DATE = ? AND RESERVE_STATUS != 'Canceled'");
+            statement.setString(1, date);
             // Returns ROOM_ID and SLOT for every reservation on the given date
-            ResultSet setResult = statement.executeQuery("SELECT ROOM_ID, SLOT FROM ROOMS_RESERVED WHERE DATE = '" + date + "'" +
-                    " AND RESERVE_STATUS != 'Canceled'");
+            ResultSet setResult = statement.executeQuery();
             while (setResult.next()) {
                 // Store as "ROOM_ID:SLOT" pairs so caller can parse both values
                 reservedList.add(setResult.getString("ROOM_ID") + ":" + setResult.getString("SLOT"));
@@ -926,15 +955,14 @@ public class QueryConnectorPlusHelper {
             try {
                 Connection connection = Connector();
                 if (connection != null) {
-                    Statement statement = connection.createStatement();
-                    statement.executeUpdate(
-                            "INSERT INTO ROOMS_RESERVED (ROOM_ID, USER_ID, RESERVE_STATUS, DATE, SLOT) VALUES ("
-                                    + roomID + ", "
-                                    + userID + ", "
-                                    + "'Pending', "
-                                    + "'" + date + "', "
-                                    + slot + ")"
+                    PreparedStatement statement = connection.prepareStatement(
+                            "INSERT INTO ROOMS_RESERVED (ROOM_ID, USER_ID, RESERVE_STATUS, DATE, SLOT) VALUES (?, ?, 'Pending', ?, ?)"
                     );
+                    statement.setString(1, roomID);
+                    statement.setString(2, userID);
+                    statement.setString(3, date);
+                    statement.setString(4, slot);
+                    statement.executeUpdate();
                     statement.close();
                     connection.close();
                 }
@@ -979,8 +1007,9 @@ public class QueryConnectorPlusHelper {
     public static String getBookIDFromBorrowedBooksID(String ID) {
         Future<String> futureBookID = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_ID FROM BOOKS_BORROWED WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT BOOK_ID FROM BOOKS_BORROWED WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String bookID = setResult.getString("BOOK_ID");
             setResult.close();
@@ -998,8 +1027,9 @@ public class QueryConnectorPlusHelper {
     public static String getUserIDFromBorrowedBooksID(String ID) {
         Future<String> futureUserID = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT USER_ID FROM BOOKS_BORROWED WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT USER_ID FROM BOOKS_BORROWED WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String UserID = setResult.getString("USER_ID");
             setResult.close();
@@ -1017,8 +1047,9 @@ public class QueryConnectorPlusHelper {
     public static String getDateFromBorrowedBooksID(String ID) {
         Future<String> futureDate = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT DATE_BORROWED FROM BOOKS_BORROWED WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT DATE_BORROWED FROM BOOKS_BORROWED WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String dateBorrowed = setResult.getString("DATE_BORROWED");
             setResult.close();
@@ -1036,8 +1067,9 @@ public class QueryConnectorPlusHelper {
     public static String getStatusFromBorrowedBooksID(String ID) {
         Future<String> futureStatus = executor.submit(() -> {
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT RESERVE_STATUS FROM BOOKS_BORROWED WHERE ID = '" + ID + "'");
+            PreparedStatement statement = connection.prepareStatement("SELECT RESERVE_STATUS FROM BOOKS_BORROWED WHERE ID = ?");
+            statement.setString(1, ID);
+            ResultSet setResult = statement.executeQuery();
             setResult.next();
             String reserveStatus = setResult.getString("RESERVE_STATUS");
             setResult.close();
@@ -1079,8 +1111,9 @@ public class QueryConnectorPlusHelper {
         Future<List<String>> futureReservedBooksFromUser = executor.submit(() -> {
             List<String> reservedBooksUser = new ArrayList<>();
             Connection connection = Connector();
-            Statement statement = connection.createStatement();
-            ResultSet setResult = statement.executeQuery("SELECT BOOK_ID FROM BOOKS_BORROWED WHERE USER_ID = '" + UserID + "' AND (RESERVE_STATUS = 'Pending' OR RESERVE_STATUS = 'Reserved')");
+            PreparedStatement statement = connection.prepareStatement("SELECT BOOK_ID FROM BOOKS_BORROWED WHERE USER_ID = ? AND (RESERVE_STATUS = 'Pending' OR RESERVE_STATUS = 'Reserved')");
+            statement.setString(1, UserID);
+            ResultSet setResult = statement.executeQuery();
             while (setResult.next())
             {
                 reservedBooksUser.add(setResult.getString("BOOK_ID"));
