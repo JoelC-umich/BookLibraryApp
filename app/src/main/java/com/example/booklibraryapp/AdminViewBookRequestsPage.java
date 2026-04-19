@@ -27,6 +27,7 @@ public class AdminViewBookRequestsPage extends Fragment {
         
         refreshList();
 
+        // FR10 Admin book request approval
         listAdminViewBookRequests.setOnItemClickListener((parent, view1, position, id) -> {
             String selectedItem = (String) parent.getItemAtPosition(position);
             // Parse the ID from "Request #ID: First Last - BookName"
@@ -62,6 +63,7 @@ public class AdminViewBookRequestsPage extends Fragment {
                 });
             });
 
+            // FR10 Admin book request decline
             dialogBuilder.setNegativeButton("No", (dialog, which) ->
             {
                 // When denying, we should also return the book to stock

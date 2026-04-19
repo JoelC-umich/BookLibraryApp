@@ -22,6 +22,7 @@ import java.util.List;
 @Config(sdk = 32)
 public class AdminViewBookRequestsPageTest {
 
+    // FR10 test admin book request list view
     @Test
     public void testFragmentUIInitialization() {
         List<String> mockRequests = Arrays.asList("Request #1: User A - Book 1", "Request #2: User B - Book 2");

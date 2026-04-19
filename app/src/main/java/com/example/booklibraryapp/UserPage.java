@@ -23,8 +23,7 @@ public class UserPage extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // This callback will only be called when UserPage is at the top of the back stack
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 logout();
@@ -41,6 +40,7 @@ public class UserPage extends Fragment {
         return binding.getRoot();
     }
 
+    // FR2 User account login
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         String userID = QueryConnectorPlusHelper.IDWhenLoggingIn;

@@ -24,6 +24,7 @@ import java.util.List;
 @Config(sdk = 32)
 public class AdminViewBorrowedBooksPageTest {
 
+    // FR11 test admin book borrowed list view
     @Test
     public void testFragmentUIInitialization() {
         List<String> mockBorrowed = Arrays.asList("Borrowed 1", "Borrowed 2");
@@ -43,6 +44,7 @@ public class AdminViewBorrowedBooksPageTest {
         }
     }
 
+    // FR11 test admin book borrowed list view search bar
     @Test
     public void testSearchFiltering() {
         List<String> mockBorrowed = Arrays.asList("Apple", "Banana");

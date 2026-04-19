@@ -28,6 +28,8 @@ public class LoginPage extends Fragment {
         return binding.getRoot();
     }
 
+    // FR1 User Registration
+    // FR2 User Login
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
@@ -72,6 +74,7 @@ public class LoginPage extends Fragment {
             }
         });
 
+        // FR1 User create account
         binding.btnLoginCreateAccount.setOnClickListener(v ->
         {
             NavHostFragment.findNavController(LoginPage.this).navigate(R.id.action_LoginPage_to_createUserPage);

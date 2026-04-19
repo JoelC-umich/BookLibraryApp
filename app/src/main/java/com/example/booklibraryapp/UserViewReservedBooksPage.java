@@ -44,6 +44,7 @@ public class UserViewReservedBooksPage extends Fragment
         
         refreshList();
 
+        // FR8 User book view the details of a book borrowed
         listViewReservedBooks.setOnItemClickListener((parent, view1, position, id) -> {
             String selectedItem = (String) parent.getItemAtPosition(position);
             
@@ -75,6 +76,7 @@ public class UserViewReservedBooksPage extends Fragment
                                        "\nBorrowed Date: " + (date != null && !date.equals("null") ? date : "N/A") + 
                                        "\nStatus: " + status);
 
+                // FR8 User book return
                 if ("Reserved".equals(status)) {
                     dialogBuilder.setPositiveButton("Return Book", (dialog, which) -> {
                         QueryConnectorPlusHelper.returnBook(borrowedID, bookID, () -> {

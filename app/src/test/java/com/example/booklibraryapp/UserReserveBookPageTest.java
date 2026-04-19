@@ -24,6 +24,7 @@ import java.util.List;
 @Config(sdk = 32)
 public class UserReserveBookPageTest {
 
+    // FR4 test user book reserve list view
     @Test
     public void testFragmentUIInitialization() {
         List<String> mockBooks = Arrays.asList("Book 1 by Author 1", "Book 2 by Author 2");
@@ -43,6 +44,7 @@ public class UserReserveBookPageTest {
         }
     }
 
+    // FR3 test user book reserve list view and search book
     @Test
     public void testSearchFiltering() {
         List<String> mockBooks = Arrays.asList("Apple by Author A", "Banana by Author B");
