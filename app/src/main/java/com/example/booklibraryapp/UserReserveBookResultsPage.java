@@ -70,12 +70,23 @@ public class UserReserveBookResultsPage extends Fragment {
                     String quantityBorrowedPlus1 = QueryConnectorPlusHelper.getQuantityBorrowedPlus1FromBookID(availableBookID);
                     
                     // Fixed: Added quotes around todayDate for SQL
-                    QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS_BORROWED VALUES ("+maxIDBookBorrowed+", "+availableBookID+", "+loggedInUserID+", '"+todayDate+"', 'Pending')");
-                    QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_AVAILABLE = '"+quantityAvailableMinus1+"' WHERE ID = '"+availableBookID+"'");
-                    QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_BORROWED = '"+quantityBorrowedPlus1+"' WHERE ID = '"+availableBookID+"'");
-                    
-                    Toast.makeText(getContext(), availableBookName + " request to reserve has been made\nPlease wait for the librarian to approve your request", Toast.LENGTH_SHORT).show();
-                    
+                    if(maxIDBookBorrowed == null)
+                    {
+                        QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS_BORROWED VALUES (0, "+availableBookID+", "+loggedInUserID+", '"+todayDate+"', 'Pending')");
+                        QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_AVAILABLE = '"+quantityAvailableMinus1+"' WHERE ID = '"+availableBookID+"'");
+                        QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_BORROWED = '"+quantityBorrowedPlus1+"' WHERE ID = '"+availableBookID+"'");
+
+                        Toast.makeText(getContext(), availableBookName + " request to reserve has been made\nPlease wait for the librarian to approve your request", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else
+                    {
+                        QueryConnectorPlusHelper.runQuery("INSERT INTO BOOKS_BORROWED VALUES ("+maxIDBookBorrowed+", "+availableBookID+", "+loggedInUserID+", '"+todayDate+"', 'Pending')");
+                        QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_AVAILABLE = '"+quantityAvailableMinus1+"' WHERE ID = '"+availableBookID+"'");
+                        QueryConnectorPlusHelper.runQuery("UPDATE BOOKS SET QUANTITY_BORROWED = '"+quantityBorrowedPlus1+"' WHERE ID = '"+availableBookID+"'");
+
+                        Toast.makeText(getContext(), availableBookName + " request to reserve has been made\nPlease wait for the librarian to approve your request", Toast.LENGTH_SHORT).show();
+                    }
                     // Navigate back to UserPage and clear the search/results fragments from the stack
                     NavHostFragment.findNavController(this).popBackStack(R.id.userPage, false);
                 }
